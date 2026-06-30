@@ -1,0 +1,53 @@
+import { ChevronRight, FileText } from 'lucide-react'
+import Link from 'next/link'
+import React from 'react'
+
+export interface PolicyArea {
+  label: string
+  href: string
+}
+
+export interface PolicyAreasSectionProps {
+  policies: PolicyArea[]
+}
+
+export function PolicyAreasSection({ policies }: PolicyAreasSectionProps) {
+  return (
+    <section className="bg-[#F8F9FA] py-12 md:py-16 lg:py-20">
+      <div className="container">
+        <h2 className="text-2xl font-bold text-[#001529] sm:text-3xl lg:text-4xl">
+          Policy areas this Ministry leads
+        </h2>
+
+        <div className="mt-8 grid grid-cols-2 gap-4 md:mt-10 md:grid-cols-3 md:gap-5 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
+          {policies.map((policy) => (
+            <Link
+              key={policy.label}
+              href={policy.href}
+              className="group flex min-h-[120px] flex-col overflow-hidden rounded-lg border border-[#E5E7EB] bg-white shadow-sm transition-shadow hover:shadow-md"
+            >
+              <div className="flex flex-1 items-start gap-3 p-4">
+                <FileText className="size-5 shrink-0 text-[#4B5563]" aria-hidden="true" />
+                <span className="text-sm font-semibold leading-snug text-[#001529]">
+                  {policy.label}
+                </span>
+              </div>
+              <div className="flex items-center justify-end bg-gradient-to-r from-[#004B4D] to-[#008C95] px-3 py-1.5">
+                <ChevronRight className="size-4 text-white" aria-hidden="true" />
+              </div>
+            </Link>
+          ))}
+        </div>
+
+        <div className="mt-10 text-center md:mt-12">
+          <Link
+            href="/policies"
+            className="inline-flex items-center justify-center text-sm font-medium text-[#008C95] transition-opacity hover:opacity-80"
+          >
+            See all policies →
+          </Link>
+        </div>
+      </div>
+    </section>
+  )
+}
