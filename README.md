@@ -8,6 +8,30 @@ This template is right for you if you are working on:
 - A content publishing platform with a fully featured publication workflow
 - Exploring the capabilities of Payload
 
+## Running Locally
+
+1. Install dependencies:
+
+   ```bash
+   pnpm install
+   ```
+
+1. Copy the example environment variables and fill them in (`DATABASE_URL` must point to a running Postgres instance and database):
+
+   ```bash
+   cp .env.example .env
+   ```
+
+1. Start the dev server:
+
+   ```bash
+   pnpm dev
+   ```
+
+1. Open [http://localhost:3000](http://localhost:3000) in your browser (if port 3000 is already in use, Next.js will automatically fall back to the next available port, e.g. `3001` — check the terminal output for the actual URL).
+
+1. Go to `/admin` and follow the on-screen instructions to create your first admin user.
+
 Core features:
 
 - [Pre-configured Payload Config](#how-it-works)

@@ -1,6 +1,8 @@
+'use client'
+
 import { cn } from '@/utilities/ui'
 import Link from 'next/link'
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 
 export interface HeroCTA {
   label: string
@@ -36,17 +38,19 @@ export function HeroSection({
 
   return (
     <section className="relative overflow-hidden bg-white">
-      {showPattern && (
-        <img
-          src={patternImage}
-          alt=""
-          aria-hidden="true"
-          className="pointer-events-none absolute -left-[10%] -top-[20%] z-0 w-[70%] max-w-3xl opacity-40 mix-blend-screen lg:-left-[5%] lg:-top-[10%] lg:w-[55%]"
-        />
-      )}
       <div className="container relative z-10 py-10 md:py-14 lg:py-16">
-        <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-16">
-          <div className="relative">
+        <div className="grid grid-cols-1 items-center gap-1 lg:grid-cols-2 lg:gap-1">
+          {/* Left column - Text content */}
+          <div className="relative flex items-center w-full h-full">
+            {/* Pattern image limited to the text side */}
+            {showPattern && (
+              <img
+                src={patternImage}
+                alt=""
+                aria-hidden="true"
+                className="pointer-events-none absolute left-0 top-0 z-0 h-full w-full object-cover "
+              />
+            )}
             <div className="relative z-10">
               <h1 className="text-3xl font-bold leading-tight text-[#001529] sm:text-4xl lg:text-5xl">
                 {title}
@@ -85,8 +89,8 @@ export function HeroSection({
             </div>
           </div>
 
+          {/* Right column - Image */}
           <div className="relative aspect-[4/3] overflow-hidden rounded-3xl lg:aspect-auto lg:min-h-[420px]">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               alt=""
               role="presentation"

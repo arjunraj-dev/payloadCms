@@ -222,3 +222,27 @@ html[data-theme='dark'],
 html[data-theme='light'] {
   opacity: initial;
 }
+
+@keyframes fluid-wave-drift {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100px);
+  }
+}
+
+.animate-fluid-wave-front {
+  animation: fluid-wave-drift 3.2s linear infinite;
+}
+
+.animate-fluid-wave-back {
+  animation: fluid-wave-drift 5.5s linear infinite reverse;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fluid-wave-front,
+  .animate-fluid-wave-back {
+    animation: none;
+  }
+}
