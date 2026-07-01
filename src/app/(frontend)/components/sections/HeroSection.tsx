@@ -72,14 +72,14 @@ export function HeroSection({
               />
             )}
             <div className="relative z-10">
-              <h1 className="text-3xl font-bold leading-tight text-[#001529] sm:text-4xl lg:text-5xl">
+              <h1 className="text-3xl font-[400] leading-tight text-[#001529] sm:text-4xl lg:text-5xl">
                 {title}
               </h1>
               {subtitleParagraphs.map((paragraph, index) => (
                 <p
                   key={index}
                   className={cn(
-                    'text-base text-[#4B5563] sm:text-lg',
+                    'text-base text-[#4B5563] font-[600] sm:text-lg',
                     index === 0 ? 'mt-4' : 'mt-3',
                   )}
                 >
@@ -87,7 +87,7 @@ export function HeroSection({
                 </p>
               ))}
               {showCTAs && (
-                <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:flex-wrap">
+                <div className="mt-8 font-[600] flex flex-col gap-4 sm:flex-row sm:flex-wrap">
                   {primaryCTA && (
                     <Link
                       href={primaryCTA.href}
