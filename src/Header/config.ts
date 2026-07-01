@@ -1,6 +1,5 @@
 import type { GlobalConfig } from 'payload'
 
-import { link } from '@/fields/link'
 import { revalidateHeader } from './hooks/revalidateHeader'
 
 export const Header: GlobalConfig = {
@@ -10,20 +9,35 @@ export const Header: GlobalConfig = {
   },
   fields: [
     {
+      name: 'logo',
+      type: 'upload',
+      relationTo: 'media',
+      required: true,
+    },
+    {
       name: 'navItems',
       type: 'array',
-      fields: [
-        link({
-          appearances: false,
-        }),
-      ],
       maxRows: 6,
+      minRows: 1,
+      fields: [
+        { name: 'label', type: 'text', required: true },
+        { name: 'href', type: 'text', required: true },
+      ],
       admin: {
         initCollapsed: true,
         components: {
           RowLabel: '@/Header/RowLabel#RowLabel',
         },
       },
+    },
+    {
+      name: 'cta',
+      type: 'group',
+      label: 'Call to action button',
+      fields: [
+        { name: 'label', type: 'text', required: true },
+        { name: 'href', type: 'text', required: true },
+      ],
     },
   ],
   hooks: {

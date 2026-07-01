@@ -13,6 +13,10 @@ export interface ShowYouCard {
 
 export interface ShowYouSectionProps {
   cards: ShowYouCard[]
+  heading?: string
+  description?: string
+  ctaLabel?: string
+  ctaHref?: string
 }
 
 const labelColorClasses: Record<ShowYouLabelColor, string> = {
@@ -41,7 +45,13 @@ function ShowYouChevron() {
   )
 }
 
-export function ShowYouSection({ cards }: ShowYouSectionProps) {
+export function ShowYouSection({
+  cards,
+  heading = "We'd rather show you than tell you",
+  description = 'Discover the real progress being made through ongoing programs, community investments, and practical solutions designed to improve everyday life.',
+  ctaLabel = 'See all our progress →',
+  ctaHref = '/progress',
+}: ShowYouSectionProps) {
   return (
     <section className="bg-white py-12 md:py-16 lg:py-20">
       <div className="container">
@@ -50,11 +60,10 @@ export function ShowYouSection({ cards }: ShowYouSectionProps) {
           <div className="relative z-10">
             <div className="max-w-3xl">
               <h2 className="text-2xl font-bold leading-tight text-white sm:text-3xl lg:text-4xl">
-                We&apos;d rather show you than tell you
+                {heading}
               </h2>
               <p className="mt-4 text-base leading-relaxed text-white/60 sm:text-lg">
-                Discover the real progress being made through ongoing programs, community
-                investments, and practical solutions designed to improve everyday life.
+                {description}
               </p>
             </div>
 
@@ -95,10 +104,10 @@ export function ShowYouSection({ cards }: ShowYouSectionProps) {
 
             <div className="mt-8 md:mt-10">
               <Link
-                href="/progress"
+                href={ctaHref}
                 className="inline-flex items-center justify-center rounded-lg bg-gradient-to-r from-[#004B4D] to-[#008C95] px-5 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90"
               >
-                See all our progress →
+                {ctaLabel}
               </Link>
             </div>
           </div>

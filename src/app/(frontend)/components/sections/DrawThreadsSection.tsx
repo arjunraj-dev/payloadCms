@@ -8,9 +8,19 @@ export interface DrawThreadsTag {
 
 export interface DrawThreadsSectionProps {
   tags: DrawThreadsTag[]
+  heading?: string
+  description?: string
+  ctaLabel?: string
+  ctaHref?: string
 }
 
-export function DrawThreadsSection({ tags }: DrawThreadsSectionProps) {
+export function DrawThreadsSection({
+  tags,
+  heading = 'One Ministry, drawing the threads together',
+  description = 'Coming together to find solutions that help prepare the Bahamas for the future — across data, digital services, and the economy. These are the areas where MIND will focus on for The Bahamas. This is where we will focus our impact on.',
+  ctaLabel = "See everything we're working on →",
+  ctaHref = '/initiatives',
+}: DrawThreadsSectionProps) {
   const midpoint = Math.ceil(tags.length / 2)
   const firstRow = tags.slice(0, midpoint)
   const secondRow = tags.slice(midpoint)
@@ -20,12 +30,10 @@ export function DrawThreadsSection({ tags }: DrawThreadsSectionProps) {
       <div className="container">
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="text-2xl font-bold leading-tight text-[#001529] sm:text-3xl lg:text-4xl">
-            One Ministry, drawing the threads together
+            {heading}
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-[#4B5563] sm:text-lg">
-            Coming together to find solutions that help prepare the Bahamas for the future — across
-            data, digital services, and the economy. These are the areas where MIND will focus on
-            for The Bahamas. This is where we will focus our impact on.
+            {description}
           </p>
         </div>
 
@@ -58,10 +66,10 @@ export function DrawThreadsSection({ tags }: DrawThreadsSectionProps) {
 
         <div className="mt-10 text-center md:mt-12">
           <Link
-            href="/initiatives"
+            href={ctaHref}
             className="inline-flex items-center justify-center rounded-lg bg-gradient-to-r from-[#004B4D] to-[#008C95] px-5 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90"
           >
-            See everything we&apos;re working on →
+            {ctaLabel}
           </Link>
         </div>
       </div>

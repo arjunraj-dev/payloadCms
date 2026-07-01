@@ -112,10 +112,12 @@ export interface Config {
   globals: {
     header: Header;
     footer: Footer;
+    homepage: Homepage;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
+    homepage: HomepageSelect<false> | HomepageSelect<true>;
   };
   locale: null;
   widgets: {
@@ -1637,26 +1639,18 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  */
 export interface Header {
   id: number;
+  logo: number | Media;
   navItems?:
     | {
-        link: {
-          type?: ('reference' | 'custom') | null;
-          newTab?: boolean | null;
-          reference?:
-            | ({
-                relationTo: 'pages';
-                value: number | Page;
-              } | null)
-            | ({
-                relationTo: 'posts';
-                value: number | Post;
-              } | null);
-          url?: string | null;
-          label: string;
-        };
+        label: string;
+        href: string;
         id?: string | null;
       }[]
     | null;
+  cta: {
+    label: string;
+    href: string;
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1666,26 +1660,172 @@ export interface Header {
  */
 export interface Footer {
   id: number;
-  navItems?:
+  logo: number | Media;
+  tagline: string;
+  columns?:
     | {
-        link: {
-          type?: ('reference' | 'custom') | null;
-          newTab?: boolean | null;
-          reference?:
-            | ({
-                relationTo: 'pages';
-                value: number | Page;
-              } | null)
-            | ({
-                relationTo: 'posts';
-                value: number | Post;
-              } | null);
-          url?: string | null;
-          label: string;
-        };
+        title: string;
+        links?:
+          | {
+              label: string;
+              href: string;
+              id?: string | null;
+            }[]
+          | null;
         id?: string | null;
       }[]
     | null;
+  contact?: {
+    /**
+     * Displayed text, e.g. (242) 327-1530
+     */
+    phoneLabel?: string | null;
+    /**
+     * e.g. tel:+12423271530
+     */
+    phoneHref?: string | null;
+    email?: string | null;
+    address?: string | null;
+  };
+  legalLinks?:
+    | {
+        label: string;
+        href: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * The year is prepended automatically — e.g. entering "MIND. All rights reserved." renders "© 2026 MIND. All rights reserved."
+   */
+  copyrightText: string;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "homepage".
+ */
+export interface Homepage {
+  id: number;
+  hero: {
+    title: string;
+    subtitle: string;
+    primaryCTA: {
+      label: string;
+      href: string;
+    };
+    secondaryCTA?: {
+      label?: string | null;
+      href?: string | null;
+    };
+    backgroundImages?:
+      | {
+          image: number | Media;
+          id?: string | null;
+        }[]
+      | null;
+    backgroundImageInterval?: number | null;
+  };
+  showYou: {
+    heading: string;
+    description: string;
+    cta: {
+      label: string;
+      href: string;
+    };
+    cards?:
+      | {
+          title: string;
+          /**
+           * e.g. LIVE, COMING, IN PROGRESS
+           */
+          label: string;
+          labelColor: 'green' | 'blue' | 'orange';
+          description: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  ministryBuilt: {
+    heading: string;
+    description?:
+      | {
+          text: string;
+          id?: string | null;
+        }[]
+      | null;
+    image: number | Media;
+    button: {
+      label: string;
+      href: string;
+    };
+  };
+  ministerProfile: {
+    label: string;
+    name: string;
+    title: string;
+    bio?:
+      | {
+          text: string;
+          id?: string | null;
+        }[]
+      | null;
+    image: number | Media;
+  };
+  initiatives: {
+    heading: string;
+    cta: {
+      label: string;
+      href: string;
+    };
+    cards?:
+      | {
+          icon: 'briefcase' | 'target' | 'users' | 'trending-up';
+          title: string;
+          description: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  governmentService: {
+    heading: string;
+    description: string;
+    cta: {
+      label: string;
+      href: string;
+    };
+    image: number | Media;
+  };
+  drawThreads: {
+    heading: string;
+    description: string;
+    tags?:
+      | {
+          label: string;
+          href: string;
+          id?: string | null;
+        }[]
+      | null;
+    cta: {
+      label: string;
+      href: string;
+    };
+  };
+  countryFuture: {
+    /**
+     * Use a new line to force a line break.
+     */
+    heading: string;
+    subtitle: string;
+    primaryButton: {
+      label: string;
+      href: string;
+    };
+    secondaryButton?: {
+      label?: string | null;
+      href?: string | null;
+    };
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1694,19 +1834,19 @@ export interface Footer {
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
+  logo?: T;
   navItems?:
     | T
     | {
-        link?:
-          | T
-          | {
-              type?: T;
-              newTab?: T;
-              reference?: T;
-              url?: T;
-              label?: T;
-            };
+        label?: T;
+        href?: T;
         id?: T;
+      };
+  cta?:
+    | T
+    | {
+        label?: T;
+        href?: T;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -1717,19 +1857,192 @@ export interface HeaderSelect<T extends boolean = true> {
  * via the `definition` "footer_select".
  */
 export interface FooterSelect<T extends boolean = true> {
-  navItems?:
+  logo?: T;
+  tagline?: T;
+  columns?:
     | T
     | {
-        link?:
+        title?: T;
+        links?:
           | T
           | {
-              type?: T;
-              newTab?: T;
-              reference?: T;
-              url?: T;
               label?: T;
+              href?: T;
+              id?: T;
             };
         id?: T;
+      };
+  contact?:
+    | T
+    | {
+        phoneLabel?: T;
+        phoneHref?: T;
+        email?: T;
+        address?: T;
+      };
+  legalLinks?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+        id?: T;
+      };
+  copyrightText?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "homepage_select".
+ */
+export interface HomepageSelect<T extends boolean = true> {
+  hero?:
+    | T
+    | {
+        title?: T;
+        subtitle?: T;
+        primaryCTA?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+            };
+        secondaryCTA?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+            };
+        backgroundImages?:
+          | T
+          | {
+              image?: T;
+              id?: T;
+            };
+        backgroundImageInterval?: T;
+      };
+  showYou?:
+    | T
+    | {
+        heading?: T;
+        description?: T;
+        cta?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+            };
+        cards?:
+          | T
+          | {
+              title?: T;
+              label?: T;
+              labelColor?: T;
+              description?: T;
+              id?: T;
+            };
+      };
+  ministryBuilt?:
+    | T
+    | {
+        heading?: T;
+        description?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+        image?: T;
+        button?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+            };
+      };
+  ministerProfile?:
+    | T
+    | {
+        label?: T;
+        name?: T;
+        title?: T;
+        bio?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+        image?: T;
+      };
+  initiatives?:
+    | T
+    | {
+        heading?: T;
+        cta?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+            };
+        cards?:
+          | T
+          | {
+              icon?: T;
+              title?: T;
+              description?: T;
+              id?: T;
+            };
+      };
+  governmentService?:
+    | T
+    | {
+        heading?: T;
+        description?: T;
+        cta?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+            };
+        image?: T;
+      };
+  drawThreads?:
+    | T
+    | {
+        heading?: T;
+        description?: T;
+        tags?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+              id?: T;
+            };
+        cta?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+            };
+      };
+  countryFuture?:
+    | T
+    | {
+        heading?: T;
+        subtitle?: T;
+        primaryButton?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+            };
+        secondaryButton?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+            };
       };
   updatedAt?: T;
   createdAt?: T;

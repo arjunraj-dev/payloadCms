@@ -18,74 +18,26 @@ import { ShowYouSection } from '@/app/(frontend)/components/sections/ShowYouSect
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { RenderHero } from '@/heros/RenderHero'
 import { generateMeta } from '@/utilities/generateMeta'
-import { Briefcase, Target, TrendingUp, Users } from 'lucide-react'
+import { getCachedGlobal } from '@/utilities/getGlobals'
+import { getMediaUrl } from '@/utilities/getMediaUrl'
+import { Briefcase, Target, TrendingUp, Users, type LucideIcon } from 'lucide-react'
 import Link from 'next/link'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
+import type { Media } from '@/payload-types'
 
-const initiativeCards = [
-  {
-    icon: Briefcase,
-    title: 'Modernize Government',
-    description: 'Our goal is to make it easier to work with the government.',
-  },
-  {
-    icon: Target,
-    title: 'Build Future-Resilience',
-    description: "We're making sure that the Bahamas is ready for the challenges of tomorrow.",
-  },
-  {
-    icon: Users,
-    title: 'Develop Bahamian Talent',
-    description: "We're helping Bahamians get the skills they need to succeed.",
-  },
-  {
-    icon: TrendingUp,
-    title: 'Drive National Development',
-    description: "We're working to build a stronger and more prosperous Bahamas for all.",
-  },
-] as const
+const initiativeIcons: Record<string, LucideIcon> = {
+  briefcase: Briefcase,
+  target: Target,
+  users: Users,
+  'trending-up': TrendingUp,
+}
 
-const drawThreadsTags = [
-  { label: 'BNSI', href: '/departments/bnsi' },
-  { label: 'Bahamas National Statistical Institute', href: '/departments/bnsi' },
-  {
-    label: 'Department of Information and Communications Technology',
-    href: '/departments/dict',
-  },
-  { label: 'Digital Transformation Unit', href: '/departments/dtu' },
-]
+const mediaUrl = (media: number | Media | null | undefined): string =>
+  typeof media === 'object' && media ? getMediaUrl(media.url) : ''
 
-const showYouCards = [
-  {
-    label: 'LIVE',
-    labelColor: 'green' as const,
-    title: 'MyGateway',
-    description:
-      "More than 135,000 Bahamians already use it to access 168 government services online — and we're actively making it better.",
-  },
-  {
-    label: 'COMING',
-    labelColor: 'orange' as const,
-    title: 'National Artificial Intelligence Committee',
-    description:
-      'The body that will govern how AI operates in The Bahamas — being established to make sure this technology works in the interest of Bahamians.',
-  },
-  {
-    label: 'COMING',
-    labelColor: 'orange' as const,
-    title: 'Bahamas AI Skills Initiative',
-    description:
-      'AI training and literacy for every Bahamian — online and in person, on every island, at every level',
-  },
-  {
-    label: 'IN PROGRESS',
-    labelColor: 'blue' as const,
-    title: 'Renewing Vision 2040',
-    description:
-      "The Bahamas' national development plan is being renewed and brought current — with the machinery to actually deliver it.",
-  },
-]
+const paragraphs = (items: { text: string }[] | null | undefined): string[] =>
+  items?.map((item) => item.text) ?? []
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -139,6 +91,7 @@ export default async function Page({ params: paramsPromise }: Args) {
   }
 
   const { hero, layout } = page
+  const homepage = decodedSlug === 'home' ? await getCachedGlobal('homepage', 2)() : null
 
   return (
     <article className={decodedSlug === 'home' ? undefined : 'pt-16 pb-24'}>
@@ -148,70 +101,99 @@ export default async function Page({ params: paramsPromise }: Args) {
 
       {draft && <LivePreviewListener />}
 
-      {decodedSlug === 'home' ? (
+      {homepage ? (
         <HeroSection
-          title="Building today what The Bahamas needs to win tomorrow."
-          subtitle="And we're already moving."
-          primaryCTA={{ label: "See what's already moving →", href: '/progress' }}
-          secondaryCTA={{ label: 'Get involved →', href: '/get-involved' }}
-          backgroundImage={[
-            '/images/hero-section-images/bahamas-future.png',
-            '/images/hero-section-images/my-gateway.png',
-            '/images/hero-section-images/smart-gov.png',
-            '/images/hero-section-images/ai-training.png',
-            '/images/hero-section-images/renewing-vision.png',
-            '/images/hero-section-images/responsible-ai.png',
-          ]}
+          title={homepage.hero.title}
+          subtitle={homepage.hero.subtitle}
+          primaryCTA={homepage.hero.primaryCTA}
+          secondaryCTA={
+            homepage.hero.secondaryCTA?.label && homepage.hero.secondaryCTA?.href
+              ? { label: homepage.hero.secondaryCTA.label, href: homepage.hero.secondaryCTA.href }
+              : undefined
+          }
+          backgroundImageInterval={homepage.hero.backgroundImageInterval ?? undefined}
+          backgroundImage={(homepage.hero.backgroundImages ?? [])
+            .map((row) => mediaUrl(row.image))
+            .filter(Boolean)}
         />
       ) : (
         <RenderHero {...hero} />
       )}
-      {decodedSlug === 'home' && <ShowYouSection cards={showYouCards} />}
-      {decodedSlug === 'home' && (
+      {homepage && (
+        <ShowYouSection
+          heading={homepage.showYou.heading}
+          description={homepage.showYou.description}
+          ctaLabel={homepage.showYou.cta.label}
+          ctaHref={homepage.showYou.cta.href}
+          cards={homepage.showYou.cards ?? []}
+        />
+      )}
+      {homepage && (
         <MinistryBuiltSection
-          heading="A Ministry built to deliver"
-          description={[
-            'Our task is to help The Bahamas prepare for the future and its challenges, and to seize its incredible opportunities.',
-            'For the first time, we have the leadership, the blueprint, and the mandate to ensure that we are not just reacting to change, but leading it. We are making sure that every Bahamian — wherever they live — can reach opportunity.',
-          ]}
-          image="/images/ministry-robotic-hand.jpg"
-          buttonLabel="More about the Ministry →"
-          buttonHref="/about"
+          heading={homepage.ministryBuilt.heading}
+          description={paragraphs(homepage.ministryBuilt.description)}
+          image={mediaUrl(homepage.ministryBuilt.image)}
+          buttonLabel={homepage.ministryBuilt.button.label}
+          buttonHref={homepage.ministryBuilt.button.href}
         />
       )}
-      {decodedSlug === 'home' && (
+      {homepage && (
         <MinisterProfileSection
-          label="The Minister"
-          bio="MIND has a clear mandate. We are giving Bahamians back their time by making government simpler and faster. We are making sure every Bahamian — wherever they live — can reach opportunity. And we are preparing our people for the jobs and industries that are emerging. That's the work. And we've already started."
-          name="Hon. Sebastian J. Bastian"
-          title="Minister of Economic Affairs"
-          image="/images/minister-portrait.jpg"
+          label={homepage.ministerProfile.label}
+          bio={paragraphs(homepage.ministerProfile.bio)}
+          name={homepage.ministerProfile.name}
+          title={homepage.ministerProfile.title}
+          image={mediaUrl(homepage.ministerProfile.image)}
         />
       )}
-      {decodedSlug === 'home' && (
+      {homepage && (
         <section className="bg-white py-12 md:py-16 lg:py-20">
           <div className="container mb-10 text-center md:mb-12">
             <h2 className="mx-auto max-w-3xl text-2xl font-bold leading-tight text-[#001529] sm:text-3xl lg:text-4xl">
-              Everything we do points toward one thing — more opportunity for every Bahamian.
+              {homepage.initiatives.heading}
             </h2>
             <Link
-              href="/progress"
+              href={homepage.initiatives.cta.href}
               className="mt-8 inline-flex items-center justify-center rounded-lg bg-[#001529] px-5 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90"
             >
-              See how we&apos;re doing it →
+              {homepage.initiatives.cta.label}
             </Link>
           </div>
-          <InitiativeCardsGrid cards={[...initiativeCards]} />
+          <InitiativeCardsGrid
+            cards={(homepage.initiatives.cards ?? []).map((card) => ({
+              icon: initiativeIcons[card.icon] ?? Briefcase,
+              title: card.title,
+              description: card.description,
+            }))}
+          />
         </section>
       )}
-      {decodedSlug === 'home' && <GovernmentServiceSection />}
-      {decodedSlug === 'home' && <DrawThreadsSection tags={drawThreadsTags} />}
-      {decodedSlug === 'home' && (
+      {homepage && (
+        <GovernmentServiceSection
+          heading={homepage.governmentService.heading}
+          description={homepage.governmentService.description}
+          ctaLabel={homepage.governmentService.cta.label}
+          ctaHref={homepage.governmentService.cta.href}
+          image={mediaUrl(homepage.governmentService.image)}
+        />
+      )}
+      {homepage && (
+        <DrawThreadsSection
+          heading={homepage.drawThreads.heading}
+          description={homepage.drawThreads.description}
+          ctaLabel={homepage.drawThreads.cta.label}
+          ctaHref={homepage.drawThreads.cta.href}
+          tags={homepage.drawThreads.tags ?? []}
+        />
+      )}
+      {homepage && (
         <CountryFutureSection
-          heading={"This is our country's future.\nHelp shape it."}
-          subtitle="The Bahamas' development relies on its people. Join us as we work to create a more prosperous, sustainable and inclusive future for all Bahamians. Your voice matters, your skills matter — help us shape our country's future."
-          primaryButtonLabel="Get involved →"
-          primaryButtonHref="/get-involved"
+          heading={homepage.countryFuture.heading}
+          subtitle={homepage.countryFuture.subtitle}
+          primaryButtonLabel={homepage.countryFuture.primaryButton.label}
+          primaryButtonHref={homepage.countryFuture.primaryButton.href}
+          secondaryButtonLabel={homepage.countryFuture.secondaryButton?.label ?? undefined}
+          secondaryButtonHref={homepage.countryFuture.secondaryButton?.href ?? undefined}
         />
       )}
       <RenderBlocks blocks={layout} />
