@@ -2,7 +2,7 @@
 
 import { cn } from '@/utilities/ui'
 import Link from 'next/link'
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 
 export interface HeroCTA {
   label: string
@@ -14,7 +14,10 @@ export interface HeroSectionProps {
   subtitle: string | string[]
   primaryCTA?: HeroCTA
   secondaryCTA?: HeroCTA
-  backgroundImage: string
+  /** A single image, or a collection to rotate through as a crossfade slideshow. */
+  backgroundImage: string | string[]
+  /** Time each image stays on screen before crossfading to the next, in ms. */
+  backgroundImageInterval?: number
   patternImage?: string
   showPattern?: boolean
   imageClassName?: string
@@ -29,12 +32,29 @@ export function HeroSection({
   primaryCTA,
   secondaryCTA,
   backgroundImage,
+  backgroundImageInterval = 5000,
   patternImage = '/images/Isolation_Mode.png',
   showPattern = true,
   imageClassName,
 }: HeroSectionProps) {
   const subtitleParagraphs = Array.isArray(subtitle) ? subtitle : [subtitle]
   const showCTAs = primaryCTA || secondaryCTA
+  const backgroundImages = useMemo(
+    () => (Array.isArray(backgroundImage) ? backgroundImage : [backgroundImage]),
+    [backgroundImage],
+  )
+  const [activeImageIndex, setActiveImageIndex] = useState(0)
+
+  useEffect(() => {
+    setActiveImageIndex(0)
+    if (backgroundImages.length <= 1) return
+
+    const id = setInterval(() => {
+      setActiveImageIndex((current) => (current + 1) % backgroundImages.length)
+    }, backgroundImageInterval)
+
+    return () => clearInterval(id)
+  }, [backgroundImages, backgroundImageInterval])
 
   return (
     <section className="relative overflow-hidden bg-white">
@@ -91,15 +111,22 @@ export function HeroSection({
 
           {/* Right column - Image */}
           <div className="relative aspect-[4/3] overflow-hidden rounded-3xl lg:aspect-auto lg:min-h-[420px]">
-            <img
-              alt=""
-              role="presentation"
-              src={backgroundImage}
-              loading="eager"
-              fetchPriority="high"
-              decoding="async"
-              className={cn('h-full w-full object-cover', imageClassName)}
-            />
+            {backgroundImages.map((src, index) => (
+              <img
+                key={src}
+                alt=""
+                role="presentation"
+                src={src}
+                loading={index === 0 ? 'eager' : 'lazy'}
+                fetchPriority={index === 0 ? 'high' : 'low'}
+                decoding="async"
+                className={cn(
+                  'absolute inset-0 h-full w-full object-cover motion-safe:transition-opacity motion-safe:duration-1000 motion-safe:ease-in-out',
+                  index === activeImageIndex ? 'opacity-100' : 'opacity-0',
+                  imageClassName,
+                )}
+              />
+            ))}
           </div>
         </div>
       </div>

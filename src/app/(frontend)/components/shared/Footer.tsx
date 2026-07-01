@@ -64,7 +64,7 @@ export function Footer() {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 alt="MIND — Ministry of Innovation & National Development"
-                src="/images/mind-logo.png"
+                src="/images/mind-logo.svg"
                 width={220}
                 height={60}
                 loading="lazy"

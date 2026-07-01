@@ -154,7 +154,14 @@ export default async function Page({ params: paramsPromise }: Args) {
           subtitle="And we're already moving."
           primaryCTA={{ label: "See what's already moving →", href: '/progress' }}
           secondaryCTA={{ label: 'Get involved →', href: '/get-involved' }}
-          backgroundImage="/images/hero-section.jpg"
+          backgroundImage={[
+            '/images/hero-section-images/bahamas-future.png',
+            '/images/hero-section-images/my-gateway.png',
+            '/images/hero-section-images/smart-gov.png',
+            '/images/hero-section-images/ai-training.png',
+            '/images/hero-section-images/renewing-vision.png',
+            '/images/hero-section-images/responsible-ai.png',
+          ]}
         />
       ) : (
         <RenderHero {...hero} />
