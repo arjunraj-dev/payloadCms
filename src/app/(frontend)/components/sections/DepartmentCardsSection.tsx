@@ -13,18 +13,21 @@ export interface DepartmentCard {
 
 export interface DepartmentCardsSectionProps {
   departments: DepartmentCard[]
+  heading?: string
+  description?: string
 }
 
-export function DepartmentCardsSection({ departments }: DepartmentCardsSectionProps) {
+export function DepartmentCardsSection({
+  departments,
+  heading = 'What falls under this Ministry.',
+  description = "Our work is supported by several key departments and initiatives, each playing a crucial role in advancing the nation's digital agenda.",
+}: DepartmentCardsSectionProps) {
   return (
     <section className="bg-white py-12 md:py-16 lg:py-20">
       <div className="container">
-        <h2 className="text-2xl font-bold text-[#001529] sm:text-3xl lg:text-4xl">
-          What falls under this Ministry.
-        </h2>
+        <h2 className="text-2xl font-bold text-[#001529] sm:text-3xl lg:text-4xl">{heading}</h2>
         <p className="mt-4 max-w-3xl text-base leading-relaxed text-[#4B5563] sm:text-lg">
-          Our work is supported by several key departments and initiatives, each playing a crucial
-          role in advancing the nation&apos;s digital agenda.
+          {description}
         </p>
 
         <div className="mt-10 grid grid-cols-1 gap-6 md:mt-12 md:grid-cols-2 lg:grid-cols-4">

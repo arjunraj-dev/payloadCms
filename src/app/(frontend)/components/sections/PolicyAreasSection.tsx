@@ -9,15 +9,21 @@ export interface PolicyArea {
 
 export interface PolicyAreasSectionProps {
   policies: PolicyArea[]
+  heading?: string
+  ctaLabel?: string
+  ctaHref?: string
 }
 
-export function PolicyAreasSection({ policies }: PolicyAreasSectionProps) {
+export function PolicyAreasSection({
+  policies,
+  heading = 'Policy areas this Ministry leads',
+  ctaLabel = 'See all policies →',
+  ctaHref = '/policies',
+}: PolicyAreasSectionProps) {
   return (
     <section className="bg-[#F8F9FA] py-12 md:py-16 lg:py-20">
       <div className="container">
-        <h2 className="text-2xl font-bold text-[#001529] sm:text-3xl lg:text-4xl">
-          Policy areas this Ministry leads
-        </h2>
+        <h2 className="text-2xl font-bold text-[#001529] sm:text-3xl lg:text-4xl">{heading}</h2>
 
         <div className="mt-8 grid grid-cols-2 gap-4 md:mt-10 md:grid-cols-3 md:gap-5 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
           {policies.map((policy) => (
@@ -41,10 +47,10 @@ export function PolicyAreasSection({ policies }: PolicyAreasSectionProps) {
 
         <div className="mt-10 text-center md:mt-12">
           <Link
-            href="/policies"
+            href={ctaHref}
             className="inline-flex items-center justify-center text-sm font-medium text-[#008C95] transition-opacity hover:opacity-80"
           >
-            See all policies →
+            {ctaLabel}
           </Link>
         </div>
       </div>

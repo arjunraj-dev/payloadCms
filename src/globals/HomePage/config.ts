@@ -1,36 +1,7 @@
-import type { Field, GlobalConfig } from 'payload'
+import type { GlobalConfig } from 'payload'
 
+import { ctaField, paragraphsField } from '@/fields/cms'
 import { revalidateHomePage } from './hooks/revalidateHomePage'
-
-const paragraphs: Field = {
-  name: 'paragraphs',
-  type: 'array',
-  fields: [
-    {
-      name: 'text',
-      type: 'textarea',
-      required: true,
-    },
-  ],
-}
-
-const cta = (name: string, label: string, required = false): Field => ({
-  name,
-  type: 'group',
-  label,
-  fields: [
-    {
-      name: 'label',
-      type: 'text',
-      required,
-    },
-    {
-      name: 'href',
-      type: 'text',
-      required,
-    },
-  ],
-})
 
 export const HomePage: GlobalConfig = {
   slug: 'homepage',
@@ -51,8 +22,8 @@ export const HomePage: GlobalConfig = {
               fields: [
                 { name: 'title', type: 'text', required: true },
                 { name: 'subtitle', type: 'textarea', required: true },
-                cta('primaryCTA', 'Primary Button', true),
-                cta('secondaryCTA', 'Secondary Button'),
+                ctaField('primaryCTA', 'Primary Button', true),
+                ctaField('secondaryCTA', 'Secondary Button'),
                 {
                   name: 'backgroundImages',
                   type: 'array',
@@ -86,7 +57,7 @@ export const HomePage: GlobalConfig = {
               fields: [
                 { name: 'heading', type: 'text', required: true },
                 { name: 'description', type: 'textarea', required: true },
-                cta('cta', 'Button', true),
+                ctaField('cta', 'Button', true),
                 {
                   name: 'cards',
                   type: 'array',
@@ -126,9 +97,9 @@ export const HomePage: GlobalConfig = {
               type: 'group',
               fields: [
                 { name: 'heading', type: 'text', required: true },
-                { ...paragraphs, name: 'description' },
+                paragraphsField('description'),
                 { name: 'image', type: 'upload', relationTo: 'media', required: true },
-                cta('button', 'Button', true),
+                ctaField('button', 'Button', true),
               ],
             },
           ],
@@ -143,7 +114,7 @@ export const HomePage: GlobalConfig = {
                 { name: 'label', type: 'text', required: true },
                 { name: 'name', type: 'text', required: true },
                 { name: 'title', type: 'text', required: true },
-                { ...paragraphs, name: 'bio' },
+                paragraphsField('bio'),
                 { name: 'image', type: 'upload', relationTo: 'media', required: true },
               ],
             },
@@ -157,7 +128,7 @@ export const HomePage: GlobalConfig = {
               type: 'group',
               fields: [
                 { name: 'heading', type: 'text', required: true },
-                cta('cta', 'Button', true),
+                ctaField('cta', 'Button', true),
                 {
                   name: 'cards',
                   type: 'array',
@@ -193,7 +164,7 @@ export const HomePage: GlobalConfig = {
               fields: [
                 { name: 'heading', type: 'text', required: true },
                 { name: 'description', type: 'textarea', required: true },
-                cta('cta', 'Button', true),
+                ctaField('cta', 'Button', true),
                 { name: 'image', type: 'upload', relationTo: 'media', required: true },
               ],
             },
@@ -217,7 +188,7 @@ export const HomePage: GlobalConfig = {
                     { name: 'href', type: 'text', required: true },
                   ],
                 },
-                cta('cta', 'Button', true),
+                ctaField('cta', 'Button', true),
               ],
             },
           ],
@@ -236,8 +207,8 @@ export const HomePage: GlobalConfig = {
                   admin: { description: 'Use a new line to force a line break.' },
                 },
                 { name: 'subtitle', type: 'textarea', required: true },
-                cta('primaryButton', 'Primary Button', true),
-                cta('secondaryButton', 'Secondary Button'),
+                ctaField('primaryButton', 'Primary Button', true),
+                ctaField('secondaryButton', 'Secondary Button'),
               ],
             },
           ],

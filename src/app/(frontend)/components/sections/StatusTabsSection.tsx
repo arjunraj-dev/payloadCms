@@ -12,9 +12,15 @@ export interface StatusCard {
 
 export interface StatusTabsSectionProps {
   statusCards: StatusCard[]
+  heading?: string
+  description?: string
 }
 
-export function StatusTabsSection({ statusCards }: StatusTabsSectionProps) {
+export function StatusTabsSection({
+  statusCards,
+  heading = "What's already in motion.",
+  description = "We said we'd show you rather than tell you. This page is how we keep that promise — an honest account of what's live, what we're building, and what's still being planned.",
+}: StatusTabsSectionProps) {
   return (
     <section className="relative overflow-hidden bg-white py-12 md:py-16 lg:py-20">
       <img
@@ -25,14 +31,8 @@ export function StatusTabsSection({ statusCards }: StatusTabsSectionProps) {
       />
       <div className="container relative z-10">
         <div className="mx-auto max-w-3xl text-center">
-          <h2 className="text-2xl font-bold text-[#001529] sm:text-3xl lg:text-4xl">
-            What&apos;s already in motion.
-          </h2>
-          <p className="mt-4 text-base leading-relaxed text-[#4B5563] sm:text-lg">
-            We said we&apos;d show you rather than tell you. This page is how we keep that promise
-            — an honest account of what&apos;s live, what we&apos;re building, and what&apos;s
-            still being planned.
-          </p>
+          <h2 className="text-2xl font-bold text-[#001529] sm:text-3xl lg:text-4xl">{heading}</h2>
+          <p className="mt-4 text-base leading-relaxed text-[#4B5563] sm:text-lg">{description}</p>
         </div>
 
         <div className="mx-auto mt-10 max-w-5xl grid grid-cols-1 gap-4 md:mt-12 md:grid-cols-2 md:gap-5 lg:grid-cols-4">

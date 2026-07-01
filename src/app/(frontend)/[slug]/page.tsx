@@ -19,25 +19,12 @@ import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { RenderHero } from '@/heros/RenderHero'
 import { generateMeta } from '@/utilities/generateMeta'
 import { getCachedGlobal } from '@/utilities/getGlobals'
-import { getMediaUrl } from '@/utilities/getMediaUrl'
-import { Briefcase, Target, TrendingUp, Users, type LucideIcon } from 'lucide-react'
+import { iconMap } from '@/utilities/iconMap'
+import { mediaUrl, paragraphs } from '@/utilities/cms'
+import { Briefcase } from 'lucide-react'
 import Link from 'next/link'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
-import type { Media } from '@/payload-types'
-
-const initiativeIcons: Record<string, LucideIcon> = {
-  briefcase: Briefcase,
-  target: Target,
-  users: Users,
-  'trending-up': TrendingUp,
-}
-
-const mediaUrl = (media: number | Media | null | undefined): string =>
-  typeof media === 'object' && media ? getMediaUrl(media.url) : ''
-
-const paragraphs = (items: { text: string }[] | null | undefined): string[] =>
-  items?.map((item) => item.text) ?? []
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -161,7 +148,7 @@ export default async function Page({ params: paramsPromise }: Args) {
           </div>
           <InitiativeCardsGrid
             cards={(homepage.initiatives.cards ?? []).map((card) => ({
-              icon: initiativeIcons[card.icon] ?? Briefcase,
+              icon: iconMap[card.icon] ?? Briefcase,
               title: card.title,
               description: card.description,
             }))}

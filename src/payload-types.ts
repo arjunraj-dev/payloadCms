@@ -113,11 +113,15 @@ export interface Config {
     header: Header;
     footer: Footer;
     homepage: Homepage;
+    'about-page': AboutPage;
+    'progress-page': ProgressPage;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
     homepage: HomepageSelect<false> | HomepageSelect<true>;
+    'about-page': AboutPageSelect<false> | AboutPageSelect<true>;
+    'progress-page': ProgressPageSelect<false> | ProgressPageSelect<true>;
   };
   locale: null;
   widgets: {
@@ -1831,6 +1835,330 @@ export interface Homepage {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "about-page".
+ */
+export interface AboutPage {
+  id: number;
+  hero: {
+    title: string;
+    subtitle?:
+      | {
+          text: string;
+          id?: string | null;
+        }[]
+      | null;
+    image: number | Media;
+  };
+  textImageSections?:
+    | {
+        heading: string;
+        text?:
+          | {
+              text: string;
+              id?: string | null;
+            }[]
+          | null;
+        image: number | Media;
+        imagePosition?: ('left' | 'right') | null;
+        id?: string | null;
+      }[]
+    | null;
+  mission: {
+    heading: string;
+    description: string;
+    cards?:
+      | {
+          icon:
+            | 'briefcase'
+            | 'target'
+            | 'users'
+            | 'trending-up'
+            | 'bar-chart'
+            | 'building'
+            | 'smartphone'
+            | 'shield'
+            | 'monitor'
+            | 'refresh-cw'
+            | 'calendar'
+            | 'lightbulb'
+            | 'folder'
+            | 'cpu'
+            | 'graduation-cap'
+            | 'book-open';
+          title: string;
+          description: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  dualCta: {
+    first: {
+      heading: string;
+      description: string;
+      button: {
+        label: string;
+        href: string;
+      };
+    };
+    second: {
+      heading: string;
+      description: string;
+      button: {
+        label: string;
+        href: string;
+      };
+    };
+  };
+  policyAreas: {
+    heading: string;
+    cta: {
+      label: string;
+      href: string;
+    };
+    policies?:
+      | {
+          label: string;
+          href: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  departments: {
+    heading: string;
+    description: string;
+    items?:
+      | {
+          icon:
+            | 'briefcase'
+            | 'target'
+            | 'users'
+            | 'trending-up'
+            | 'bar-chart'
+            | 'building'
+            | 'smartphone'
+            | 'shield'
+            | 'monitor'
+            | 'refresh-cw'
+            | 'calendar'
+            | 'lightbulb'
+            | 'folder'
+            | 'cpu'
+            | 'graduation-cap'
+            | 'book-open';
+          title: string;
+          description: string;
+          linkLabel: string;
+          href: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  ministerProfiles?:
+    | {
+        label: string;
+        name: string;
+        title: string;
+        bio?:
+          | {
+              text: string;
+              id?: string | null;
+            }[]
+          | null;
+        image: number | Media;
+        id?: string | null;
+      }[]
+    | null;
+  countryFuture: {
+    heading: string;
+    subtitle: string;
+    primaryButton: {
+      label: string;
+      href: string;
+    };
+    secondaryButton?: {
+      label?: string | null;
+      href?: string | null;
+    };
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "progress-page".
+ */
+export interface ProgressPage {
+  id: number;
+  status: {
+    heading: string;
+    description: string;
+    cards?:
+      | {
+          title: string;
+          description: string;
+          icon:
+            | 'briefcase'
+            | 'target'
+            | 'users'
+            | 'trending-up'
+            | 'bar-chart'
+            | 'building'
+            | 'smartphone'
+            | 'shield'
+            | 'monitor'
+            | 'refresh-cw'
+            | 'calendar'
+            | 'lightbulb'
+            | 'folder'
+            | 'cpu'
+            | 'graduation-cap'
+            | 'book-open';
+          /**
+           * Hex color, e.g. #16A34A
+           */
+          color: string;
+          image: number | Media;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  modernizeGovernment: {
+    title: string;
+    description: string;
+    cards?:
+      | {
+          icon:
+            | 'briefcase'
+            | 'target'
+            | 'users'
+            | 'trending-up'
+            | 'bar-chart'
+            | 'building'
+            | 'smartphone'
+            | 'shield'
+            | 'monitor'
+            | 'refresh-cw'
+            | 'calendar'
+            | 'lightbulb'
+            | 'folder'
+            | 'cpu'
+            | 'graduation-cap'
+            | 'book-open';
+          label: string;
+          labelColor: 'green' | 'blue' | 'orange' | 'dark' | 'planned';
+          title: string;
+          description: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  buildFutureReadiness: {
+    title: string;
+    description: string;
+    cards?:
+      | {
+          icon:
+            | 'briefcase'
+            | 'target'
+            | 'users'
+            | 'trending-up'
+            | 'bar-chart'
+            | 'building'
+            | 'smartphone'
+            | 'shield'
+            | 'monitor'
+            | 'refresh-cw'
+            | 'calendar'
+            | 'lightbulb'
+            | 'folder'
+            | 'cpu'
+            | 'graduation-cap'
+            | 'book-open';
+          label: string;
+          labelColor: 'green' | 'blue' | 'orange' | 'dark' | 'planned';
+          title: string;
+          description: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  developBahamianTalent: {
+    title: string;
+    description: string;
+    backgroundImage: number | Media;
+    cards?:
+      | {
+          icon:
+            | 'briefcase'
+            | 'target'
+            | 'users'
+            | 'trending-up'
+            | 'bar-chart'
+            | 'building'
+            | 'smartphone'
+            | 'shield'
+            | 'monitor'
+            | 'refresh-cw'
+            | 'calendar'
+            | 'lightbulb'
+            | 'folder'
+            | 'cpu'
+            | 'graduation-cap'
+            | 'book-open';
+          label: string;
+          labelColor: 'green' | 'blue' | 'orange' | 'dark' | 'planned';
+          title: string;
+          description: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  driveNationalDevelopment: {
+    title: string;
+    description: string;
+    cards?:
+      | {
+          icon:
+            | 'briefcase'
+            | 'target'
+            | 'users'
+            | 'trending-up'
+            | 'bar-chart'
+            | 'building'
+            | 'smartphone'
+            | 'shield'
+            | 'monitor'
+            | 'refresh-cw'
+            | 'calendar'
+            | 'lightbulb'
+            | 'folder'
+            | 'cpu'
+            | 'graduation-cap'
+            | 'book-open';
+          label: string;
+          labelColor: 'green' | 'blue' | 'orange' | 'dark' | 'planned';
+          title: string;
+          description: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  countryFuture: {
+    heading: string;
+    subtitle: string;
+    pillarsHeading?: string | null;
+    pillarsDescription?: string | null;
+    footerText?: string | null;
+    primaryButton: {
+      label: string;
+      href: string;
+    };
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
@@ -2038,6 +2366,255 @@ export interface HomepageSelect<T extends boolean = true> {
               href?: T;
             };
         secondaryButton?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "about-page_select".
+ */
+export interface AboutPageSelect<T extends boolean = true> {
+  hero?:
+    | T
+    | {
+        title?: T;
+        subtitle?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+        image?: T;
+      };
+  textImageSections?:
+    | T
+    | {
+        heading?: T;
+        text?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+        image?: T;
+        imagePosition?: T;
+        id?: T;
+      };
+  mission?:
+    | T
+    | {
+        heading?: T;
+        description?: T;
+        cards?:
+          | T
+          | {
+              icon?: T;
+              title?: T;
+              description?: T;
+              id?: T;
+            };
+      };
+  dualCta?:
+    | T
+    | {
+        first?:
+          | T
+          | {
+              heading?: T;
+              description?: T;
+              button?:
+                | T
+                | {
+                    label?: T;
+                    href?: T;
+                  };
+            };
+        second?:
+          | T
+          | {
+              heading?: T;
+              description?: T;
+              button?:
+                | T
+                | {
+                    label?: T;
+                    href?: T;
+                  };
+            };
+      };
+  policyAreas?:
+    | T
+    | {
+        heading?: T;
+        cta?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+            };
+        policies?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+              id?: T;
+            };
+      };
+  departments?:
+    | T
+    | {
+        heading?: T;
+        description?: T;
+        items?:
+          | T
+          | {
+              icon?: T;
+              title?: T;
+              description?: T;
+              linkLabel?: T;
+              href?: T;
+              id?: T;
+            };
+      };
+  ministerProfiles?:
+    | T
+    | {
+        label?: T;
+        name?: T;
+        title?: T;
+        bio?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+        image?: T;
+        id?: T;
+      };
+  countryFuture?:
+    | T
+    | {
+        heading?: T;
+        subtitle?: T;
+        primaryButton?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+            };
+        secondaryButton?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "progress-page_select".
+ */
+export interface ProgressPageSelect<T extends boolean = true> {
+  status?:
+    | T
+    | {
+        heading?: T;
+        description?: T;
+        cards?:
+          | T
+          | {
+              title?: T;
+              description?: T;
+              icon?: T;
+              color?: T;
+              image?: T;
+              id?: T;
+            };
+      };
+  modernizeGovernment?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        cards?:
+          | T
+          | {
+              icon?: T;
+              label?: T;
+              labelColor?: T;
+              title?: T;
+              description?: T;
+              id?: T;
+            };
+      };
+  buildFutureReadiness?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        cards?:
+          | T
+          | {
+              icon?: T;
+              label?: T;
+              labelColor?: T;
+              title?: T;
+              description?: T;
+              id?: T;
+            };
+      };
+  developBahamianTalent?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        backgroundImage?: T;
+        cards?:
+          | T
+          | {
+              icon?: T;
+              label?: T;
+              labelColor?: T;
+              title?: T;
+              description?: T;
+              id?: T;
+            };
+      };
+  driveNationalDevelopment?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        cards?:
+          | T
+          | {
+              icon?: T;
+              label?: T;
+              labelColor?: T;
+              title?: T;
+              description?: T;
+              id?: T;
+            };
+      };
+  countryFuture?:
+    | T
+    | {
+        heading?: T;
+        subtitle?: T;
+        pillarsHeading?: T;
+        pillarsDescription?: T;
+        footerText?: T;
+        primaryButton?:
           | T
           | {
               label?: T;
