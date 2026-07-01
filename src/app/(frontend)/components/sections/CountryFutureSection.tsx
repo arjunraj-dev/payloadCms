@@ -5,6 +5,9 @@ import React from 'react'
 export interface CountryFutureSectionProps {
   heading: string
   subtitle: string
+  pillarsHeading?: string
+  pillarsDescription?: string
+  footerText?: string
   primaryButtonLabel: string
   primaryButtonHref: string
   secondaryButtonLabel?: string
@@ -83,6 +86,9 @@ function CountryFuturePattern() {
 export function CountryFutureSection({
   heading,
   subtitle,
+  pillarsHeading,
+  pillarsDescription,
+  footerText,
   primaryButtonLabel,
   primaryButtonHref,
   secondaryButtonLabel,
@@ -106,6 +112,18 @@ export function CountryFutureSection({
               ))}
             </h2>
             <p className="mt-4 text-base leading-relaxed text-white/80 sm:text-lg">{subtitle}</p>
+
+            {pillarsHeading && (
+              <h3 className="mt-8 text-xl font-bold text-white sm:text-2xl">{pillarsHeading}</h3>
+            )}
+            {pillarsDescription && (
+              <p className="mt-4 text-base leading-relaxed text-white/80 sm:text-lg">
+                {pillarsDescription}
+              </p>
+            )}
+            {footerText && (
+              <p className="mt-6 text-base leading-relaxed text-white/80 sm:text-lg">{footerText}</p>
+            )}
 
             <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:flex-wrap">
               <Link
