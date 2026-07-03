@@ -69,6 +69,7 @@ export interface Config {
   collections: {
     pages: Page;
     posts: Post;
+    updates: Update;
     media: Media;
     categories: Category;
     users: User;
@@ -91,6 +92,7 @@ export interface Config {
   collectionsSelect: {
     pages: PagesSelect<false> | PagesSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
+    updates: UpdatesSelect<false> | UpdatesSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
@@ -115,6 +117,9 @@ export interface Config {
     homepage: Homepage;
     'about-page': AboutPage;
     'progress-page': ProgressPage;
+    'updates-page': UpdatesPage;
+    'get-involved-page': GetInvolvedPage;
+    'contact-page': ContactPage;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
@@ -122,6 +127,9 @@ export interface Config {
     homepage: HomepageSelect<false> | HomepageSelect<true>;
     'about-page': AboutPageSelect<false> | AboutPageSelect<true>;
     'progress-page': ProgressPageSelect<false> | ProgressPageSelect<true>;
+    'updates-page': UpdatesPageSelect<false> | UpdatesPageSelect<true>;
+    'get-involved-page': GetInvolvedPageSelect<false> | GetInvolvedPageSelect<true>;
+    'contact-page': ContactPageSelect<false> | ContactPageSelect<true>;
   };
   locale: null;
   widgets: {
@@ -789,6 +797,31 @@ export interface Form {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "updates".
+ */
+export interface Update {
+  id: number;
+  title: string;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  image: number | Media;
+  date: string;
+  category: 'announcements' | 'events' | 'statements' | 'media';
+  excerpt: string;
+  content?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -984,6 +1017,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'posts';
         value: number | Post;
+      } | null)
+    | ({
+        relationTo: 'updates';
+        value: number | Update;
       } | null)
     | ({
         relationTo: 'media';
@@ -1224,6 +1261,27 @@ export interface PostsSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "updates_select".
+ */
+export interface UpdatesSelect<T extends boolean = true> {
+  title?: T;
+  generateSlug?: T;
+  slug?: T;
+  image?: T;
+  date?: T;
+  category?: T;
+  excerpt?: T;
+  content?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1884,7 +1942,9 @@ export interface AboutPage {
             | 'folder'
             | 'cpu'
             | 'graduation-cap'
-            | 'book-open';
+            | 'book-open'
+            | 'handshake'
+            | 'megaphone';
           title: string;
           description: string;
           id?: string | null;
@@ -1944,7 +2004,9 @@ export interface AboutPage {
             | 'folder'
             | 'cpu'
             | 'graduation-cap'
-            | 'book-open';
+            | 'book-open'
+            | 'handshake'
+            | 'megaphone';
           title: string;
           description: string;
           linkLabel: string;
@@ -2012,7 +2074,9 @@ export interface ProgressPage {
             | 'folder'
             | 'cpu'
             | 'graduation-cap'
-            | 'book-open';
+            | 'book-open'
+            | 'handshake'
+            | 'megaphone';
           /**
            * Hex color, e.g. #16A34A
            */
@@ -2043,7 +2107,9 @@ export interface ProgressPage {
             | 'folder'
             | 'cpu'
             | 'graduation-cap'
-            | 'book-open';
+            | 'book-open'
+            | 'handshake'
+            | 'megaphone';
           label: string;
           labelColor: 'green' | 'blue' | 'orange' | 'dark' | 'planned';
           title: string;
@@ -2073,7 +2139,9 @@ export interface ProgressPage {
             | 'folder'
             | 'cpu'
             | 'graduation-cap'
-            | 'book-open';
+            | 'book-open'
+            | 'handshake'
+            | 'megaphone';
           label: string;
           labelColor: 'green' | 'blue' | 'orange' | 'dark' | 'planned';
           title: string;
@@ -2104,7 +2172,9 @@ export interface ProgressPage {
             | 'folder'
             | 'cpu'
             | 'graduation-cap'
-            | 'book-open';
+            | 'book-open'
+            | 'handshake'
+            | 'megaphone';
           label: string;
           labelColor: 'green' | 'blue' | 'orange' | 'dark' | 'planned';
           title: string;
@@ -2134,7 +2204,9 @@ export interface ProgressPage {
             | 'folder'
             | 'cpu'
             | 'graduation-cap'
-            | 'book-open';
+            | 'book-open'
+            | 'handshake'
+            | 'megaphone';
           label: string;
           labelColor: 'green' | 'blue' | 'orange' | 'dark' | 'planned';
           title: string;
@@ -2149,6 +2221,180 @@ export interface ProgressPage {
     pillarsHeading?: string | null;
     pillarsDescription?: string | null;
     footerText?: string | null;
+    primaryButton: {
+      label: string;
+      href: string;
+    };
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "updates-page".
+ */
+export interface UpdatesPage {
+  id: number;
+  hero: {
+    title: string;
+    subtitle: string;
+  };
+  closing: {
+    heading: string;
+    subtitle: string;
+    primaryButton: {
+      label: string;
+      href: string;
+    };
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "get-involved-page".
+ */
+export interface GetInvolvedPage {
+  id: number;
+  hero: {
+    title: string;
+    subtitle?:
+      | {
+          text: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  categoriesSection: {
+    heading: string;
+    categories?:
+      | {
+          icon:
+            | 'briefcase'
+            | 'target'
+            | 'users'
+            | 'trending-up'
+            | 'bar-chart'
+            | 'building'
+            | 'smartphone'
+            | 'shield'
+            | 'monitor'
+            | 'refresh-cw'
+            | 'calendar'
+            | 'lightbulb'
+            | 'folder'
+            | 'cpu'
+            | 'graduation-cap'
+            | 'book-open'
+            | 'handshake'
+            | 'megaphone';
+          image: number | Media;
+          title: string;
+          description: string;
+          href: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  form: {
+    formTitle: string;
+    illustrationImage: number | Media;
+  };
+  reachOut: {
+    heading: string;
+    text?:
+      | {
+          text: string;
+          id?: string | null;
+        }[]
+      | null;
+    image: number | Media;
+    imagePosition?: ('left' | 'right') | null;
+  };
+  followTheWork: {
+    heading: string;
+    description: string;
+    backgroundImage: number | Media;
+    socialLinks?:
+      | {
+          platform: 'facebook' | 'instagram' | 'linkedin' | 'x';
+          label: string;
+          href: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-page".
+ */
+export interface ContactPage {
+  id: number;
+  hero: {
+    title: string;
+    subtitle: string;
+    secondaryCTA?: {
+      label?: string | null;
+      href?: string | null;
+    };
+  };
+  officeInfo: {
+    address: string;
+    phone: string;
+    email: string;
+    hours?:
+      | {
+          text: string;
+          id?: string | null;
+        }[]
+      | null;
+    image: number | Media;
+  };
+  enquiries?:
+    | {
+        icon:
+          | 'briefcase'
+          | 'target'
+          | 'users'
+          | 'trending-up'
+          | 'bar-chart'
+          | 'building'
+          | 'smartphone'
+          | 'shield'
+          | 'monitor'
+          | 'refresh-cw'
+          | 'calendar'
+          | 'lightbulb'
+          | 'folder'
+          | 'cpu'
+          | 'graduation-cap'
+          | 'book-open'
+          | 'handshake'
+          | 'megaphone';
+        title: string;
+        description: string;
+        email: string;
+        id?: string | null;
+      }[]
+    | null;
+  followUs: {
+    heading: string;
+    subtitle: string;
+    socialLinks?:
+      | {
+          platform: 'facebook' | 'instagram' | 'linkedin' | 'x';
+          label: string;
+          href: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  closing: {
+    heading: string;
+    subtitle?: string | null;
     primaryButton: {
       label: string;
       href: string;
@@ -2614,6 +2860,172 @@ export interface ProgressPageSelect<T extends boolean = true> {
         pillarsHeading?: T;
         pillarsDescription?: T;
         footerText?: T;
+        primaryButton?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "updates-page_select".
+ */
+export interface UpdatesPageSelect<T extends boolean = true> {
+  hero?:
+    | T
+    | {
+        title?: T;
+        subtitle?: T;
+      };
+  closing?:
+    | T
+    | {
+        heading?: T;
+        subtitle?: T;
+        primaryButton?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "get-involved-page_select".
+ */
+export interface GetInvolvedPageSelect<T extends boolean = true> {
+  hero?:
+    | T
+    | {
+        title?: T;
+        subtitle?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+      };
+  categoriesSection?:
+    | T
+    | {
+        heading?: T;
+        categories?:
+          | T
+          | {
+              icon?: T;
+              image?: T;
+              title?: T;
+              description?: T;
+              href?: T;
+              id?: T;
+            };
+      };
+  form?:
+    | T
+    | {
+        formTitle?: T;
+        illustrationImage?: T;
+      };
+  reachOut?:
+    | T
+    | {
+        heading?: T;
+        text?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+        image?: T;
+        imagePosition?: T;
+      };
+  followTheWork?:
+    | T
+    | {
+        heading?: T;
+        description?: T;
+        backgroundImage?: T;
+        socialLinks?:
+          | T
+          | {
+              platform?: T;
+              label?: T;
+              href?: T;
+              id?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-page_select".
+ */
+export interface ContactPageSelect<T extends boolean = true> {
+  hero?:
+    | T
+    | {
+        title?: T;
+        subtitle?: T;
+        secondaryCTA?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+            };
+      };
+  officeInfo?:
+    | T
+    | {
+        address?: T;
+        phone?: T;
+        email?: T;
+        hours?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+        image?: T;
+      };
+  enquiries?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        description?: T;
+        email?: T;
+        id?: T;
+      };
+  followUs?:
+    | T
+    | {
+        heading?: T;
+        subtitle?: T;
+        socialLinks?:
+          | T
+          | {
+              platform?: T;
+              label?: T;
+              href?: T;
+              id?: T;
+            };
+      };
+  closing?:
+    | T
+    | {
+        heading?: T;
+        subtitle?: T;
         primaryButton?:
           | T
           | {

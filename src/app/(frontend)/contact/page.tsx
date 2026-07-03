@@ -3,7 +3,11 @@ import { CountryFutureSection } from '@/app/(frontend)/components/sections/Count
 import { FollowUsSection } from '@/app/(frontend)/components/sections/FollowUsSection'
 import { HeroSection } from '@/app/(frontend)/components/sections/HeroSection'
 import { SpecificEnquiriesSection } from '@/app/(frontend)/components/sections/SpecificEnquiriesSection'
-import { Facebook, Handshake, Instagram, Linkedin, Megaphone, Twitter } from 'lucide-react'
+import { getCachedGlobal } from '@/utilities/getGlobals'
+import { iconMap } from '@/utilities/iconMap'
+import { mediaUrl, paragraphs } from '@/utilities/cms'
+import { socialIconMap } from '@/utilities/socialIcons'
+import { Briefcase } from 'lucide-react'
 import React from 'react'
 
 export const metadata = {
@@ -11,61 +15,62 @@ export const metadata = {
   description: 'Contact the Ministry of Innovation & National Development',
 }
 
-const ENQUIRIES = [
-  {
-    icon: Megaphone,
-    title: 'Media & press',
-    description: 'For media enquiries, interview requests, and press information.',
-    email: 'info@mediamindbahamas.com',
-  },
-  {
-    icon: Handshake,
-    title: 'Partnerships & business',
-    description: 'For organisations and businesses interested in working with the Ministry.',
-    email: 'info@businessmindbahamas.com',
-  },
-] as const
+export default async function ContactPage() {
+  const page = await getCachedGlobal('contact-page', 1)()
 
-const SOCIAL_LINKS = [
-  { platform: 'facebook', icon: Facebook, label: 'Facebook', href: 'https://facebook.com' },
-  { platform: 'instagram', icon: Instagram, label: 'Instagram', href: 'https://instagram.com' },
-  { platform: 'linkedin', icon: Linkedin, label: 'LinkedIn', href: 'https://linkedin.com' },
-  { platform: 'x', icon: Twitter, label: 'X', href: 'https://x.com' },
-] as const
-
-export default function ContactPage() {
   return (
     <main>
       <HeroSection
-        title="Contact the Ministry."
-        subtitle="Find us below — or if you want to share ideas, feedback, or get involved in our work, head to Get Involved."
+        title={page.hero.title}
+        subtitle={page.hero.subtitle}
         align="center"
         titleVariant="display"
-        secondaryCTA={{ label: 'Get Involved →', href: '/get-involved' }}
+        secondaryCTA={
+          page.hero.secondaryCTA?.label && page.hero.secondaryCTA?.href
+            ? { label: page.hero.secondaryCTA.label, href: page.hero.secondaryCTA.href }
+            : undefined
+        }
       />
 
       <ContactInfoSection
-        address="Goodman's Bay Corporate Center, Nassau, New Providence, The Bahamas"
-        phone="242-604-7300"
-        email="info@mindbahamas.com"
-        hours={['Monday — Friday, 9:00 AM – 5:00 PM', 'Excluding public holidays']}
-        image="/images/ourOffice-flag.png"
+        address={page.officeInfo.address}
+        phone={page.officeInfo.phone}
+        email={page.officeInfo.email}
+        hours={paragraphs(page.officeInfo.hours)}
+        image={mediaUrl(page.officeInfo.image)}
       />
 
       <section className="bg-white py-12 md:py-16 lg:py-20">
         <div className="container">
           <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-2 lg:gap-16">
-            <SpecificEnquiriesSection embedded enquiries={[...ENQUIRIES]} />
-            <FollowUsSection socialLinks={[...SOCIAL_LINKS]} />
+            <SpecificEnquiriesSection
+              embedded
+              enquiries={(page.enquiries ?? []).map((enquiry) => ({
+                icon: iconMap[enquiry.icon] ?? Briefcase,
+                title: enquiry.title,
+                description: enquiry.description,
+                email: enquiry.email,
+              }))}
+            />
+            <FollowUsSection
+              heading={page.followUs.heading}
+              subtitle={page.followUs.subtitle}
+              socialLinks={(page.followUs.socialLinks ?? []).map((link) => ({
+                platform: link.platform,
+                label: link.label,
+                href: link.href,
+                icon: socialIconMap[link.platform] ?? Briefcase,
+              }))}
+            />
           </div>
         </div>
       </section>
 
       <CountryFutureSection
-        heading="Looking to share feedback, ideas, or get involved in our work? That's a different conversation — and we'd love to have it."
-        subtitle=""
-        primaryButtonLabel="Get involved →"
-        primaryButtonHref="/get-involved"
+        heading={page.closing.heading}
+        subtitle={page.closing.subtitle ?? ''}
+        primaryButtonLabel={page.closing.primaryButton.label}
+        primaryButtonHref={page.closing.primaryButton.href}
       />
     </main>
   )

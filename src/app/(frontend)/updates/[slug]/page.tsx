@@ -3,7 +3,10 @@ import {
   UpdateDetailBackLink,
   UpdateDetailHeader,
 } from '@/app/(frontend)/components/sections/UpdateDetailHeader'
-import { DEFAULT_SOCIAL_LINKS, getUpdateBySlug } from '@/app/(frontend)/updates/data'
+import { DEFAULT_SOCIAL_LINKS } from '@/app/(frontend)/updates/data'
+import { mediaAlt, mediaUrl, paragraphs } from '@/utilities/cms'
+import configPromise from '@payload-config'
+import { getPayload } from 'payload'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
@@ -13,9 +16,41 @@ type Args = {
   }>
 }
 
+const categoryLabels: Record<string, string> = {
+  announcements: 'Announcement',
+  events: 'Event',
+  statements: 'Statement',
+  media: 'Media',
+}
+
+export async function generateStaticParams() {
+  const payload = await getPayload({ config: configPromise })
+  const { docs } = await payload.find({
+    collection: 'updates',
+    limit: 1000,
+    overrideAccess: false,
+    pagination: false,
+    select: { slug: true },
+  })
+
+  return docs.map(({ slug }) => ({ slug }))
+}
+
+async function getUpdateBySlug(slug: string) {
+  const payload = await getPayload({ config: configPromise })
+  const { docs } = await payload.find({
+    collection: 'updates',
+    where: { slug: { equals: slug } },
+    limit: 1,
+    overrideAccess: false,
+  })
+
+  return docs[0] ?? null
+}
+
 export async function generateMetadata({ params }: Args): Promise<Metadata> {
   const { slug } = await params
-  const update = getUpdateBySlug(slug)
+  const update = await getUpdateBySlug(slug)
 
   if (!update) {
     return {
@@ -31,7 +66,7 @@ export async function generateMetadata({ params }: Args): Promise<Metadata> {
 
 export default async function UpdateDetailPage({ params }: Args) {
   const { slug } = await params
-  const update = getUpdateBySlug(slug)
+  const update = await getUpdateBySlug(slug)
 
   if (!update) {
     notFound()
@@ -48,15 +83,19 @@ export default async function UpdateDetailPage({ params }: Args) {
           <div className="min-w-0 flex-1">
             <UpdateDetailHeader
               title={update.title}
-              date={update.date}
-              category={update.category}
+              date={new Date(update.date).toLocaleDateString('en-US', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric',
+              })}
+              category={categoryLabels[update.category] ?? update.category}
               socialLinks={DEFAULT_SOCIAL_LINKS}
             />
 
             <UpdateDetailContent
-              image={update.image}
-              imageAlt={update.imageAlt}
-              paragraphs={update.paragraphs}
+              image={mediaUrl(update.image)}
+              imageAlt={mediaAlt(update.image) || update.title}
+              paragraphs={paragraphs(update.content)}
             />
           </div>
         </div>

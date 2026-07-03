@@ -8,12 +8,16 @@ import { Categories } from './collections/Categories'
 import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
 import { Posts } from './collections/Posts'
+import { Updates } from './collections/Updates'
 import { Users } from './collections/Users'
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
 import { AboutPage } from './globals/AboutPage/config'
+import { ContactPage } from './globals/ContactPage/config'
+import { GetInvolvedPage } from './globals/GetInvolvedPage/config'
 import { HomePage } from './globals/HomePage/config'
 import { ProgressPage } from './globals/ProgressPage/config'
+import { UpdatesPage } from './globals/UpdatesPage/config'
 import { plugins } from './plugins'
 import { defaultLexical } from '@/fields/defaultLexical'
 import { getServerSideURL } from './utilities/getURL'
@@ -65,9 +69,18 @@ export default buildConfig({
       connectionString: process.env.DATABASE_URL || '',
     },
   }),
-  collections: [Pages, Posts, Media, Categories, Users],
+  collections: [Pages, Posts, Updates, Media, Categories, Users],
   cors: [getServerSideURL()].filter(Boolean),
-  globals: [Header, Footer, HomePage, AboutPage, ProgressPage],
+  globals: [
+    Header,
+    Footer,
+    HomePage,
+    AboutPage,
+    ProgressPage,
+    UpdatesPage,
+    GetInvolvedPage,
+    ContactPage,
+  ],
   plugins,
   secret: process.env.PAYLOAD_SECRET,
   sharp,

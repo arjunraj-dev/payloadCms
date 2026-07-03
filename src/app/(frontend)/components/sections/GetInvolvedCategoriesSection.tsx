@@ -12,17 +12,17 @@ export interface GetInvolvedCategory {
 
 export interface GetInvolvedCategoriesSectionProps {
   categories: GetInvolvedCategory[]
+  heading?: string
 }
 
 export function GetInvolvedCategoriesSection({
   categories,
+  heading = 'What we want to hear.',
 }: GetInvolvedCategoriesSectionProps) {
   return (
     <section className="bg-white py-12 md:py-16 lg:py-20">
       <div className="container">
-        <h2 className="text-2xl font-bold text-[#001529] sm:text-3xl lg:text-4xl">
-          What we want to hear.
-        </h2>
+        <h2 className="text-2xl font-bold text-[#001529] sm:text-3xl lg:text-4xl">{heading}</h2>
 
         <div className="mt-10 grid grid-cols-1 gap-8 md:mt-12 lg:grid-cols-3">
           {categories.map((category) => {

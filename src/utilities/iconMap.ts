@@ -7,7 +7,9 @@ import {
   Cpu,
   Folder,
   GraduationCap,
+  Handshake,
   Lightbulb,
+  Megaphone,
   Monitor,
   RefreshCw,
   Shield,
@@ -35,6 +37,8 @@ export const iconMap: Record<string, LucideIcon> = {
   cpu: Cpu,
   'graduation-cap': GraduationCap,
   'book-open': BookOpen,
+  handshake: Handshake,
+  megaphone: Megaphone,
 }
 
 export const iconOptions = [
@@ -54,4 +58,6 @@ export const iconOptions = [
   { label: 'Cpu', value: 'cpu' },
   { label: 'Graduation Cap', value: 'graduation-cap' },
   { label: 'Book Open', value: 'book-open' },
+  { label: 'Handshake', value: 'handshake' },
+  { label: 'Megaphone', value: 'megaphone' },
 ]
