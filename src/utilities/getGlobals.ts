@@ -24,3 +24,23 @@ export const getCachedGlobal = <T extends Global>(slug: T, depth = 0) =>
   unstable_cache(async () => getGlobal<T>(slug, depth), [slug], {
     tags: [`global_${slug}`],
   })
+
+/**
+ * Same as getCachedGlobal but returns null when the database is unavailable
+ * or the global cannot be loaded (e.g. schema not pushed yet).
+ */
+export const getCachedGlobalSafe = <T extends Global>(slug: T, depth = 0) =>
+  unstable_cache(
+    async (): Promise<DataFromGlobalSlug<T> | null> => {
+      try {
+        return await getGlobal<T>(slug, depth)
+      } catch (error) {
+        console.error(`Failed to load global "${slug}":`, error)
+        return null
+      }
+    },
+    [slug, 'safe', String(depth)],
+    {
+      tags: [`global_${slug}`],
+    },
+  )

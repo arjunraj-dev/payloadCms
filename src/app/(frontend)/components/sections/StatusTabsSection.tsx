@@ -31,7 +31,9 @@ export function StatusTabsSection({
       />
       <div className="container relative z-10">
         <div className="mx-auto max-w-3xl text-center">
-          <h2 className="text-2xl font-bold text-[#001529] sm:text-3xl lg:text-4xl">{heading}</h2>
+          <h1 className="text-[clamp(2rem,5vw,56.69px)] font-normal leading-[1.084] tracking-normal text-[#001529] lg:text-[56.69px] lg:leading-[61.42px]">
+            {heading}
+          </h1>
           <p className="mt-4 text-base leading-relaxed text-[#4B5563] sm:text-lg">{description}</p>
         </div>
 

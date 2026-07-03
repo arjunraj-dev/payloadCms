@@ -8,6 +8,8 @@ export interface MinisterProfileSectionProps {
   bio: string | string[]
   image: string
   variant?: 'quote' | 'profile'
+  /** Figma banner layout — 1132×440 with 90px gap */
+  layout?: 'default' | 'banner'
   backgroundColor?: string
 }
 
@@ -18,9 +20,40 @@ export function MinisterProfileSection({
   bio,
   image,
   variant = 'quote',
+  layout = 'default',
   backgroundColor = 'bg-white',
 }: MinisterProfileSectionProps) {
   const bioParagraphs = Array.isArray(bio) ? bio : [bio]
+  const isBanner = layout === 'banner'
+
+  if (isBanner) {
+    return (
+      <section className="bg-white py-12 md:py-16 lg:py-20">
+        <div className="container">
+          <div className="mx-auto flex w-full max-w-[1132px] flex-col lg:h-[440px] lg:flex-row lg:items-stretch lg:gap-[90px]">
+            <div className="h-[280px] w-full shrink-0 overflow-hidden rounded-3xl bg-[#B8C5CE] sm:h-[340px] lg:h-[440px] lg:w-[352px]">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                alt={name}
+                src={image}
+                loading="lazy"
+                decoding="async"
+                className="h-full w-full object-cover object-top"
+              />
+            </div>
+
+            <div className="flex flex-1 flex-col justify-center px-6 py-8 sm:px-0 lg:py-0">
+              <p className="text-lg leading-relaxed text-[#001529] sm:text-xl lg:text-[1.375rem] lg:leading-[1.65]">
+                {bioParagraphs[0]}
+              </p>
+              <p className="mt-6 text-base font-bold text-[#001529] sm:text-lg">{name}</p>
+              <p className="mt-1 text-sm text-[#4B5563] sm:text-base">{title}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    )
+  }
 
   return (
     <section className={cn('py-12 md:py-16 lg:py-20', backgroundColor)}>

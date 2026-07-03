@@ -12,6 +12,7 @@ export interface CountryFutureSectionProps {
   primaryButtonHref: string
   secondaryButtonLabel?: string
   secondaryButtonHref?: string
+  embedded?: boolean
 }
 
 const ctaBaseClassName =
@@ -93,17 +94,22 @@ export function CountryFutureSection({
   primaryButtonHref,
   secondaryButtonLabel,
   secondaryButtonHref,
+  embedded = false,
 }: CountryFutureSectionProps) {
   const headingLines = heading.split('\n')
 
   return (
-    <section className="bg-[#F8F9FA] pb-12 md:pb-16 lg:pb-20">
+    <section
+      className={cn(
+        embedded ? 'pb-12 md:pb-16 lg:pb-20' : 'bg-[#F8F9FA] pb-12 md:pb-16 lg:pb-20',
+      )}
+    >
       <div className="container">
         <div className="relative overflow-hidden rounded-3xl bg-[#001529] px-8 py-12 md:px-12 md:py-16 lg:px-16 lg:py-20">
           <CountryFuturePattern />
 
           <div className="relative z-10 max-w-xl lg:max-w-2xl">
-            <h2 className="text-2xl font-bold leading-tight text-white sm:text-3xl lg:text-4xl">
+            <h2 className="text-[clamp(1.75rem,4vw,40px)] font-normal leading-[1.175] tracking-normal text-white lg:text-[40px] lg:leading-[47px]">
               {headingLines.map((line, index) => (
                 <React.Fragment key={index}>
                   {index > 0 && <br />}
@@ -111,7 +117,9 @@ export function CountryFutureSection({
                 </React.Fragment>
               ))}
             </h2>
-            <p className="mt-4 text-base leading-relaxed text-white/80 sm:text-lg">{subtitle}</p>
+            <p className="mt-4 text-[18px] font-medium leading-[26px] tracking-normal text-white/80">
+              {subtitle}
+            </p>
 
             {pillarsHeading && (
               <h3 className="mt-8 text-xl font-bold text-white sm:text-2xl">{pillarsHeading}</h3>

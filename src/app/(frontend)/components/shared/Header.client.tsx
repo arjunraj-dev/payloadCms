@@ -15,7 +15,7 @@ interface HeaderClientProps {
   logoUrl: string
   logoAlt: string
   navLinks: NavLinkItem[]
-  cta: NavLinkItem
+  cta?: NavLinkItem
 }
 
 function NavLink({
@@ -38,7 +38,7 @@ function NavLink({
       href={href}
       onClick={onClick}
       className={cn(
-        'text-sm font-medium transition-colors',
+        'text-[18px] font-medium leading-none tracking-normal transition-colors',
         isActive ? 'text-[#008C95]' : 'text-[#001529] hover:text-[#008C95]',
         className,
       )}
@@ -53,16 +53,18 @@ function GovernmentServicesCTA({
   className,
   onClick,
 }: {
-  cta: NavLinkItem
+  cta?: NavLinkItem
   className?: string
   onClick?: () => void
 }) {
+  if (!cta?.href) return null
+
   return (
     <Link
       href={cta.href}
       onClick={onClick}
       className={cn(
-        'inline-flex items-center justify-center rounded-lg bg-gradient-to-r from-[#004B4D] to-[#008C95] px-5 py-2.5 text-sm font-medium text-white transition-opacity hover:opacity-90',
+        'inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[#004B4D] to-[#008C95] px-6 py-2.5 text-sm font-medium text-white transition-opacity hover:opacity-90',
         className,
       )}
     >
@@ -96,34 +98,45 @@ export function HeaderClient({ logoUrl, logoAlt, navLinks, cta }: HeaderClientPr
 
   return (
     <header className="sticky top-0 z-50 border-b border-[#E5E7EB] bg-white">
-      <div className="container flex items-center justify-between gap-4 py-3 lg:py-4">
+      <div className="container flex items-center py-3 lg:py-4">
         <Link href="/" className="shrink-0">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            alt={logoAlt}
-            src={logoUrl}
-            width={220}
-            height={70}
-            loading="eager"
-            fetchPriority="high"
-            decoding="async"
-            className="h-auto max-w-[180px] w-full sm:max-w-[220px]"
-          />
+          {logoUrl ? (
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img
+              alt={logoAlt}
+              src={logoUrl}
+              width={220}
+              height={70}
+              loading="eager"
+              fetchPriority="high"
+              decoding="async"
+              className="h-auto w-full max-w-[180px] sm:max-w-[220px]"
+            />
+          ) : null}
         </Link>
 
-        <nav className="hidden items-center gap-6 lg:flex xl:gap-8" aria-label="Main navigation">
+        <nav
+          className="ml-10 hidden items-center gap-8 lg:flex xl:ml-14 xl:gap-10"
+          aria-label="Main navigation"
+        >
           {navLinks.map(({ label, href }) => (
-            <NavLink key={href} href={href} label={label} pathname={pathname} />
+            <NavLink
+              key={href}
+              href={href}
+              label={label}
+              pathname={pathname}
+              className="shrink-0 whitespace-nowrap"
+            />
           ))}
         </nav>
 
-        <div className="hidden lg:block">
+        <div className="ml-auto hidden shrink-0 lg:block">
           <GovernmentServicesCTA cta={cta} />
         </div>
 
         <button
           type="button"
-          className="inline-flex size-10 items-center justify-center rounded-md text-[#001529] lg:hidden"
+          className="ml-auto inline-flex size-10 shrink-0 items-center justify-center rounded-md text-[#001529] lg:hidden"
           aria-expanded={mobileOpen}
           aria-controls="mobile-nav"
           onClick={() => setMobileOpen((open) => !open)}
@@ -147,7 +160,7 @@ export function HeaderClient({ logoUrl, logoAlt, navLinks, cta }: HeaderClientPr
                 label={label}
                 pathname={pathname}
                 onClick={closeMobileMenu}
-                className="py-3"
+                className="py-3 text-base"
               />
             ))}
             <div className="py-3">

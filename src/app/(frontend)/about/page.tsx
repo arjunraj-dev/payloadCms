@@ -6,10 +6,12 @@ import { InitiativeCardsGrid } from '@/app/(frontend)/components/sections/Initia
 import { MinisterProfileSection } from '@/app/(frontend)/components/sections/MinisterProfileSection'
 import { PolicyAreasSection } from '@/app/(frontend)/components/sections/PolicyAreasSection'
 import { TextImageSection } from '@/app/(frontend)/components/sections/TextImageSection'
-import { getCachedGlobal } from '@/utilities/getGlobals'
+import { getCachedGlobalSafe } from '@/utilities/getGlobals'
 import { iconMap } from '@/utilities/iconMap'
 import { mediaUrl, paragraphs } from '@/utilities/cms'
 import { Briefcase } from 'lucide-react'
+
+import { notFound } from 'next/navigation'
 
 export const metadata = {
   title: 'About | MIND',
@@ -17,7 +19,11 @@ export const metadata = {
 }
 
 export default async function AboutPage() {
-  const about = await getCachedGlobal('about-page', 1)()
+  const about = await getCachedGlobalSafe('about-page', 1)()
+
+  if (!about?.hero) {
+    notFound()
+  }
 
   return (
     <main>

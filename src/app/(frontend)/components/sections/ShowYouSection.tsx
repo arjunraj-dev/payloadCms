@@ -59,7 +59,7 @@ export function ShowYouSection({
           <ShowYouChevron />
           <div className="relative z-10">
             <div className="max-w-3xl">
-              <h2 className="text-2xl font-bold leading-tight text-white sm:text-3xl lg:text-4xl">
+              <h2 className="text-[clamp(1.75rem,4vw,40px)] font-normal leading-[1.625] tracking-normal text-white lg:text-[40px] lg:leading-[65px]">
                 {heading}
               </h2>
               <p className="mt-4 text-base leading-relaxed text-white/60 sm:text-lg">

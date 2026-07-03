@@ -4,10 +4,12 @@ import ProgramSectionCards from '@/app/(frontend)/components/sections/ProgramSec
 import type { ProgramLabelColor } from '@/app/(frontend)/components/sections/ProgramSectionCards'
 import { StatusTabsSection } from '@/app/(frontend)/components/sections/StatusTabsSection'
 import type { InitiativeLabelColor } from '@/app/(frontend)/components/sections/InitiativeGridSection'
-import { getCachedGlobal } from '@/utilities/getGlobals'
+import { getCachedGlobalSafe } from '@/utilities/getGlobals'
 import { iconMap } from '@/utilities/iconMap'
 import { mediaUrl } from '@/utilities/cms'
 import { Briefcase } from 'lucide-react'
+
+import { notFound } from 'next/navigation'
 
 export const metadata = {
   title: 'Progress | MIND',
@@ -15,7 +17,11 @@ export const metadata = {
 }
 
 export default async function ProgressPage() {
-  const progress = await getCachedGlobal('progress-page', 1)()
+  const progress = await getCachedGlobalSafe('progress-page', 1)()
+
+  if (!progress?.status) {
+    notFound()
+  }
 
   const toCard = (card: {
     icon: string

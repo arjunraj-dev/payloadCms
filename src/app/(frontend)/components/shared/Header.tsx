@@ -1,20 +1,26 @@
-import { getCachedGlobal } from '@/utilities/getGlobals'
-import { getMediaUrl } from '@/utilities/getMediaUrl'
 import { HeaderClient } from './Header.client'
-import type { Media } from '@/payload-types'
 
-export async function Header() {
-  const header = await getCachedGlobal('header', 1)()
+const DEFAULT_LOGO = '/images/mind-logo.svg'
+const DEFAULT_NAV_LINKS = [
+  { label: 'About', href: '/about' },
+  { label: 'Progress', href: '/progress' },
+  { label: 'Updates', href: '/updates' },
+  { label: 'Get Involved', href: '/get-involved' },
+  { label: 'Contact', href: '/contact' },
+]
 
-  const logoUrl = typeof header.logo === 'object' ? getMediaUrl((header.logo as Media).url) : ''
-  const logoAlt = typeof header.logo === 'object' ? (header.logo as Media).alt || '' : ''
+const DEFAULT_CTA = {
+  label: 'Government services →',
+  href: '/government-services',
+}
 
+export function Header() {
   return (
     <HeaderClient
-      logoUrl={logoUrl}
-      logoAlt={logoAlt}
-      navLinks={header.navItems ?? []}
-      cta={header.cta}
+      logoUrl={DEFAULT_LOGO}
+      logoAlt="MIND"
+      navLinks={DEFAULT_NAV_LINKS}
+      cta={DEFAULT_CTA}
     />
   )
 }

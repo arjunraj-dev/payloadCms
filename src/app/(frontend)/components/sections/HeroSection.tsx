@@ -14,13 +14,16 @@ export interface HeroSectionProps {
   subtitle: string | string[]
   primaryCTA?: HeroCTA
   secondaryCTA?: HeroCTA
-  /** A single image, or a collection to rotate through as a crossfade slideshow. */
-  backgroundImage: string | string[]
+  /** A single image, or a collection to rotate through as a crossfade slideshow. Omit for text-only heroes. */
+  backgroundImage?: string | string[]
   /** Time each image stays on screen before crossfading to the next, in ms. */
   backgroundImageInterval?: number
   patternImage?: string
   showPattern?: boolean
   imageClassName?: string
+  align?: 'left' | 'center'
+  /** Figma display heading — Nunito Sans 56.69px / 61.42px line-height */
+  titleVariant?: 'default' | 'display'
 }
 
 const ctaBaseClassName =
@@ -36,13 +39,17 @@ export function HeroSection({
   patternImage = '/images/Isolation_Mode.png',
   showPattern = true,
   imageClassName,
+  align = 'left',
+  titleVariant = 'default',
 }: HeroSectionProps) {
-  const subtitleParagraphs = Array.isArray(subtitle) ? subtitle : [subtitle]
+  const subtitleParagraphs = (Array.isArray(subtitle) ? subtitle : [subtitle]).filter(Boolean)
   const showCTAs = primaryCTA || secondaryCTA
-  const backgroundImages = useMemo(
-    () => (Array.isArray(backgroundImage) ? backgroundImage : [backgroundImage]),
-    [backgroundImage],
-  )
+  const isCentered = align === 'center'
+  const hasImage = backgroundImage != null && backgroundImage !== ''
+  const backgroundImages = useMemo(() => {
+    if (!hasImage) return []
+    return Array.isArray(backgroundImage) ? backgroundImage : [backgroundImage]
+  }, [backgroundImage, hasImage])
   const [activeImageIndex, setActiveImageIndex] = useState(0)
 
   useEffect(() => {
@@ -58,36 +65,80 @@ export function HeroSection({
 
   return (
     <section className="relative overflow-hidden bg-white">
-      <div className="container relative z-10 py-10 md:py-14 lg:py-16">
-        <div className="grid grid-cols-1 items-center gap-1 lg:grid-cols-2 lg:gap-1">
-          {/* Left column - Text content */}
-          <div className="relative flex items-center w-full h-full">
-            {/* Pattern image limited to the text side */}
-            {showPattern && (
+      {showPattern && !hasImage && (
+        <img
+          src={patternImage}
+          alt=""
+          aria-hidden="true"
+          className={cn(
+            'pointer-events-none absolute inset-0 z-0 h-full w-full object-cover',
+            isCentered && 'object-[center_top]',
+          )}
+        />
+      )}
+      <div
+        className={cn(
+          'container relative z-10',
+          hasImage ? 'py-10 md:py-14 lg:py-16' : 'py-12 md:py-16 lg:py-20',
+        )}
+      >
+        <div
+          className={cn(
+            'grid grid-cols-1 items-center gap-1',
+            hasImage && 'lg:grid-cols-2 lg:gap-1',
+            !hasImage && isCentered && 'justify-items-center',
+          )}
+        >
+          <div
+            className={cn(
+              'relative flex h-full w-full items-center',
+              !hasImage && isCentered && 'mx-auto max-w-3xl justify-center',
+              !hasImage && !isCentered && 'max-w-3xl',
+              isCentered && 'text-center',
+            )}
+          >
+            {showPattern && hasImage && (
               <img
                 src={patternImage}
                 alt=""
                 aria-hidden="true"
-                className="pointer-events-none absolute left-0 top-0 z-0 h-full w-full object-cover "
+                className="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover"
               />
             )}
             <div className="relative z-10">
-              <h1 className="text-3xl font-[400] leading-tight text-[#001529] sm:text-4xl lg:text-5xl">
+              <h1
+                className={cn(
+                  'text-[#001529]',
+                  titleVariant === 'display'
+                    ? 'text-[clamp(2rem,5vw,56.69px)] font-normal leading-[1.084] tracking-normal lg:text-[56.69px] lg:leading-[61.42px]'
+                    : 'text-3xl font-normal leading-tight sm:text-4xl lg:text-5xl',
+                )}
+              >
                 {title}
               </h1>
               {subtitleParagraphs.map((paragraph, index) => (
                 <p
                   key={index}
                   className={cn(
-                    'text-base text-[#4B5563] font-[600] sm:text-lg',
                     index === 0 ? 'mt-4' : 'mt-3',
+                    titleVariant === 'display'
+                      ? 'text-[20px] font-semibold leading-none tracking-normal text-[#4B5563]'
+                      : cn(
+                          'text-base text-[#4B5563] sm:text-lg',
+                          isCentered ? 'font-normal leading-relaxed' : 'font-semibold',
+                        ),
                   )}
                 >
                   {paragraph}
                 </p>
               ))}
               {showCTAs && (
-                <div className="mt-8 font-[600] flex flex-col gap-4 sm:flex-row sm:flex-wrap">
+                <div
+                  className={cn(
+                    'mt-8 flex flex-col gap-4 font-semibold sm:flex-row sm:flex-wrap',
+                    isCentered && 'items-center justify-center',
+                  )}
+                >
                   {primaryCTA && (
                     <Link
                       href={primaryCTA.href}
@@ -109,25 +160,26 @@ export function HeroSection({
             </div>
           </div>
 
-          {/* Right column - Image */}
-          <div className="relative aspect-[4/3] overflow-hidden rounded-3xl lg:aspect-auto lg:min-h-[420px]">
-            {backgroundImages.map((src, index) => (
-              <img
-                key={src}
-                alt=""
-                role="presentation"
-                src={src}
-                loading={index === 0 ? 'eager' : 'lazy'}
-                fetchPriority={index === 0 ? 'high' : 'low'}
-                decoding="async"
-                className={cn(
-                  'absolute inset-0 h-full w-full object-cover motion-safe:transition-opacity motion-safe:duration-1000 motion-safe:ease-in-out',
-                  index === activeImageIndex ? 'opacity-100' : 'opacity-0',
-                  imageClassName,
-                )}
-              />
-            ))}
-          </div>
+          {hasImage && (
+            <div className="relative aspect-[4/3] overflow-hidden rounded-3xl lg:aspect-auto lg:min-h-[420px]">
+              {backgroundImages.map((src, index) => (
+                <img
+                  key={src}
+                  alt=""
+                  role="presentation"
+                  src={src}
+                  loading={index === 0 ? 'eager' : 'lazy'}
+                  fetchPriority={index === 0 ? 'high' : 'low'}
+                  decoding="async"
+                  className={cn(
+                    'absolute inset-0 h-full w-full object-cover motion-safe:transition-opacity motion-safe:duration-1000 motion-safe:ease-in-out',
+                    index === activeImageIndex ? 'opacity-100' : 'opacity-0',
+                    imageClassName,
+                  )}
+                />
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </section>

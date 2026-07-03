@@ -18,7 +18,7 @@ import { ShowYouSection } from '@/app/(frontend)/components/sections/ShowYouSect
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { RenderHero } from '@/heros/RenderHero'
 import { generateMeta } from '@/utilities/generateMeta'
-import { getCachedGlobal } from '@/utilities/getGlobals'
+import { getCachedGlobalSafe } from '@/utilities/getGlobals'
 import { iconMap } from '@/utilities/iconMap'
 import { mediaUrl, paragraphs } from '@/utilities/cms'
 import { Briefcase } from 'lucide-react'
@@ -78,7 +78,7 @@ export default async function Page({ params: paramsPromise }: Args) {
   }
 
   const { hero, layout } = page
-  const homepage = decodedSlug === 'home' ? await getCachedGlobal('homepage', 2)() : null
+  const homepage = decodedSlug === 'home' ? await getCachedGlobalSafe('homepage', 2)() : null
 
   return (
     <article className={decodedSlug === 'home' ? undefined : 'pt-16 pb-24'}>
@@ -92,6 +92,7 @@ export default async function Page({ params: paramsPromise }: Args) {
         <HeroSection
           title={homepage.hero.title}
           subtitle={homepage.hero.subtitle}
+          titleVariant="display"
           primaryCTA={homepage.hero.primaryCTA}
           secondaryCTA={
             homepage.hero.secondaryCTA?.label && homepage.hero.secondaryCTA?.href
@@ -126,6 +127,7 @@ export default async function Page({ params: paramsPromise }: Args) {
       )}
       {homepage && (
         <MinisterProfileSection
+          layout="banner"
           label={homepage.ministerProfile.label}
           bio={paragraphs(homepage.ministerProfile.bio)}
           name={homepage.ministerProfile.name}
@@ -135,24 +137,30 @@ export default async function Page({ params: paramsPromise }: Args) {
       )}
       {homepage && (
         <section className="bg-white py-12 md:py-16 lg:py-20">
-          <div className="container mb-10 text-center md:mb-12">
-            <h2 className="mx-auto max-w-3xl text-2xl font-bold leading-tight text-[#001529] sm:text-3xl lg:text-4xl">
-              {homepage.initiatives.heading}
-            </h2>
-            <Link
-              href={homepage.initiatives.cta.href}
-              className="mt-8 inline-flex items-center justify-center rounded-lg bg-[#001529] px-5 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90"
-            >
-              {homepage.initiatives.cta.label}
-            </Link>
+          <div className="container">
+            <div className="mx-auto flex w-full max-w-[1348px] flex-col gap-8 lg:h-[492px] lg:gap-[40px]">
+              <div className="shrink-0 text-center">
+                <h2 className="mx-auto max-w-[880px] text-center text-[clamp(1.75rem,4vw,40px)] font-normal leading-[1.175] tracking-normal text-[#001529] lg:text-[40px] lg:leading-[47px]">
+                  {homepage.initiatives.heading}
+                </h2>
+                <Link
+                  href={homepage.initiatives.cta.href}
+                  className="mt-6 inline-flex items-center justify-center rounded-lg bg-[#001529] px-5 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90"
+                >
+                  {homepage.initiatives.cta.label}
+                </Link>
+              </div>
+              <InitiativeCardsGrid
+                variant="home"
+                className="min-h-0 flex-1 gap-[40px]"
+                cards={(homepage.initiatives.cards ?? []).map((card) => ({
+                  icon: iconMap[card.icon] ?? Briefcase,
+                  title: card.title,
+                  description: card.description,
+                }))}
+              />
+            </div>
           </div>
-          <InitiativeCardsGrid
-            cards={(homepage.initiatives.cards ?? []).map((card) => ({
-              icon: iconMap[card.icon] ?? Briefcase,
-              title: card.title,
-              description: card.description,
-            }))}
-          />
         </section>
       )}
       {homepage && (
@@ -202,20 +210,25 @@ export async function generateMetadata({ params: paramsPromise }: Args): Promise
 const queryPageBySlug = cache(async ({ slug }: { slug: string }) => {
   const { isEnabled: draft } = await draftMode()
 
-  const payload = await getPayload({ config: configPromise })
+  try {
+    const payload = await getPayload({ config: configPromise })
 
-  const result = await payload.find({
-    collection: 'pages',
-    draft,
-    limit: 1,
-    pagination: false,
-    overrideAccess: draft,
-    where: {
-      slug: {
-        equals: slug,
+    const result = await payload.find({
+      collection: 'pages',
+      draft,
+      limit: 1,
+      pagination: false,
+      overrideAccess: draft,
+      where: {
+        slug: {
+          equals: slug,
+        },
       },
-    },
-  })
+    })
 
-  return result.docs?.[0] || null
+    return result.docs?.[0] || null
+  } catch (error) {
+    console.error(`Failed to load page "${slug}":`, error)
+    return null
+  }
 })
