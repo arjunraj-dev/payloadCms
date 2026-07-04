@@ -43,7 +43,7 @@ export function MinisterProfileSection({
             </div>
 
             <div className="flex flex-1 flex-col justify-center px-6 py-8 sm:px-0 lg:py-0">
-              <p className="text-lg leading-relaxed text-[#001529] sm:text-xl lg:text-[1.375rem] lg:leading-[1.65]">
+              <p className="text-lg leading-relaxed text-[#13181D] sm:text-xl lg:text-[1.375rem] lg:leading-[1.65]">
                 {bioParagraphs[0]}
               </p>
               <p className="mt-6 text-base font-bold text-[#001529] sm:text-lg">{name}</p>
@@ -71,9 +71,7 @@ export function MinisterProfileSection({
           </div>
 
           <div className="order-2">
-            <p className="text-xs font-semibold uppercase tracking-wider text-[#4B5563]">
-              {label}
-            </p>
+            <p className="text-xs font-semibold uppercase tracking-wider text-[#4B5563]">{label}</p>
 
             {variant === 'quote' ? (
               <>

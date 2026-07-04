@@ -37,7 +37,7 @@ export function MinistryBuiltSection({
 
           {/* Text on RIGHT */}
           <div className="order-2">
-            <h2 className="text-2xl font-bold leading-tight text-[#001529] sm:text-3xl lg:text-4xl">
+            <h2 className="text-2xl font-[400] leading-tight text-[#001529] sm:text-3xl lg:text-4xl">
               {heading}
             </h2>
             {paragraphs.map((paragraph, index) => (
@@ -53,7 +53,7 @@ export function MinistryBuiltSection({
             ))}
             <Link
               href={buttonHref}
-              className="mt-8 inline-flex items-center justify-center rounded-lg bg-[#001529] px-5 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90"
+              className="mt-8 inline-flex items-center justify-center rounded-lg bg-[linear-gradient(90deg,rgba(13,27,42,1)_0%,rgba(13,27,42,1)_20%,rgba(34,54,77,1)_40%,rgba(34,54,77,1)_60%,rgba(41,60,81,1)_80%,rgba(13,27,42,1)_100%)] px-5 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90"
             >
               {buttonLabel}
             </Link>

@@ -23,12 +23,10 @@ export function GovernmentServiceSection({
           <h2 className="text-center text-[clamp(1.75rem,4vw,40px)] font-normal leading-[1.175] tracking-normal text-[#001529] lg:text-[40px] lg:leading-[47px]">
             {heading}
           </h2>
-          <p className="mt-4 text-base leading-relaxed text-[#4B5563] sm:text-lg">
-            {description}
-          </p>
+          <p className="mt-4 text-base leading-relaxed text-[#4B5563] sm:text-lg">{description}</p>
           <Link
             href={ctaHref}
-            className="mt-6 inline-flex items-center justify-center rounded-lg bg-[#001529] px-5 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90"
+            className="mt-6 inline-flex items-center justify-center rounded-lg bg-[linear-gradient(90deg,rgba(13,27,42,1)_0%,rgba(13,27,42,1)_20%,rgba(34,54,77,1)_40%,rgba(34,54,77,1)_60%,rgba(41,60,81,1)_80%,rgba(13,27,42,1)_100%)] px-5 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90"
           >
             {ctaLabel}
           </Link>

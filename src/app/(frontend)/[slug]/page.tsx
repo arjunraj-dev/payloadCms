@@ -140,12 +140,12 @@ export default async function Page({ params: paramsPromise }: Args) {
           <div className="container">
             <div className="mx-auto flex w-full max-w-[1348px] flex-col gap-8 lg:h-[492px] lg:gap-[40px]">
               <div className="shrink-0 text-center">
-                <h2 className="mx-auto max-w-[880px] text-center text-[clamp(1.75rem,4vw,40px)] font-normal leading-[1.175] tracking-normal text-[#001529] lg:text-[40px] lg:leading-[47px]">
+                <h2 className="mx-auto max-w-[880px] font-[400] text-center text-[clamp(1.75rem,4vw,40px)] font-normal leading-[1.175] tracking-normal text-[#13181D] lg:text-[40px] lg:leading-[47px]">
                   {homepage.initiatives.heading}
                 </h2>
                 <Link
                   href={homepage.initiatives.cta.href}
-                  className="mt-6 inline-flex items-center justify-center rounded-lg bg-[#001529] px-5 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90"
+                  className="mt-6 inline-flex items-center justify-center rounded-[6px] border border-transparent bg-[linear-gradient(90deg,rgba(13,27,42,1)_0%,rgba(13,27,42,1)_20%,rgba(34,54,77,1)_40%,rgba(34,54,77,1)_60%,rgba(41,60,81,1)_80%,rgba(13,27,42,1)_100%)] px-[18px] py-[10px] text-sm font-medium text-white transition-opacity hover:opacity-90"
                 >
                   {homepage.initiatives.cta.label}
                 </Link>
