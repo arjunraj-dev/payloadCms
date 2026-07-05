@@ -1724,6 +1724,10 @@ export interface Footer {
   id: number;
   logo: number | Media;
   tagline: string;
+  /**
+   * Optional second line shown below the main tagline.
+   */
+  secondaryTagline?: string | null;
   columns?:
     | {
         title: string;
@@ -1746,6 +1750,14 @@ export interface Footer {
      * e.g. tel:+12423271530
      */
     phoneHref?: string | null;
+    /**
+     * Displayed text, e.g. 1-800-123-4567
+     */
+    tollFreeLabel?: string | null;
+    /**
+     * e.g. tel:+18001234567
+     */
+    tollFreeHref?: string | null;
     email?: string | null;
     address?: string | null;
   };
@@ -2433,6 +2445,7 @@ export interface HeaderSelect<T extends boolean = true> {
 export interface FooterSelect<T extends boolean = true> {
   logo?: T;
   tagline?: T;
+  secondaryTagline?: T;
   columns?:
     | T
     | {
@@ -2451,6 +2464,8 @@ export interface FooterSelect<T extends boolean = true> {
     | {
         phoneLabel?: T;
         phoneHref?: T;
+        tollFreeLabel?: T;
+        tollFreeHref?: T;
         email?: T;
         address?: T;
       };

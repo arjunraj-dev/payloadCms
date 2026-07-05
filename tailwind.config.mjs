@@ -8,6 +8,7 @@ const config = {
             {
               '--tw-prose-body': 'var(--text)',
               '--tw-prose-headings': 'var(--text)',
+              fontFamily: 'var(--font-nunito-sans), "Nunito Sans", sans-serif',
               h1: {
                 fontWeight: 'normal',
                 marginBottom: '0.25em',
@@ -18,6 +19,7 @@ const config = {
         base: {
           css: [
             {
+              fontFamily: 'var(--font-nunito-sans), "Nunito Sans", sans-serif',
               h1: {
                 fontSize: '2.5rem',
               },
@@ -31,6 +33,7 @@ const config = {
         md: {
           css: [
             {
+              fontFamily: 'var(--font-nunito-sans), "Nunito Sans", sans-serif',
               h1: {
                 fontSize: '3.5rem',
               },

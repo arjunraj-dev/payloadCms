@@ -31,6 +31,7 @@ export function GetInvolvedFormSection({
   illustrationImage = '/images/emailCommunication.jpg',
   onSubmit,
 }: GetInvolvedFormSectionProps) {
+  const resolvedIllustrationImage = illustrationImage || '/images/emailCommunication.jpg'
   const baseId = useId()
   const nameId = `${baseId}-name`
   const emailId = `${baseId}-email`
@@ -61,7 +62,7 @@ export function GetInvolvedFormSection({
         <div className="relative mx-auto flex w-full max-w-[1348px] flex-col overflow-hidden rounded-[24px] bg-[#001529] lg:h-[619px] lg:flex-row">
           <div className="relative h-[240px] w-full shrink-0 sm:h-[300px] lg:h-[619px] lg:w-[576px]">
             <img
-              src={illustrationImage}
+              src={resolvedIllustrationImage}
               alt=""
               aria-hidden="true"
               className="h-full w-full object-cover object-[65%_center]"

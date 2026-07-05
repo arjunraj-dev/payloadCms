@@ -43,7 +43,7 @@
   --breakpoint-lg: 64rem;
   --breakpoint-xl: 80rem;
   --breakpoint-2xl: 86rem;
-  --font-mono: var(--font-geist-mono);
+  --font-mono: var(--font-nunito-sans);
   --font-sans: var(--font-nunito-sans);
 }
 
@@ -209,8 +209,12 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html,
   body {
-    @apply bg-background text-foreground min-h-[100vh] flex flex-col font-sans;
+    @apply font-sans;
+  }
+  body {
+    @apply bg-background text-foreground min-h-[100vh] flex flex-col;
   }
 }
 

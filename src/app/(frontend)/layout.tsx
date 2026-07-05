@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 
 import { cn } from '@/utilities/ui'
-import { GeistMono } from 'geist/font/mono'
 import { Nunito_Sans } from 'next/font/google'
 import React from 'react'
 
@@ -9,7 +8,7 @@ import { AdminBar } from '@/components/AdminBar'
 import { Footer } from '@/app/(frontend)/components/shared/Footer'
 import { Header } from '@/app/(frontend)/components/shared/Header'
 import { Providers } from '@/providers'
-import { InitTheme } from '@/providers/Theme/InitTheme'
+import { defaultTheme } from '@/providers/Theme/shared'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import { draftMode } from 'next/headers'
 
@@ -26,9 +25,13 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const { isEnabled } = await draftMode()
 
   return (
-    <html className={cn(nunitoSans.variable, GeistMono.variable)} lang="en" suppressHydrationWarning>
+    <html
+      className={cn(nunitoSans.variable, nunitoSans.className)}
+      data-theme={defaultTheme}
+      lang="en"
+      suppressHydrationWarning
+    >
       <head>
-        <InitTheme />
         <link href="/favicon.ico" rel="icon" sizes="32x32" />
         <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
       </head>

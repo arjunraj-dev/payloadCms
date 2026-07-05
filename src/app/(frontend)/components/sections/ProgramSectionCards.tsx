@@ -2,7 +2,7 @@ import { cn } from '@/utilities/ui'
 import type { LucideIcon } from 'lucide-react'
 import type React from 'react'
 
-export type ProgramLabelColor = 'green' | 'blue' | 'orange' | 'planned'
+export type ProgramLabelColor = 'green' | 'blue' | 'orange' | 'dark' | 'planned'
 export type ProgramSectionTheme = 'light' | 'accent'
 export type ProgramCardSurface = 'white' | 'cream'
 
@@ -28,7 +28,20 @@ const labelColorClasses: Record<ProgramLabelColor, string> = {
   green: 'bg-[#16A34A] text-white',
   blue: 'bg-[#3B82F6] text-white',
   orange: 'bg-[#F97316] text-white',
+  dark: 'bg-[#1F2937] text-white',
   planned: 'bg-[#DFDFDF] text-black',
+}
+
+function getGridClass(cardCount: number) {
+  if (cardCount === 4) {
+    return 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4'
+  }
+
+  if (cardCount === 5) {
+    return 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
+  }
+
+  return 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
 }
 
 const ProgramSectionCards: React.FC<ProgramSectionCardsProps> = ({
@@ -76,7 +89,12 @@ const ProgramSectionCards: React.FC<ProgramSectionCardsProps> = ({
               {description}
             </p>
 
-            <div className="mt-8 grid grid-cols-1 gap-5 md:mt-10 md:grid-cols-2 md:gap-6 lg:grid-cols-3">
+            <div
+              className={cn(
+                'mt-8 grid gap-5 md:mt-10 md:gap-6',
+                getGridClass(cards.length),
+              )}
+            >
               {cards.map((card) => {
                 const Icon = card.icon
 

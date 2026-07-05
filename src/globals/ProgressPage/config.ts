@@ -12,10 +12,11 @@ const labelColorOptions = [
   { label: 'Planned (grey)', value: 'planned' },
 ]
 
-const pillarCardsField = () => ({
+const pillarCardsField = (options?: { minRows?: number; maxRows?: number }) => ({
   name: 'cards',
   type: 'array' as const,
-  minRows: 1,
+  minRows: options?.minRows ?? 1,
+  maxRows: options?.maxRows,
   fields: [
     { name: 'icon', type: 'select' as const, required: true, options: iconOptions },
     { name: 'label', type: 'text' as const, required: true },
@@ -95,7 +96,7 @@ export const ProgressPage: GlobalConfig = {
               fields: [
                 { name: 'title', type: 'text', required: true },
                 { name: 'description', type: 'textarea', required: true },
-                pillarCardsField(),
+                pillarCardsField({ minRows: 4, maxRows: 4 }),
               ],
             },
           ],

@@ -25,12 +25,12 @@ export function PolicyAreasSection({
       <div className="container">
         <h2 className="text-2xl font-bold text-[#001529] sm:text-3xl lg:text-4xl">{heading}</h2>
 
-        <div className="mt-8 grid grid-cols-2 gap-4 md:mt-10 md:grid-cols-3 md:gap-5 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
+        <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 md:mt-10 md:grid-cols-3 md:gap-5 lg:grid-cols-5">
           {policies.map((policy) => (
             <Link
               key={policy.label}
               href={policy.href}
-              className="group flex min-h-[120px] flex-col overflow-hidden rounded-lg border border-[#E5E7EB] bg-white shadow-sm transition-shadow hover:shadow-md"
+              className="group flex min-h-[132px] flex-col overflow-hidden rounded-lg border border-[#E5E7EB] bg-white shadow-sm transition-shadow hover:shadow-md"
             >
               <div className="flex flex-1 items-start gap-3 p-4">
                 <FileText className="size-5 shrink-0 text-[#4B5563]" aria-hidden="true" />

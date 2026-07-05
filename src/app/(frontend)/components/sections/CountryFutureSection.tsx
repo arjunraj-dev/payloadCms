@@ -3,13 +3,13 @@ import Link from 'next/link'
 import React from 'react'
 
 export interface CountryFutureSectionProps {
-  heading: string
-  subtitle: string
+  heading?: string
+  subtitle?: string
   pillarsHeading?: string
   pillarsDescription?: string
   footerText?: string
-  primaryButtonLabel: string
-  primaryButtonHref: string
+  primaryButtonLabel?: string
+  primaryButtonHref?: string
   secondaryButtonLabel?: string
   secondaryButtonHref?: string
   embedded?: boolean
@@ -96,7 +96,12 @@ export function CountryFutureSection({
   secondaryButtonHref,
   embedded = false,
 }: CountryFutureSectionProps) {
-  const headingLines = heading.split('\n')
+  const headingLines = (heading ?? '')
+    .split('\n')
+    .map((line) => line.trim())
+    .filter(Boolean)
+  const hasPrimaryCTA = Boolean(primaryButtonLabel && primaryButtonHref)
+  const hasSecondaryCTA = Boolean(secondaryButtonLabel && secondaryButtonHref)
 
   return (
     <section
@@ -109,17 +114,21 @@ export function CountryFutureSection({
           <CountryFuturePattern />
 
           <div className="relative z-10 max-w-xl lg:max-w-2xl">
-            <h2 className="text-[clamp(1.75rem,4vw,40px)] font-normal leading-[1.175] tracking-normal text-white lg:text-[40px] lg:leading-[47px]">
-              {headingLines.map((line, index) => (
-                <React.Fragment key={index}>
-                  {index > 0 && <br />}
-                  {line}
-                </React.Fragment>
-              ))}
-            </h2>
-            <p className="mt-4 text-[18px] font-medium leading-[26px] tracking-normal text-white/80">
-              {subtitle}
-            </p>
+            {headingLines.length > 0 && (
+              <h2 className="text-[clamp(1.75rem,4vw,40px)] font-normal leading-[1.175] tracking-normal text-white lg:text-[40px] lg:leading-[47px]">
+                {headingLines.map((line, index) => (
+                  <React.Fragment key={index}>
+                    {index > 0 && <br />}
+                    {line}
+                  </React.Fragment>
+                ))}
+              </h2>
+            )}
+            {subtitle && (
+              <p className="mt-4 text-[18px] font-medium leading-[26px] tracking-normal text-white/80">
+                {subtitle}
+              </p>
+            )}
 
             {pillarsHeading && (
               <h3 className="mt-8 text-xl font-bold text-white sm:text-2xl">{pillarsHeading}</h3>
@@ -133,19 +142,22 @@ export function CountryFutureSection({
               <p className="mt-6 text-base leading-relaxed text-white/80 sm:text-lg">{footerText}</p>
             )}
 
-            <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:flex-wrap">
-              <Link
-                href={primaryButtonHref}
-                className={cn(
-                  ctaBaseClassName,
-                  'bg-gradient-to-r from-[#004B4D] to-[#008C95]',
+            {(hasPrimaryCTA || hasSecondaryCTA) && (
+              <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:flex-wrap">
+                {hasPrimaryCTA && (
+                  <Link
+                    href={primaryButtonHref!}
+                    className={cn(
+                      ctaBaseClassName,
+                      'bg-gradient-to-r from-[#004B4D] to-[#008C95]',
+                    )}
+                  >
+                    {primaryButtonLabel}
+                  </Link>
                 )}
-              >
-                {primaryButtonLabel}
-              </Link>
-              {secondaryButtonLabel && secondaryButtonHref && (
+                {hasSecondaryCTA && (
                 <Link
-                  href={secondaryButtonHref}
+                  href={secondaryButtonHref!}
                   className={cn(
                     ctaBaseClassName,
                     'border border-white/30 hover:bg-white/10',
@@ -153,8 +165,9 @@ export function CountryFutureSection({
                 >
                   {secondaryButtonLabel}
                 </Link>
-              )}
-            </div>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </div>

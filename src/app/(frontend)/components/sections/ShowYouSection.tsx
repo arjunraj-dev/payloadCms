@@ -68,7 +68,7 @@ export function ShowYouSection({
             </div>
 
             <div className="mt-10 border-t border-white/10 md:mt-12">
-              <div className="grid grid-cols-1 lg:grid-cols-4">
+              <div className="grid grid-cols-1 lg:grid-cols-4 lg:items-stretch">
                 {cards.map((card, index) => (
                   <article
                     key={card.title}
@@ -78,16 +78,13 @@ export function ShowYouSection({
                       index > 0 && 'lg:border-l lg:border-white/10',
                     )}
                   >
-                    <span className="text-2xl font-bold tabular-nums text-white/10 sm:text-3xl">
-                      {String(index + 1).padStart(2, '0')}
-                    </span>
-                    <div className="mt-4 flex flex-wrap items-start gap-x-2 gap-y-1">
-                      <h3 className="text-base font-bold leading-snug text-white sm:text-lg">
+                    <div className="flex items-start justify-between gap-3">
+                      <h3 className="min-w-0 flex-1 text-base font-bold leading-snug text-white sm:text-lg">
                         {card.title}
                       </h3>
                       <span
                         className={cn(
-                          'mt-0.5 shrink-0 rounded px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide sm:text-xs',
+                          'mt-0.5 shrink-0  px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide whitespace-nowrap sm:text-[11px]',
                           labelColorClasses[card.labelColor],
                         )}
                       >

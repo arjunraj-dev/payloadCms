@@ -1,3 +1,4 @@
+import Script from 'next/script'
 import React from 'react'
 
 import { defaultTheme, themeLocalStorageKey } from '../ThemeSelector/types'
@@ -39,11 +40,8 @@ const themeInitScript = `
 
 export const InitTheme: React.FC = () => {
   return (
-    <script
-      dangerouslySetInnerHTML={{
-        __html: themeInitScript,
-      }}
-      id="theme-script"
-    />
+    <Script id="theme-script" strategy="beforeInteractive">
+      {themeInitScript}
+    </Script>
   )
 }

@@ -3,11 +3,11 @@ import { Clock, Mail, MapPin, Phone } from 'lucide-react'
 import React from 'react'
 
 export interface ContactInfoSectionProps {
-  address: string
-  phone: string
-  email: string
-  hours: string[]
-  image: string
+  address?: string
+  phone?: string
+  email?: string
+  hours?: string[]
+  image?: string
 }
 
 interface ContactInfoItemProps {
@@ -32,21 +32,26 @@ function ContactInfoItem({ icon: Icon, label, children }: ContactInfoItemProps) 
   )
 }
 
-function formatPhoneHref(phone: string) {
-  return `tel:${phone.replace(/[^\d+]/g, '')}`
+function formatPhoneHref(phone?: string) {
+  if (!phone) return undefined
+
+  const sanitizedPhone = phone.replace(/[^\d+]/g, '')
+  return sanitizedPhone ? `tel:${sanitizedPhone}` : undefined
 }
 
 export function ContactInfoSection({
   address,
   phone,
   email,
-  hours,
+  hours = [],
   image,
 }: ContactInfoSectionProps) {
   const [primaryHours, ...remainingHours] = hours
   const footnote = remainingHours.at(-1)
   const extraHours =
     remainingHours.length > 1 ? remainingHours.slice(0, -1) : []
+  const phoneHref = formatPhoneHref(phone)
+  const hasOfficeInfo = Boolean(address || phone || email || primaryHours || footnote || extraHours.length)
 
   return (
     <section className="bg-white py-12 md:py-16 lg:py-20">
@@ -57,52 +62,62 @@ export function ContactInfoSection({
               Our office
             </h2>
 
-            <div className="mt-8 flex flex-col gap-8">
-              <ContactInfoItem icon={MapPin} label="ADDRESS">
-                <p>{address}</p>
-              </ContactInfoItem>
-
-              <ContactInfoItem icon={Phone} label="PHONE">
-                <a
-                  href={formatPhoneHref(phone)}
-                  className="transition-colors hover:text-[#008C95]"
-                >
-                  {phone}
-                </a>
-              </ContactInfoItem>
-
-              <ContactInfoItem icon={Mail} label="GENERAL ENQUIRIES">
-                <a
-                  href={`mailto:${email}`}
-                  className="transition-colors hover:text-[#008C95]"
-                >
-                  {email}
-                </a>
-              </ContactInfoItem>
-
-              <ContactInfoItem icon={Clock} label="OFFICE HOURS">
-                {primaryHours && <p>{primaryHours}</p>}
-                {extraHours.map((line) => (
-                  <p key={line}>{line}</p>
-                ))}
-                {footnote && (
-                  <p className="mt-1 text-[18px] font-medium leading-[25px] text-[#4B5563]">
-                    {footnote}
-                  </p>
+            {hasOfficeInfo && (
+              <div className="mt-8 flex flex-col gap-8">
+                {address && (
+                  <ContactInfoItem icon={MapPin} label="ADDRESS">
+                    <p>{address}</p>
+                  </ContactInfoItem>
                 )}
-              </ContactInfoItem>
-            </div>
+
+                {phone && (
+                  <ContactInfoItem icon={Phone} label="PHONE">
+                    {phoneHref ? (
+                      <a href={phoneHref} className="transition-colors hover:text-[#008C95]">
+                        {phone}
+                      </a>
+                    ) : (
+                      <p>{phone}</p>
+                    )}
+                  </ContactInfoItem>
+                )}
+
+                {email && (
+                  <ContactInfoItem icon={Mail} label="GENERAL ENQUIRIES">
+                    <a href={`mailto:${email}`} className="transition-colors hover:text-[#008C95]">
+                      {email}
+                    </a>
+                  </ContactInfoItem>
+                )}
+
+                {(primaryHours || footnote || extraHours.length > 0) && (
+                  <ContactInfoItem icon={Clock} label="OFFICE HOURS">
+                    {primaryHours && <p>{primaryHours}</p>}
+                    {extraHours.map((line) => (
+                      <p key={line}>{line}</p>
+                    ))}
+                    {footnote && (
+                      <p className="mt-1 text-[18px] font-medium leading-[25px] text-[#4B5563]">
+                        {footnote}
+                      </p>
+                    )}
+                  </ContactInfoItem>
+                )}
+              </div>
+            )}
           </div>
 
-          <div className="overflow-hidden rounded-2xl lg:rounded-3xl">
-            <img
-              src={image}
-              alt="MIND office location in The Bahamas"
-              loading="lazy"
-              decoding="async"
-              className="aspect-[4/3] w-full object-cover"
-            />
-          </div>
+          {image ? (
+            <div className="overflow-hidden rounded-2xl lg:rounded-3xl">
+              <img
+                src={image}
+                alt="MIND office location in The Bahamas"
+                loading="lazy"
+                decoding="async"
+                className="aspect-[4/3] w-full object-cover"
+              />
+            </div>
+          ) : null}
         </div>
       </div>
     </section>

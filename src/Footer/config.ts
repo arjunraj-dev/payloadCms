@@ -20,6 +20,14 @@ export const Footer: GlobalConfig = {
       required: true,
     },
     {
+      name: 'secondaryTagline',
+      type: 'textarea',
+      label: 'Extra tagline',
+      admin: {
+        description: 'Optional second line shown below the main tagline.',
+      },
+    },
+    {
       name: 'columns',
       type: 'array',
       label: 'Link columns',
@@ -50,6 +58,17 @@ export const Footer: GlobalConfig = {
       fields: [
         { name: 'phoneLabel', type: 'text', admin: { description: 'Displayed text, e.g. (242) 327-1530' } },
         { name: 'phoneHref', type: 'text', admin: { description: 'e.g. tel:+12423271530' } },
+        {
+          name: 'tollFreeLabel',
+          type: 'text',
+          label: 'Toll free',
+          admin: { description: 'Displayed text, e.g. 1-800-123-4567' },
+        },
+        {
+          name: 'tollFreeHref',
+          type: 'text',
+          admin: { description: 'e.g. tel:+18001234567' },
+        },
         { name: 'email', type: 'text' },
         { name: 'address', type: 'text' },
       ],

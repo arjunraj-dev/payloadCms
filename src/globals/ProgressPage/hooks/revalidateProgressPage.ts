@@ -1,6 +1,6 @@
 import type { GlobalAfterChangeHook } from 'payload'
 
-import { revalidateTag } from 'next/cache'
+import { revalidatePath, revalidateTag } from 'next/cache'
 
 export const revalidateProgressPage: GlobalAfterChangeHook = ({
   doc,
@@ -10,6 +10,7 @@ export const revalidateProgressPage: GlobalAfterChangeHook = ({
     payload.logger.info(`Revalidating progress page`)
 
     revalidateTag('global_progress-page', 'max')
+    revalidatePath('/progress')
   }
 
   return doc
