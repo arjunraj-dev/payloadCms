@@ -1,6 +1,7 @@
 import type { LucideIcon } from 'lucide-react'
 import { cn } from '@/utilities/ui'
 import React from 'react'
+import { StaggerGroup, StaggerItem } from '@/app/(frontend)/components/motion/StaggerGroup'
 
 export interface InitiativeCard {
   icon?: LucideIcon
@@ -24,12 +25,13 @@ export function InitiativeCardsGrid({
   const isMuted = variant === 'muted'
 
   return (
-    <div className={cn('grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4', className)}>
+    <StaggerGroup as="div" className={cn('grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4', className)}>
       {cards.map((card) => {
         const Icon = card.icon
 
         return (
-          <article
+          <StaggerItem
+            as="article"
             key={card.title}
             className={cn(
               'rounded-2xl p-6 sm:p-8',
@@ -73,9 +75,9 @@ export function InitiativeCardsGrid({
             >
               {card.description}
             </p>
-          </article>
+          </StaggerItem>
         )
       })}
-    </div>
+    </StaggerGroup>
   )
 }

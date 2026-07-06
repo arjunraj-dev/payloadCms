@@ -1,5 +1,7 @@
 import { cn } from '@/utilities/ui'
 import React from 'react'
+import { Reveal } from '@/app/(frontend)/components/motion/Reveal'
+import { StaggerGroup, StaggerItem } from '@/app/(frontend)/components/motion/StaggerGroup'
 
 const MODERNIZE_ICON = '/Mordernize-gov.svg'
 
@@ -46,14 +48,15 @@ export function InitiativeGridSection({
     <section className="bg-white py-8 md:py-10 lg:py-12">
       <div className="container">
         <div className="overflow-hidden rounded-[2rem] bg-[#001529] px-6 py-10 md:px-10 md:py-12 lg:px-12 lg:py-14">
-          <h2 className="text-[clamp(1.75rem,4vw,40px)] font-normal leading-[47px] tracking-normal text-white lg:text-[40px]">
+          <Reveal as="h2" className="text-[clamp(1.75rem,4vw,40px)] font-normal leading-[47px] tracking-normal text-white lg:text-[40px]">
             {title}
-          </h2>
-          <p className="mt-4 max-w-2xl text-[18px] font-medium leading-[25px] tracking-normal text-white/90">
+          </Reveal>
+          <Reveal as="p" delay={0.08} className="mt-4 max-w-2xl text-[18px] font-medium leading-[25px] tracking-normal text-white/90">
             {description}
-          </p>
+          </Reveal>
 
-          <div
+          <StaggerGroup
+            as="div"
             className={cn(
               'mt-8 gap-5 md:mt-10 md:gap-6',
               useFiveCardLayout
@@ -62,7 +65,8 @@ export function InitiativeGridSection({
             )}
           >
             {initiatives.map((initiative, index) => (
-              <article
+              <StaggerItem
+                as="article"
                 key={initiative.title}
                 className={cn(
                   'flex h-full flex-col rounded-2xl border border-white/10 bg-white/[0.06] p-6 shadow-sm backdrop-blur-md transition-all duration-200 hover:border-white/20 hover:bg-white/10 hover:shadow-lg',
@@ -94,9 +98,9 @@ export function InitiativeGridSection({
                 <p className="mt-3 flex-1 text-sm leading-relaxed text-white/75">
                   {initiative.description}
                 </p>
-              </article>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerGroup>
         </div>
       </div>
     </section>

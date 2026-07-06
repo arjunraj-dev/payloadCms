@@ -1,5 +1,6 @@
 import { cn } from '@/utilities/ui'
 import React from 'react'
+import { Reveal } from '@/app/(frontend)/components/motion/Reveal'
 
 export interface MinisterProfileSectionProps {
   label: string
@@ -42,13 +43,13 @@ export function MinisterProfileSection({
               />
             </div>
 
-            <div className="flex flex-1 flex-col justify-center px-6 py-8 sm:px-0 lg:py-0">
+            <Reveal as="div" className="flex flex-1 flex-col justify-center px-6 py-8 sm:px-0 lg:py-0">
               <p className="text-lg leading-relaxed text-[#13181D] sm:text-xl lg:text-[1.375rem] lg:leading-[1.65]">
                 {bioParagraphs[0]}
               </p>
               <p className="mt-6 text-base font-bold text-[#001529] sm:text-lg">{name}</p>
               <p className="mt-1 text-sm text-[#4B5563] sm:text-base">{title}</p>
-            </div>
+            </Reveal>
           </div>
         </div>
       </section>
@@ -75,7 +76,7 @@ export function MinisterProfileSection({
             />
           </div>
 
-          <div className="order-2">
+          <Reveal as="div" className="order-2">
             {variant === 'quote' ? (
               <>
                 <p className="text-xs font-semibold uppercase tracking-wider text-[#4B5563]">{label}</p>
@@ -109,7 +110,7 @@ export function MinisterProfileSection({
                 ))}
               </>
             )}
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>

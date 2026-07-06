@@ -1,4 +1,5 @@
 import React from 'react'
+import { Reveal } from '@/app/(frontend)/components/motion/Reveal'
 
 export interface UpdateDetailContentProps {
   image: string
@@ -8,7 +9,7 @@ export interface UpdateDetailContentProps {
 
 export function UpdateDetailContent({ image, imageAlt, paragraphs }: UpdateDetailContentProps) {
   return (
-    <article className="mt-8 md:mt-10">
+    <Reveal as="article" className="mt-8 md:mt-10">
       <div className="overflow-hidden rounded-2xl lg:rounded-3xl">
         <img
           src={image}
@@ -29,6 +30,6 @@ export function UpdateDetailContent({ image, imageAlt, paragraphs }: UpdateDetai
           </p>
         ))}
       </div>
-    </article>
+    </Reveal>
   )
 }

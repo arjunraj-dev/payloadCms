@@ -1,6 +1,8 @@
 import { cn } from '@/utilities/ui'
 import type { LucideIcon } from 'lucide-react'
 import type React from 'react'
+import { Reveal } from '@/app/(frontend)/components/motion/Reveal'
+import { StaggerGroup, StaggerItem } from '@/app/(frontend)/components/motion/StaggerGroup'
 
 export type ProgramLabelColor = 'green' | 'blue' | 'orange' | 'dark' | 'planned'
 export type ProgramSectionTheme = 'light' | 'accent'
@@ -80,7 +82,7 @@ const ProgramSectionCards: React.FC<ProgramSectionCardsProps> = ({
           )}
 
           <div className="relative z-10">
-            <h2
+            <Reveal as="h2"
               className={cn(
                 isNunito
                   ? 'text-[clamp(1.75rem,4vw,40px)] font-normal leading-[47px] tracking-normal lg:text-[40px]'
@@ -89,8 +91,9 @@ const ProgramSectionCards: React.FC<ProgramSectionCardsProps> = ({
               )}
             >
               {title}
-            </h2>
-            <p
+            </Reveal>
+            <Reveal as="p"
+              delay={0.08}
               className={cn(
                 isNunito
                   ? 'mt-4 max-w-2xl text-[18px] font-medium leading-[25px] tracking-normal'
@@ -99,9 +102,10 @@ const ProgramSectionCards: React.FC<ProgramSectionCardsProps> = ({
               )}
             >
               {description}
-            </p>
+            </Reveal>
 
-            <div
+            <StaggerGroup
+              as="div"
               className={cn(
                 'mt-8 grid gap-5 md:mt-10 md:gap-6',
                 getGridClass(cards.length),
@@ -111,7 +115,8 @@ const ProgramSectionCards: React.FC<ProgramSectionCardsProps> = ({
                 const Icon = card.icon
 
                 return (
-                  <article
+                  <StaggerItem
+                    as="article"
                     key={card.title}
                     className={cn(
                       'flex h-full flex-col rounded-2xl border p-6 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg',
@@ -171,10 +176,10 @@ const ProgramSectionCards: React.FC<ProgramSectionCardsProps> = ({
                     <p className="mt-3 flex-1 text-sm leading-relaxed text-[#4B5563]">
                       {card.description}
                     </p>
-                  </article>
+                  </StaggerItem>
                 )
               })}
-            </div>
+            </StaggerGroup>
           </div>
         </div>
       </div>

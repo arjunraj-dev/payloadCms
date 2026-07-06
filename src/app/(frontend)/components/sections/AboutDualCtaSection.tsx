@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import React from 'react'
+import { StaggerGroup, StaggerItem } from '@/app/(frontend)/components/motion/StaggerGroup'
 
 export interface AboutDualCtaBlock {
   heading: string
@@ -16,9 +17,10 @@ export function AboutDualCtaSection({ blocks }: AboutDualCtaSectionProps) {
   return (
     <section className="bg-white py-12 md:py-16 lg:py-20">
       <div className="container">
-        <div className="overflow-hidden rounded-3xl bg-[#001529]">
+        <StaggerGroup as="div" className="overflow-hidden rounded-3xl bg-[#001529]">
           {blocks.map((block, index) => (
-            <div
+            <StaggerItem
+              as="div"
               key={block.heading}
               className="grid grid-cols-1 items-start gap-6 px-6 py-10 md:px-10 md:py-12 lg:grid-cols-2 lg:gap-12 lg:px-12 lg:py-14"
               style={index === 0 ? { borderBottom: '1px solid rgba(255,255,255,0.1)' } : undefined}
@@ -37,9 +39,9 @@ export function AboutDualCtaSection({ blocks }: AboutDualCtaSectionProps) {
                   {block.buttonLabel}
                 </Link>
               </div>
-            </div>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerGroup>
       </div>
     </section>
   )

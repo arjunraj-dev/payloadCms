@@ -1,9 +1,13 @@
 'use client'
 
 import { cn } from '@/utilities/ui'
+import { motion } from 'framer-motion'
 import Link from 'next/link'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { GravityWaveBackground } from '@/app/(frontend)/components/shared/GravityWaveBackground'
+import { STAGGER_CHILDREN } from '@/app/(frontend)/components/motion/config'
+import { StaggerGroup, StaggerItem } from '@/app/(frontend)/components/motion/StaggerGroup'
+import { useCursorParallax } from '@/app/(frontend)/components/motion/useCursorParallax'
 
 export interface HeroCTA {
   label: string
@@ -54,6 +58,8 @@ export function HeroSection({
     return Array.isArray(backgroundImage) ? backgroundImage : [backgroundImage]
   }, [backgroundImage, hasImage])
   const [activeImageIndex, setActiveImageIndex] = useState(0)
+  const gridRef = useRef<HTMLDivElement>(null)
+  const parallax = useCursorParallax(gridRef, { range: 8 })
 
   useEffect(() => {
     setActiveImageIndex(0)
@@ -78,6 +84,9 @@ export function HeroSection({
         )}
       >
         <div
+          ref={gridRef}
+          onPointerMove={hasImage ? parallax.onPointerMove : undefined}
+          onPointerLeave={hasImage ? parallax.onPointerLeave : undefined}
           className={cn(
             'grid grid-cols-1 gap-1',
             hasImage ? 'items-stretch lg:grid-cols-2 lg:gap-1' : 'items-center',
@@ -98,8 +107,12 @@ export function HeroSection({
             {showPattern && hasImage && (
               <GravityWaveBackground className="pointer-events-none absolute inset-0 z-0 h-full w-full" />
             )}
-            <div className="relative z-10 w-full">
-              <h1
+            <StaggerGroup
+              as="div"
+              staggerChildren={STAGGER_CHILDREN}
+              className="relative z-10 w-full"
+            >
+              <StaggerItem as="h1"
                 className={cn(
                   'text-[#001529]',
                   titleVariant === 'display'
@@ -113,9 +126,10 @@ export function HeroSection({
                     {line}
                   </React.Fragment>
                 ))}
-              </h1>
+              </StaggerItem>
               {subtitleParagraphs.map((paragraph, index) => (
-                <p
+                <StaggerItem
+                  as="p"
                   key={index}
                   className={cn(
                     index === 0 ? 'mt-4' : 'mt-3',
@@ -128,10 +142,11 @@ export function HeroSection({
                   )}
                 >
                   {paragraph}
-                </p>
+                </StaggerItem>
               ))}
               {showCTAs && (
-                <div
+                <StaggerItem
+                  as="div"
                   className={cn(
                     'mt-8 flex flex-col gap-4 font-semibold sm:flex-row sm:flex-wrap',
                     isCentered && 'items-center justify-center',
@@ -153,15 +168,18 @@ export function HeroSection({
                       {secondaryCTA.label}
                     </Link>
                   )}
-                </div>
+                </StaggerItem>
               )}
-            </div>
+            </StaggerGroup>
           </div>
 
           {hasImage && (
-            <div className="relative aspect-[4/3] overflow-hidden rounded-3xl lg:aspect-auto lg:min-h-[420px]">
+            <motion.div
+              style={{ x: parallax.x, y: parallax.y }}
+              className="relative aspect-[4/3] overflow-hidden rounded-3xl lg:aspect-auto lg:min-h-[420px]"
+            >
               {backgroundImages.map((src, index) => (
-                <img
+                <motion.img
                   key={src}
                   alt=""
                   role="presentation"
@@ -169,14 +187,15 @@ export function HeroSection({
                   loading={index === 0 ? 'eager' : 'lazy'}
                   fetchPriority={index === 0 ? 'high' : 'low'}
                   decoding="async"
-                  className={cn(
-                    'absolute inset-0 h-full w-full object-cover motion-safe:transition-opacity motion-safe:duration-1000 motion-safe:ease-in-out',
-                    index === activeImageIndex ? 'opacity-100' : 'opacity-0',
-                    imageClassName,
-                  )}
+                  animate={{
+                    opacity: index === activeImageIndex ? 1 : 0,
+                    scale: index === activeImageIndex ? 1 : 1.03,
+                  }}
+                  transition={{ duration: 1, ease: 'easeInOut' }}
+                  className={cn('absolute inset-0 h-full w-full object-cover', imageClassName)}
                 />
               ))}
-            </div>
+            </motion.div>
           )}
         </div>
       </div>

@@ -6,6 +6,7 @@ import {
   type NewsFilterCategory,
 } from '@/app/(frontend)/components/sections/NewsFilterSection'
 import React, { useMemo, useState } from 'react'
+import { StaggerGroup, StaggerItem } from '@/app/(frontend)/components/motion/StaggerGroup'
 
 export interface NewsItem {
   id: string
@@ -62,13 +63,13 @@ export function NewsGridSection({ news, onCategorySelect, heading }: NewsGridSec
         />
 
         {filteredNews.length > 0 ? (
-          <div className="mt-8 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+          <StaggerGroup as="div" className="mt-8 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
             {filteredNews.map(({ id, categoryValue: _categoryValue, ...cardProps }) => (
-              <div key={id} className="h-full">
+              <StaggerItem as="div" key={id} className="h-full">
                 <NewsCard {...cardProps} />
-              </div>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerGroup>
         ) : (
           <p className="mt-8 text-center text-[#4B5563]">No updates found in this category.</p>
         )}
