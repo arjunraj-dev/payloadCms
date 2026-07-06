@@ -1,4 +1,6 @@
 import React from 'react'
+import { Reveal } from '@/app/(frontend)/components/motion/Reveal'
+import { StaggerGroup, StaggerItem } from '@/app/(frontend)/components/motion/StaggerGroup'
 
 export interface StatusCard {
   status: string
@@ -41,19 +43,20 @@ export function StatusTabsSection({
         className="pointer-events-none absolute left-1/2 top-1/2 z-0 w-[min(100%,900px)] max-w-none -translate-x-1/2 -translate-y-1/2 opacity-[0.07]"
       />
       <div className="container relative z-10">
-        <div className="mx-auto max-w-3xl text-center">
+        <Reveal as="div" className="mx-auto max-w-3xl text-center">
           <h1 className="text-[clamp(2rem,5vw,56.69px)] font-normal leading-[1.084] tracking-normal text-[#001529] lg:text-[56.69px] lg:leading-[61.42px]">
             {heading}
           </h1>
           <p className="mt-4 text-base leading-relaxed text-[#4B5563] sm:text-lg">{description}</p>
-        </div>
+        </Reveal>
 
-        <div className="mx-auto mt-10 grid max-w-5xl grid-cols-1 gap-4 md:mt-12 md:grid-cols-2 md:gap-5 lg:grid-cols-4">
+        <StaggerGroup as="div" className="mx-auto mt-10 grid max-w-5xl grid-cols-1 gap-4 md:mt-12 md:grid-cols-2 md:gap-5 lg:grid-cols-4">
           {statusCards.map((card) => {
             const accentColor = getStatusAccentColor(card.title)
 
             return (
-              <article
+              <StaggerItem
+                as="article"
                 key={card.status}
                 className="relative flex min-h-[168px] flex-col items-center justify-center overflow-hidden rounded-2xl px-5 py-8 text-center text-white sm:min-h-[180px]"
                 style={{ boxShadow: `0 8px 24px -4px ${card.color}66` }}
@@ -86,10 +89,10 @@ export function StatusTabsSection({
                     {card.description}
                   </p>
                 </div>
-              </article>
+              </StaggerItem>
             )
           })}
-        </div>
+        </StaggerGroup>
       </div>
     </section>
   )

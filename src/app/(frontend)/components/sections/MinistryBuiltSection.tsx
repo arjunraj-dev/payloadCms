@@ -1,6 +1,7 @@
 import { cn } from '@/utilities/ui'
 import Link from 'next/link'
 import React from 'react'
+import { Reveal } from '@/app/(frontend)/components/motion/Reveal'
 
 export interface MinistryBuiltSectionProps {
   heading: string
@@ -37,26 +38,30 @@ export function MinistryBuiltSection({
 
           {/* Text on RIGHT */}
           <div className="order-2">
-            <h2 className="text-2xl font-[400] leading-tight text-[#001529] sm:text-3xl lg:text-4xl">
-              {heading}
-            </h2>
-            {paragraphs.map((paragraph, index) => (
-              <p
-                key={index}
-                className={cn(
-                  'text-base leading-relaxed text-[#4B5563] sm:text-lg',
-                  index === 0 ? 'mt-4' : 'mt-3',
-                )}
+            <Reveal as="div">
+              <h2 className="text-2xl font-[400] leading-tight text-[#001529] sm:text-3xl lg:text-4xl">
+                {heading}
+              </h2>
+              {paragraphs.map((paragraph, index) => (
+                <p
+                  key={index}
+                  className={cn(
+                    'text-base leading-relaxed text-[#4B5563] sm:text-lg',
+                    index === 0 ? 'mt-4' : 'mt-3',
+                  )}
+                >
+                  {paragraph}
+                </p>
+              ))}
+            </Reveal>
+            <Reveal as="div">
+              <Link
+                href={buttonHref}
+                className="mt-8 inline-flex items-center justify-center rounded-lg bg-[linear-gradient(90deg,rgba(13,27,42,1)_0%,rgba(13,27,42,1)_20%,rgba(34,54,77,1)_40%,rgba(34,54,77,1)_60%,rgba(41,60,81,1)_80%,rgba(13,27,42,1)_100%)] px-5 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90"
               >
-                {paragraph}
-              </p>
-            ))}
-            <Link
-              href={buttonHref}
-              className="mt-8 inline-flex items-center justify-center rounded-lg bg-[linear-gradient(90deg,rgba(13,27,42,1)_0%,rgba(13,27,42,1)_20%,rgba(34,54,77,1)_40%,rgba(34,54,77,1)_60%,rgba(41,60,81,1)_80%,rgba(13,27,42,1)_100%)] px-5 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90"
-            >
-              {buttonLabel}
-            </Link>
+                {buttonLabel}
+              </Link>
+            </Reveal>
           </div>
         </div>
       </div>

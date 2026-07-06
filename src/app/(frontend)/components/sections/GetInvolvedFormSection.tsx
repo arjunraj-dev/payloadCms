@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useId } from 'react'
+import { Reveal } from '@/app/(frontend)/components/motion/Reveal'
 
 export interface GetInvolvedFormData {
   name: string
@@ -70,7 +71,9 @@ export function GetInvolvedFormSection({
           </div>
 
           <div className="flex flex-1 flex-col justify-center px-6 py-8 sm:px-8 lg:px-10 lg:py-10 xl:px-12">
-            <h2 className="text-2xl font-bold leading-tight text-white sm:text-3xl">{formTitle}</h2>
+            <Reveal as="h2" className="text-2xl font-bold leading-tight text-white sm:text-3xl">
+              {formTitle}
+            </Reveal>
 
             <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">

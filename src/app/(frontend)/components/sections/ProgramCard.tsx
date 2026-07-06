@@ -1,6 +1,7 @@
 import { cn } from '@/utilities/ui'
 import Link from 'next/link'
 import React from 'react'
+import { Reveal } from '@/app/(frontend)/components/motion/Reveal'
 
 export interface ProgramCTA {
   label: string
@@ -49,7 +50,7 @@ export function ProgramCard({
   return (
     <section className="bg-white py-12 md:py-14 lg:py-16">
       <div className="container">
-        <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-16">
+        <Reveal as="div" className="grid grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-16">
           <div
             className={cn(
               'group relative overflow-hidden rounded-3xl bg-[#E8ECEF] p-6 sm:p-8',
@@ -97,7 +98,7 @@ export function ProgramCard({
               </Link>
             </div>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   )

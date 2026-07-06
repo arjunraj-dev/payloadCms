@@ -1,6 +1,8 @@
 import { cn } from '@/utilities/ui'
 import Link from 'next/link'
 import React from 'react'
+import { Reveal } from '@/app/(frontend)/components/motion/Reveal'
+import { StaggerGroup, StaggerItem } from '@/app/(frontend)/components/motion/StaggerGroup'
 
 export type ShowYouLabelColor = 'green' | 'blue' | 'orange'
 
@@ -58,19 +60,20 @@ export function ShowYouSection({
         <div className="relative overflow-hidden rounded-3xl bg-[#001529] px-6 py-10 md:px-10 md:py-14 lg:px-12 lg:py-16">
           <ShowYouChevron />
           <div className="relative z-10">
-            <div className="max-w-3xl">
+            <Reveal as="div" className="max-w-3xl">
               <h2 className="text-[clamp(1.75rem,4vw,40px)] font-normal leading-[1.625] tracking-normal text-white lg:text-[40px] lg:leading-[65px]">
                 {heading}
               </h2>
               <p className="mt-4 text-base leading-relaxed text-white/60 sm:text-lg">
                 {description}
               </p>
-            </div>
+            </Reveal>
 
             <div className="mt-10 border-t border-white/10 md:mt-12">
-              <div className="grid grid-cols-1 lg:grid-cols-4 lg:items-stretch">
+              <StaggerGroup as="div" className="grid grid-cols-1 lg:grid-cols-4 lg:items-stretch">
                 {cards.map((card, index) => (
-                  <article
+                  <StaggerItem
+                    as="article"
                     key={card.title}
                     className={cn(
                       'flex flex-col py-8 lg:px-5 lg:py-10 xl:px-6',
@@ -100,19 +103,19 @@ export function ShowYouSection({
                     <p className="mt-4 flex-1 text-sm leading-relaxed text-white/60">
                       {card.description}
                     </p>
-                  </article>
+                  </StaggerItem>
                 ))}
-              </div>
+              </StaggerGroup>
             </div>
 
-            <div className="mt-8 md:mt-10">
+            <Reveal as="div" className="mt-8 md:mt-10">
               <Link
                 href={ctaHref}
                 className="inline-flex items-center justify-center rounded-lg bg-gradient-to-r from-[#004B4D] to-[#008C95] px-5 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90"
               >
                 {ctaLabel}
               </Link>
-            </div>
+            </Reveal>
           </div>
         </div>
       </div>

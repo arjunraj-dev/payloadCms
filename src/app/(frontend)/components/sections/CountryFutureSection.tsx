@@ -1,6 +1,7 @@
 import { cn } from '@/utilities/ui'
 import Link from 'next/link'
 import React from 'react'
+import { Reveal } from '@/app/(frontend)/components/motion/Reveal'
 
 export interface CountryFutureSectionProps {
   heading?: string
@@ -113,7 +114,7 @@ export function CountryFutureSection({
         <div className="relative overflow-hidden rounded-3xl bg-[#001529] px-8 py-12 md:px-12 md:py-16 lg:px-16 lg:py-20">
           <CountryFuturePattern />
 
-          <div className="relative z-10 max-w-xl lg:max-w-2xl">
+          <Reveal as="div" className="relative z-10 max-w-xl lg:max-w-2xl">
             {headingLines.length > 0 && (
               <h2 className="text-[clamp(1.75rem,4vw,40px)] font-normal leading-[1.175] tracking-normal text-white lg:text-[40px] lg:leading-[47px]">
                 {headingLines.map((line, index) => (
@@ -168,7 +169,7 @@ export function CountryFutureSection({
                 )}
               </div>
             )}
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>

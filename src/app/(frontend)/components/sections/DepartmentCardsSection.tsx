@@ -1,6 +1,8 @@
 import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
+import { Reveal } from '@/app/(frontend)/components/motion/Reveal'
+import { StaggerGroup, StaggerItem } from '@/app/(frontend)/components/motion/StaggerGroup'
 
 export interface DepartmentCard {
   iconSrc: string
@@ -24,16 +26,21 @@ export function DepartmentCardsSection({
   return (
     <section className="bg-white py-12 md:py-16 lg:py-20">
       <div className="container">
-        <h2 className="text-[clamp(1.75rem,4vw,40px)] font-normal leading-[47px] tracking-normal text-[#001529] lg:text-[40px]">
+        <Reveal as="h2" className="text-[clamp(1.75rem,4vw,40px)] font-normal leading-[47px] tracking-normal text-[#001529] lg:text-[40px]">
           {heading}
-        </h2>
-        <p className="mt-4 max-w-3xl text-base leading-relaxed text-[#4B5563] sm:text-lg">
+        </Reveal>
+        <Reveal
+          as="p"
+          className="mt-4 max-w-3xl text-base leading-relaxed text-[#4B5563] sm:text-lg"
+          delay={0.08}
+        >
           {description}
-        </p>
+        </Reveal>
 
-        <div className="mt-10 grid grid-cols-1 gap-6 md:mt-12 md:grid-cols-2 lg:grid-cols-4">
+        <StaggerGroup as="div" className="mt-10 grid grid-cols-1 gap-6 md:mt-12 md:grid-cols-2 lg:grid-cols-4">
           {departments.map((department) => (
-            <article
+            <StaggerItem
+              as="article"
               key={department.title}
               className="flex h-full flex-col items-start rounded-2xl bg-[#E9E9E980] p-6 sm:p-8"
             >
@@ -59,9 +66,9 @@ export function DepartmentCardsSection({
                 {department.linkLabel}
                 <ArrowRight className="size-4 shrink-0" aria-hidden="true" />
               </Link>
-            </article>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerGroup>
       </div>
     </section>
   )

@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import React from 'react'
+import { Reveal } from '@/app/(frontend)/components/motion/Reveal'
 
 export interface GovernmentServiceSectionProps {
   heading?: string
@@ -19,7 +20,7 @@ export function GovernmentServiceSection({
   return (
     <section className="bg-white py-12 md:py-16 lg:py-20">
       <div className="container">
-        <div className="mx-auto max-w-2xl text-center">
+        <Reveal as="div" className="mx-auto max-w-2xl text-center">
           <h2 className="text-center text-[clamp(1.75rem,4vw,40px)] font-normal leading-[1.175] tracking-normal text-[#001529] lg:text-[40px] lg:leading-[47px]">
             {heading}
           </h2>
@@ -30,15 +31,15 @@ export function GovernmentServiceSection({
           >
             {ctaLabel}
           </Link>
-        </div>
+        </Reveal>
 
-        <div className="mx-auto mt-10 max-w-4xl md:mt-12">
+        <Reveal as="div" delay={0.1} className="mx-auto mt-10 max-w-4xl md:mt-12">
           <img
             src={image}
             alt="People using government services — family, online applications, and celebration"
             className="h-auto w-full"
           />
-        </div>
+        </Reveal>
       </div>
     </section>
   )

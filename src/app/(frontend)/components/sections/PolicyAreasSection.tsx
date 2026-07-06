@@ -1,5 +1,7 @@
 import Link from 'next/link'
 import React from 'react'
+import { Reveal } from '@/app/(frontend)/components/motion/Reveal'
+import { StaggerGroup, StaggerItem } from '@/app/(frontend)/components/motion/StaggerGroup'
 
 const POLICY_AREA_ICON = '/Mordernize-gov.svg'
 
@@ -27,16 +29,17 @@ export function PolicyAreasSection({
   return (
     <section className="bg-[#F8F9FA] py-12 md:py-16 lg:py-20">
       <div className="container">
-        <h2 className="text-[clamp(1.75rem,4vw,40px)] font-normal leading-[47px] tracking-normal text-[#001529] lg:text-[40px]">
+        <Reveal as="h2" className="text-[clamp(1.75rem,4vw,40px)] font-normal leading-[47px] tracking-normal text-[#001529] lg:text-[40px]">
           {heading}
-        </h2>
+        </Reveal>
 
-        <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 md:mt-10 md:grid-cols-3 md:gap-5 lg:grid-cols-5">
+        <StaggerGroup as="div" className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 md:mt-10 md:grid-cols-3 md:gap-5 lg:grid-cols-5">
           {policies.map((policy) => {
             const isComingSoon = policy.status === 'comingSoon'
 
             return (
-              <article
+              <StaggerItem
+                as="article"
                 key={policy.label}
                 className="flex min-h-[148px] flex-col overflow-hidden rounded-xl border border-[#E5E7EB] bg-white shadow-sm"
               >
@@ -70,19 +73,19 @@ export function PolicyAreasSection({
                     View progress →
                   </Link>
                 )}
-              </article>
+              </StaggerItem>
             )
           })}
-        </div>
+        </StaggerGroup>
 
-        <div className="mt-10 text-center md:mt-12">
+        <Reveal as="div" className="mt-10 text-center md:mt-12">
           <Link
             href={ctaHref}
             className="inline-flex items-center justify-center text-sm font-medium text-[#008C95] transition-opacity hover:opacity-80"
           >
             {ctaLabel}
           </Link>
-        </div>
+        </Reveal>
       </div>
     </section>
   )

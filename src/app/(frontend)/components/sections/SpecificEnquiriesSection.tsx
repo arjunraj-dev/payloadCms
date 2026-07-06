@@ -1,6 +1,8 @@
 import type { LucideIcon } from 'lucide-react'
 import { cn } from '@/utilities/ui'
 import React from 'react'
+import { Reveal } from '@/app/(frontend)/components/motion/Reveal'
+import { StaggerGroup, StaggerItem } from '@/app/(frontend)/components/motion/StaggerGroup'
 
 export interface EnquiryItem {
   icon: LucideIcon
@@ -73,11 +75,12 @@ export function SpecificEnquiriesSection({
 }: SpecificEnquiriesSectionProps) {
   const content = (
     <>
-      <h2 className="text-[clamp(1.75rem,4vw,40px)] font-normal leading-[47px] text-[#001529]">
+      <Reveal as="h2" className="text-[clamp(1.75rem,4vw,40px)] font-normal leading-[47px] text-[#001529]">
         Specific enquiries.
-      </h2>
+      </Reveal>
 
-      <div
+      <StaggerGroup
+        as="div"
         className={
           embedded
             ? 'mt-8 flex flex-col gap-6'
@@ -85,9 +88,11 @@ export function SpecificEnquiriesSection({
         }
       >
         {enquiries.map((enquiry) => (
-          <EnquiryCard key={enquiry.email} enquiry={enquiry} />
+          <StaggerItem as="div" key={enquiry.email}>
+            <EnquiryCard enquiry={enquiry} />
+          </StaggerItem>
         ))}
-      </div>
+      </StaggerGroup>
     </>
   )
 

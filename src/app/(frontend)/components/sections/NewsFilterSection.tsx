@@ -2,6 +2,7 @@
 
 import { cn } from '@/utilities/ui'
 import React from 'react'
+import { Reveal } from '@/app/(frontend)/components/motion/Reveal'
 
 export interface NewsFilterCategory {
   label: string
@@ -25,9 +26,9 @@ export function NewsFilterSection({
 }: NewsFilterSectionProps) {
   const content = (
     <>
-      <h2 className="text-[clamp(1.75rem,4vw,40px)] font-normal leading-[47px] tracking-normal text-[#001529] lg:text-[40px]">
+      <Reveal as="h2" className="text-[clamp(1.75rem,4vw,40px)] font-normal leading-[47px] tracking-normal text-[#001529] lg:text-[40px]">
         {heading}
-      </h2>
+      </Reveal>
 
       <div
         role="tablist"

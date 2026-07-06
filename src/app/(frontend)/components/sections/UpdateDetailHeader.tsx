@@ -2,6 +2,7 @@ import type { LucideIcon } from 'lucide-react'
 import { Facebook, Instagram, Linkedin, Twitter } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
+import { Reveal } from '@/app/(frontend)/components/motion/Reveal'
 
 export interface UpdateDetailSocialLink {
   platform: 'facebook' | 'instagram' | 'linkedin' | 'x' | 'twitter' | string
@@ -39,11 +40,15 @@ function getPlatformConfig(platform: string) {
 export function UpdateDetailHeader({ title, date, category, socialLinks }: UpdateDetailHeaderProps) {
   return (
     <header>
-      <h1 className="text-[clamp(2rem,5vw,56px)] font-normal leading-[50px] text-[#001529]">
+      <Reveal as="h1" className="text-[clamp(2rem,5vw,56px)] font-normal leading-[50px] text-[#001529]">
         {title}
-      </h1>
+      </Reveal>
 
-      <div className="mt-6 flex flex-wrap items-center gap-[17px] text-base font-normal leading-[30px] text-[#4B5563]">
+      <Reveal
+        as="div"
+        delay={0.08}
+        className="mt-6 flex flex-wrap items-center gap-[17px] text-base font-normal leading-[30px] text-[#4B5563]"
+      >
         <time dateTime={date}>{date}</time>
         <span aria-hidden="true">|</span>
         <span>{category}</span>
@@ -64,7 +69,7 @@ export function UpdateDetailHeader({ title, date, category, socialLinks }: Updat
             </Link>
           )
         })}
-      </div>
+      </Reveal>
     </header>
   )
 }

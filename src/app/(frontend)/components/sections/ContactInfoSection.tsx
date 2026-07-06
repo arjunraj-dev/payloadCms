@@ -1,6 +1,7 @@
 import type { LucideIcon } from 'lucide-react'
 import { Clock, Mail, MapPin, Phone } from 'lucide-react'
 import React from 'react'
+import { Reveal } from '@/app/(frontend)/components/motion/Reveal'
 
 export interface ContactInfoSectionProps {
   address?: string
@@ -57,7 +58,7 @@ export function ContactInfoSection({
     <section className="bg-white py-12 md:py-16 lg:py-20">
       <div className="container">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-start lg:gap-16">
-          <div>
+          <Reveal as="div">
             <h2 className="text-[clamp(1.75rem,4vw,40px)] font-normal leading-[47px] text-[#001529]">
               Our office
             </h2>
@@ -105,10 +106,10 @@ export function ContactInfoSection({
                 )}
               </div>
             )}
-          </div>
+          </Reveal>
 
           {image ? (
-            <div className="overflow-hidden rounded-2xl lg:rounded-3xl">
+            <Reveal as="div" className="overflow-hidden rounded-2xl lg:rounded-3xl">
               <img
                 src={image}
                 alt="MIND office location in The Bahamas"
@@ -116,7 +117,7 @@ export function ContactInfoSection({
                 decoding="async"
                 className="aspect-[4/3] w-full object-cover"
               />
-            </div>
+            </Reveal>
           ) : null}
         </div>
       </div>

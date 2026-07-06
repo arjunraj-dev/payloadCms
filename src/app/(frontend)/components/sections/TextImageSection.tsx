@@ -1,6 +1,7 @@
 import { cn } from '@/utilities/ui'
 import Link from 'next/link'
 import React from 'react'
+import { Reveal } from '@/app/(frontend)/components/motion/Reveal'
 
 export interface TextImageSectionProps {
   heading: string
@@ -33,7 +34,7 @@ export function TextImageSection({
   const hasButton = Boolean(buttonLabel && buttonHref)
 
   const textContent = (
-    <>
+    <Reveal as="div">
       <h2 className="text-[clamp(1.75rem,4vw,40px)] font-normal leading-[47px] tracking-normal text-[#001529] lg:text-[40px]">
         {heading}
       </h2>
@@ -57,7 +58,7 @@ export function TextImageSection({
           <span aria-hidden="true">→</span>
         </Link>
       )}
-    </>
+    </Reveal>
   )
 
   return (
