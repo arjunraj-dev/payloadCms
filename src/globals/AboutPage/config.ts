@@ -123,7 +123,23 @@ export const AboutPage: GlobalConfig = {
                   minRows: 1,
                   fields: [
                     { name: 'label', type: 'text', required: true },
-                    { name: 'href', type: 'text', required: true },
+                    {
+                      name: 'status',
+                      type: 'select',
+                      defaultValue: 'active',
+                      required: true,
+                      options: [
+                        { label: 'View progress', value: 'active' },
+                        { label: 'Coming soon', value: 'comingSoon' },
+                      ],
+                    },
+                    {
+                      name: 'href',
+                      type: 'text',
+                      admin: {
+                        condition: (_, siblingData) => siblingData?.status === 'active',
+                      },
+                    },
                   ],
                 },
               ],

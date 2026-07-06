@@ -85,6 +85,23 @@ export const GetInvolvedPage: GlobalConfig = {
               fields: [
                 { name: 'heading', type: 'text', required: true },
                 paragraphsField('text'),
+                {
+                  name: 'button',
+                  type: 'group',
+                  label: 'Button',
+                  fields: [
+                    {
+                      name: 'label',
+                      type: 'text',
+                      defaultValue: "See what's already in motion",
+                    },
+                    {
+                      name: 'href',
+                      type: 'text',
+                      defaultValue: '/progress',
+                    },
+                  ],
+                },
                 { name: 'image', type: 'upload', relationTo: 'media', required: true },
                 {
                   name: 'imagePosition',

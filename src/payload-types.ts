@@ -1782,6 +1782,9 @@ export interface Footer {
 export interface Homepage {
   id: number;
   hero: {
+    /**
+     * Press Enter for a new line. Example: "Building today what" on line 1, "The Bahamas needs to win tomorrow." on line 2.
+     */
     title: string;
     subtitle: string;
     primaryCTA: {
@@ -1990,7 +1993,8 @@ export interface AboutPage {
     policies?:
       | {
           label: string;
-          href: string;
+          status: 'active' | 'comingSoon';
+          href?: string | null;
           id?: string | null;
         }[]
       | null;
@@ -2320,6 +2324,10 @@ export interface GetInvolvedPage {
           id?: string | null;
         }[]
       | null;
+    button?: {
+      label?: string | null;
+      href?: string | null;
+    };
     image: number | Media;
     imagePosition?: ('left' | 'right') | null;
   };
@@ -2724,6 +2732,7 @@ export interface AboutPageSelect<T extends boolean = true> {
           | T
           | {
               label?: T;
+              status?: T;
               href?: T;
               id?: T;
             };
@@ -2959,6 +2968,12 @@ export interface GetInvolvedPageSelect<T extends boolean = true> {
           | {
               text?: T;
               id?: T;
+            };
+        button?:
+          | T
+          | {
+              label?: T;
+              href?: T;
             };
         image?: T;
         imagePosition?: T;

@@ -4,7 +4,6 @@ import { GetInvolvedFormSection } from '@/app/(frontend)/components/sections/Get
 import { HeroSection } from '@/app/(frontend)/components/sections/HeroSection'
 import { TextImageSection } from '@/app/(frontend)/components/sections/TextImageSection'
 import { getCachedGlobal } from '@/utilities/getGlobals'
-import { iconMap } from '@/utilities/iconMap'
 import { mediaUrl, paragraphs } from '@/utilities/cms'
 import { socialIconMap } from '@/utilities/socialIcons'
 import { Briefcase } from 'lucide-react'
@@ -29,7 +28,6 @@ export default async function GetInvolvedPage() {
       <GetInvolvedCategoriesSection
         heading={page.categoriesSection.heading}
         categories={(page.categoriesSection.categories ?? []).map((category) => ({
-          icon: iconMap[category.icon] ?? Briefcase,
           image: mediaUrl(category.image),
           title: category.title,
           description: category.description,
@@ -47,6 +45,9 @@ export default async function GetInvolvedPage() {
         text={paragraphs(page.reachOut.text)}
         image={mediaUrl(page.reachOut.image)}
         imagePosition={page.reachOut.imagePosition ?? 'right'}
+        backgroundColor="bg-[#F8F9FA]"
+        buttonLabel={page.reachOut.button?.label ?? "See what's already in motion"}
+        buttonHref={page.reachOut.button?.href ?? '/progress'}
       />
 
       <FollowTheWorkSection

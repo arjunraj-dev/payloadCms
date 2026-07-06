@@ -1,10 +1,9 @@
-import type { LucideIcon } from 'lucide-react'
 import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
 
 export interface DepartmentCard {
-  icon: LucideIcon
+  iconSrc: string
   title: string
   description: string
   linkLabel: string
@@ -25,37 +24,43 @@ export function DepartmentCardsSection({
   return (
     <section className="bg-white py-12 md:py-16 lg:py-20">
       <div className="container">
-        <h2 className="text-2xl font-bold text-[#001529] sm:text-3xl lg:text-4xl">{heading}</h2>
+        <h2 className="text-[clamp(1.75rem,4vw,40px)] font-normal leading-[47px] tracking-normal text-[#001529] lg:text-[40px]">
+          {heading}
+        </h2>
         <p className="mt-4 max-w-3xl text-base leading-relaxed text-[#4B5563] sm:text-lg">
           {description}
         </p>
 
         <div className="mt-10 grid grid-cols-1 gap-6 md:mt-12 md:grid-cols-2 lg:grid-cols-4">
-          {departments.map((department) => {
-            const Icon = department.icon
-
-            return (
-              <article
-                key={department.title}
-                className="flex h-full flex-col rounded-2xl border border-[#E5E7EB] bg-white p-8 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md"
+          {departments.map((department) => (
+            <article
+              key={department.title}
+              className="flex h-full flex-col items-start rounded-2xl bg-[#E9E9E980] p-6 sm:p-8"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={department.iconSrc}
+                alt=""
+                aria-hidden="true"
+                className="h-6 w-auto shrink-0 self-start"
+                loading="lazy"
+                decoding="async"
+              />
+              <h3 className="mt-4 text-[24px] font-normal leading-[30px] tracking-normal text-[#001529]">
+                {department.title}
+              </h3>
+              <p className="mt-3 flex-1 text-sm leading-relaxed text-[#4B5563]">
+                {department.description}
+              </p>
+              <Link
+                href={department.href}
+                className="mt-6 inline-flex items-center gap-1 text-sm font-medium text-[#008C95] transition-opacity hover:opacity-80"
               >
-                <Icon className="size-6 text-[#001529]" aria-hidden="true" strokeWidth={1.75} />
-                <h3 className="mt-4 text-lg font-bold leading-snug text-[#001529]">
-                  {department.title}
-                </h3>
-                <p className="mt-3 flex-1 text-sm leading-relaxed text-[#4B5563]">
-                  {department.description}
-                </p>
-                <Link
-                  href={department.href}
-                  className="mt-6 inline-flex items-center gap-1 text-sm font-medium text-[#008C95] transition-opacity hover:opacity-80"
-                >
-                  {department.linkLabel}
-                  <ArrowRight className="size-4 shrink-0" aria-hidden="true" />
-                </Link>
-              </article>
-            )
-          })}
+                {department.linkLabel}
+                <ArrowRight className="size-4 shrink-0" aria-hidden="true" />
+              </Link>
+            </article>
+          ))}
         </div>
       </div>
     </section>

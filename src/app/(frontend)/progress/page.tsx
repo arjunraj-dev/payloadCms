@@ -46,7 +46,6 @@ export default async function ProgressPage() {
           status: card.title,
           color: card.color,
           backgroundImage: mediaUrl(card.image),
-          icon: iconMap[card.icon] ?? Briefcase,
           title: card.title,
           description: card.description,
         }))}
@@ -55,15 +54,27 @@ export default async function ProgressPage() {
       <InitiativeGridSection
         title={progress.modernizeGovernment.title}
         description={progress.modernizeGovernment.description}
-        initiatives={(progress.modernizeGovernment.cards ?? []).map(toCard)}
+        initiatives={(progress.modernizeGovernment.cards ?? []).map((card) => ({
+          label: card.label,
+          labelColor: card.labelColor as InitiativeLabelColor,
+          title: card.title,
+          description: card.description,
+        }))}
       />
 
       <ProgramSectionCards
         title={progress.buildFutureReadiness.title}
         description={progress.buildFutureReadiness.description}
-        backgroundColor="bg-[#F8F9FA]"
         theme="light"
-        cards={(progress.buildFutureReadiness.cards ?? []).map(toCard)}
+        cardSurface="muted"
+        sectionTypography="nunito"
+        iconSrc="/Mordernize-gov.svg"
+        cards={(progress.buildFutureReadiness.cards ?? []).map((card) => ({
+          label: card.label,
+          labelColor: card.labelColor as ProgramLabelColor,
+          title: card.title,
+          description: card.description,
+        }))}
       />
 
       <ProgramSectionCards
@@ -72,15 +83,29 @@ export default async function ProgressPage() {
         backgroundImage={mediaUrl(progress.developBahamianTalent.backgroundImage)}
         theme="accent"
         cardSurface="cream"
-        cards={(progress.developBahamianTalent.cards ?? []).map(toCard)}
+        sectionTypography="nunito"
+        iconSrc="/Mordernize-gov.svg"
+        cards={(progress.developBahamianTalent.cards ?? []).map((card) => ({
+          label: card.label,
+          labelColor: card.labelColor as ProgramLabelColor,
+          title: card.title,
+          description: card.description,
+        }))}
       />
 
       <ProgramSectionCards
         title={progress.driveNationalDevelopment.title}
         description={progress.driveNationalDevelopment.description}
-        backgroundColor="bg-[#F8F9FA]"
         theme="light"
-        cards={(progress.driveNationalDevelopment.cards ?? []).map(toCard)}
+        cardSurface="muted"
+        sectionTypography="nunito"
+        iconSrc="/Mordernize-gov.svg"
+        cards={(progress.driveNationalDevelopment.cards ?? []).map((card) => ({
+          label: card.label,
+          labelColor: card.labelColor as ProgramLabelColor,
+          title: card.title,
+          description: card.description,
+        }))}
       />
 
       <CountryFutureSection

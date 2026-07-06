@@ -58,7 +58,12 @@ export function MinisterProfileSection({
   return (
     <section className={cn('py-12 md:py-16 lg:py-20', backgroundColor)}>
       <div className="container">
-        <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-[2fr_3fr] lg:gap-16">
+        <div
+          className={cn(
+            'grid grid-cols-1 gap-8 lg:grid-cols-[2fr_3fr] lg:gap-16',
+            variant === 'profile' ? 'lg:items-center' : 'items-start',
+          )}
+        >
           <div className="order-1 overflow-hidden rounded-3xl bg-[#E8ECEF]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
@@ -71,10 +76,9 @@ export function MinisterProfileSection({
           </div>
 
           <div className="order-2">
-            <p className="text-xs font-semibold uppercase tracking-wider text-[#4B5563]">{label}</p>
-
             {variant === 'quote' ? (
               <>
+                <p className="text-xs font-semibold uppercase tracking-wider text-[#4B5563]">{label}</p>
                 <p className="mt-4 text-xl leading-relaxed text-[#001529] sm:text-2xl">
                   {bioParagraphs[0]}
                 </p>
@@ -83,8 +87,15 @@ export function MinisterProfileSection({
               </>
             ) : (
               <>
-                <h3 className="mt-4 text-2xl font-bold text-[#001529] sm:text-3xl">{name}</h3>
-                <p className="mt-2 text-base font-medium text-[#4B5563] sm:text-lg">{title}</p>
+                <p className="text-[clamp(1.25rem,3vw,28px)] font-normal leading-[47px] tracking-normal text-[#001529] lg:text-[28px]">
+                  {label}
+                </p>
+                <h3 className="mt-4 text-[clamp(1.75rem,4vw,40px)] font-normal leading-[22px] tracking-normal text-[#001529] lg:text-[40px]">
+                  {name}
+                </h3>
+                <p className="mt-2 text-[16px] font-medium leading-[24px] tracking-normal text-[#4B5563]">
+                  {title}
+                </p>
                 {bioParagraphs.map((paragraph, index) => (
                   <p
                     key={index}
