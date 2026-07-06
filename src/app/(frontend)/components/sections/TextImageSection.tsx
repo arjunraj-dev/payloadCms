@@ -89,15 +89,6 @@ export function TextImageSection({
                   decoding="async"
                   className="aspect-[4/3] h-full w-full object-cover lg:aspect-auto lg:min-h-full"
                 />
-                {isImageLeft && (
-                  /* eslint-disable-next-line @next/next/no-img-element */
-                  <img
-                    alt=""
-                    aria-hidden="true"
-                    src="/images/show-you-chevron.png"
-                    className="pointer-events-none absolute right-0 top-1/2 z-10 hidden h-auto w-10 -translate-y-1/2 lg:block xl:w-12"
-                  />
-                )}
               </div>
               <div className="flex flex-col justify-center bg-[#E9E9E980] p-6 md:p-10 lg:w-1/2 lg:p-12">
                 {textContent}
