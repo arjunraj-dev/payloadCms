@@ -3,6 +3,7 @@
 import { cn } from '@/utilities/ui'
 import Link from 'next/link'
 import React, { useEffect, useMemo, useState } from 'react'
+import { GravityWaveBackground } from '@/app/(frontend)/components/shared/GravityWaveBackground'
 
 export interface HeroCTA {
   label: string
@@ -18,7 +19,6 @@ export interface HeroSectionProps {
   backgroundImage?: string | string[]
   /** Time each image stays on screen before crossfading to the next, in ms. */
   backgroundImageInterval?: number
-  patternImage?: string
   showPattern?: boolean
   imageClassName?: string
   align?: 'left' | 'center'
@@ -36,7 +36,6 @@ export function HeroSection({
   secondaryCTA,
   backgroundImage,
   backgroundImageInterval = 5000,
-  patternImage = '/images/Isolation_Mode.png',
   showPattern = true,
   imageClassName,
   align = 'left',
@@ -66,15 +65,7 @@ export function HeroSection({
   return (
     <section className="relative overflow-hidden bg-white">
       {showPattern && !hasImage && (
-        <img
-          src={patternImage}
-          alt=""
-          aria-hidden="true"
-          className={cn(
-            'pointer-events-none absolute inset-0 z-0 h-full w-full object-cover',
-            isCentered && 'object-[center_top]',
-          )}
-        />
+        <GravityWaveBackground className="pointer-events-none absolute inset-0 z-0 h-full w-full" />
       )}
       <div
         className={cn(
@@ -98,12 +89,7 @@ export function HeroSection({
             )}
           >
             {showPattern && hasImage && (
-              <img
-                src={patternImage}
-                alt=""
-                aria-hidden="true"
-                className="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover"
-              />
+              <GravityWaveBackground className="pointer-events-none absolute inset-0 z-0 h-full w-full" />
             )}
             <div className="relative z-10">
               <h1

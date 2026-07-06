@@ -44,37 +44,64 @@ export const Media: CollectionConfig = {
     staticDir: path.resolve(dirname, '../../public/media'),
     adminThumbnail: 'thumbnail',
     focalPoint: true,
+    // Converts any uploaded format (png, jpg, gif, etc.) to webp before it's
+    // saved/uploaded to storage. Each imageSize below needs its own
+    // formatOptions too, since Payload formats each resized variant separately.
+    formatOptions: {
+      format: 'webp',
+    },
     imageSizes: [
       {
         name: 'thumbnail',
         width: 300,
+        formatOptions: {
+          format: 'webp',
+        },
       },
       {
         name: 'square',
         width: 500,
         height: 500,
+        formatOptions: {
+          format: 'webp',
+        },
       },
       {
         name: 'small',
         width: 600,
+        formatOptions: {
+          format: 'webp',
+        },
       },
       {
         name: 'medium',
         width: 900,
+        formatOptions: {
+          format: 'webp',
+        },
       },
       {
         name: 'large',
         width: 1400,
+        formatOptions: {
+          format: 'webp',
+        },
       },
       {
         name: 'xlarge',
         width: 1920,
+        formatOptions: {
+          format: 'webp',
+        },
       },
       {
         name: 'og',
         width: 1200,
         height: 630,
         crop: 'center',
+        formatOptions: {
+          format: 'webp',
+        },
       },
     ],
   },
