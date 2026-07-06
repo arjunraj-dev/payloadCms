@@ -31,7 +31,6 @@ export default async function AboutPage() {
         subtitle={paragraphs(about.hero.subtitle)}
         backgroundImage={mediaUrl(about.hero.image)}
         showPattern
-        patternImage="/images/Isolation_Mode.png"
         imageClassName="object-right"
       />
 
