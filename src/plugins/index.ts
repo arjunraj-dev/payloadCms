@@ -92,7 +92,9 @@ export const plugins: Plugin[] = [
   }),
   s3Storage({
     collections: {
-      media: true,
+      media: {
+        prefix: process.env.S3_PREFIX || undefined,
+      },
     },
     bucket: process.env.S3_BUCKET || '',
     config: {
@@ -102,9 +104,11 @@ export const plugins: Plugin[] = [
         accessKeyId: process.env.S3_ACCESS_KEY || '',
         secretAccessKey: process.env.S3_SECRET_KEY || '',
       },
-      // Required for S3-compatible mocks/servers like LocalStack that
-      // don't support virtual-hosted-style bucket URLs.
-      forcePathStyle: true,
+      // Required for S3-compatible mocks/servers like LocalStack/floci that
+      // don't support virtual-hosted-style bucket URLs. Real AWS S3 uses
+      // virtual-hosted style, so this is only forced when a custom
+      // endpoint (i.e. a local mock) is configured.
+      forcePathStyle: Boolean(process.env.S3_ENDPOINT),
     },
   }),
 ]
