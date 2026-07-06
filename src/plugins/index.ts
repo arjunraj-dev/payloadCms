@@ -94,6 +94,24 @@ export const plugins: Plugin[] = [
     collections: {
       media: {
         prefix: process.env.S3_PREFIX || undefined,
+        // Serve files through the CloudFront distribution in front of the
+        // bucket (when configured) instead of proxying through Payload or
+        // hitting S3 directly. Falls back to Payload's default behavior
+        // (local proxy / direct S3 URL) when S3_CDN_URL isn't set.
+        //
+        // NOTE: the CDN's origin path is already configured to point at the
+        // S3_PREFIX folder (e.g. "dev-assets"), so it must NOT be included
+        // again here or CloudFront will look for "dev-assets/dev-assets/..."
+        // in the bucket and return 403 AccessDenied.
+        ...(process.env.S3_CDN_URL
+          ? {
+              disablePayloadAccessControl: true,
+              generateFileURL: ({ filename }) => {
+                const cdnUrl = process.env.S3_CDN_URL!.replace(/\/$/, '')
+                return `${cdnUrl}/${filename}`
+              },
+            }
+          : {}),
       },
     },
     bucket: process.env.S3_BUCKET || '',

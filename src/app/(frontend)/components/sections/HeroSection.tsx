@@ -24,6 +24,10 @@ export interface HeroSectionProps {
   /** Time each image stays on screen before crossfading to the next, in ms. */
   backgroundImageInterval?: number
   showPattern?: boolean
+  /** RGB triplet used for the background pattern's particle color, e.g. "12,27,58". Only used when `patternVariant="solid"`. */
+  patternColor?: string
+  /** "aurora" (default) is the flowing brand-colored gradient effect. "solid" uses a single flat `patternColor`. */
+  patternVariant?: 'solid' | 'aurora'
   imageClassName?: string
   align?: 'left' | 'center'
   /** Figma display heading — Nunito Sans 56.69px / 61.42px line-height */
@@ -41,6 +45,8 @@ export function HeroSection({
   backgroundImage,
   backgroundImageInterval = 5000,
   showPattern = true,
+  patternColor,
+  patternVariant,
   imageClassName,
   align = 'left',
   titleVariant = 'default',
@@ -75,7 +81,11 @@ export function HeroSection({
   return (
     <section className="relative overflow-hidden bg-white">
       {showPattern && !hasImage && (
-        <GravityWaveBackground className="pointer-events-none absolute inset-0 z-0 h-full w-full" />
+        <GravityWaveBackground
+          className="pointer-events-none absolute inset-0 z-0 h-full w-full"
+          particleColor={patternColor}
+          variant={patternVariant}
+        />
       )}
       <div
         className={cn(
@@ -105,7 +115,11 @@ export function HeroSection({
             )}
           >
             {showPattern && hasImage && (
-              <GravityWaveBackground className="pointer-events-none absolute inset-0 z-0 h-full w-full" />
+              <GravityWaveBackground
+                className="pointer-events-none absolute inset-0 z-0 h-full w-full"
+                particleColor={patternColor}
+                variant={patternVariant}
+              />
             )}
             <StaggerGroup
               as="div"

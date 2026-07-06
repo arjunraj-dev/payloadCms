@@ -2,10 +2,41 @@
 
 import React, { useEffect, useRef } from 'react'
 
+type RGB = [number, number, number]
+
+// Brand teal -> cyan -> soft blue, looping back to teal so the shift is seamless.
+const AURORA_PALETTE: RGB[] = [
+  [0, 75, 77], // #004B4D deep teal
+  [0, 140, 149], // #008C95 bright teal/cyan (primary brand accent)
+  [32, 132, 255], // #2084FF soft blue accent (matches "in progress" status color)
+  [0, 140, 149], // back to cyan for a smooth loop
+  [0, 75, 77], // back to deep teal for a smooth loop
+]
+
+function samplePalette(palette: RGB[], t: number): RGB {
+  const clamped = ((t % 1) + 1) % 1
+  const segment = clamped * (palette.length - 1)
+  const index = Math.floor(segment)
+  const frac = segment - index
+  const a = palette[index]
+  const b = palette[Math.min(index + 1, palette.length - 1)]
+  return [
+    a[0] + (b[0] - a[0]) * frac,
+    a[1] + (b[1] - a[1]) * frac,
+    a[2] + (b[2] - a[2]) * frac,
+  ]
+}
+
 export interface GravityWaveBackgroundProps {
   className?: string
-  /** RGB triplet used for the particle color, e.g. "12,27,58" */
+  /** RGB triplet used for the particle color, e.g. "12,27,58". Only used when `variant="solid"`. */
   particleColor?: string
+  /**
+   * "aurora" (default) gives an Apple-Intelligence-style effect: particles flow through a
+   * shifting brand-colored gradient (deep teal -> cyan -> soft blue) that reacts to the wave
+   * surface instead of one flat tone. "solid" renders every particle in `particleColor`.
+   */
+  variant?: 'solid' | 'aurora'
 }
 
 /**
@@ -17,6 +48,7 @@ export interface GravityWaveBackgroundProps {
 export function GravityWaveBackground({
   className,
   particleColor = '12,27,58',
+  variant = 'aurora',
 }: GravityWaveBackgroundProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
@@ -33,6 +65,8 @@ export function GravityWaveBackground({
       '(prefers-reduced-motion: reduce)',
     ).matches
 
+    const solidColor: RGB = particleColor.split(',').map((n) => Number(n.trim())) as RGB
+
     const meshWidth = 2000
     const meshHeight = 640
     const gridCols = 72
@@ -47,7 +81,14 @@ export function GravityWaveBackground({
     let rafId = 0
 
     type Particle = { u: number; v: number; phase: number }
-    type DrawPoint = { x: number; y: number; radius: number; alpha: number; depth: number }
+    type DrawPoint = {
+      x: number
+      y: number
+      radius: number
+      alpha: number
+      depth: number
+      color: RGB
+    }
 
     const particles: Particle[] = []
     const drawBuffer: DrawPoint[] = []
@@ -143,7 +184,12 @@ export function GravityWaveBackground({
         const radius = 1.2 + crest * 0.58 + slope * 0.32
         const alpha = (0.065 + crest * 0.085 + slope * 0.06) * edgeFade
 
-        drawBuffer.push({ x, y, radius, alpha, depth: h })
+        const color: RGB =
+          variant === 'aurora'
+            ? samplePalette(AURORA_PALETTE, p.u * 0.55 + p.v * 0.25 + crest * 0.3 + time * 0.045)
+            : solidColor
+
+        drawBuffer.push({ x, y, radius, alpha, depth: h, color })
       }
 
       drawBuffer.sort((a, b) => a.depth - b.depth)
@@ -152,7 +198,7 @@ export function GravityWaveBackground({
         if (d.alpha < 0.01) continue
         ctx.beginPath()
         ctx.arc(d.x, d.y, d.radius, 0, Math.PI * 2)
-        ctx.fillStyle = `rgba(${particleColor},${d.alpha})`
+        ctx.fillStyle = `rgba(${d.color[0]},${d.color[1]},${d.color[2]},${d.alpha})`
         ctx.fill()
       }
     }
@@ -213,7 +259,7 @@ export function GravityWaveBackground({
       window.removeEventListener('pointermove', handlePointerMove)
       window.removeEventListener('pointerleave', handlePointerLeave)
     }
-  }, [particleColor])
+  }, [particleColor, variant])
 
   return <canvas ref={canvasRef} aria-hidden="true" className={className} />
 }
