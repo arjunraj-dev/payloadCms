@@ -20,7 +20,15 @@ export const HomePage: GlobalConfig = {
               name: 'hero',
               type: 'group',
               fields: [
-                { name: 'title', type: 'text', required: true },
+                {
+                  name: 'title',
+                  type: 'textarea',
+                  required: true,
+                  admin: {
+                    description:
+                      'Press Enter for a new line. Example: "Building today what" on line 1, "The Bahamas needs to win tomorrow." on line 2.',
+                  },
+                },
                 { name: 'subtitle', type: 'textarea', required: true },
                 ctaField('primaryCTA', 'Primary Button', true),
                 ctaField('secondaryCTA', 'Secondary Button'),

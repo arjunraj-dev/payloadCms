@@ -34,6 +34,7 @@ export const enum__pages_v_version_hero_type = pgEnum('enum__pages_v_version_her
 export const enum__pages_v_version_status = pgEnum('enum__pages_v_version_status', ['draft', 'published'])
 export const enum_posts_status = pgEnum('enum_posts_status', ['draft', 'published'])
 export const enum__posts_v_version_status = pgEnum('enum__posts_v_version_status', ['draft', 'published'])
+export const enum_updates_category = pgEnum('enum_updates_category', ['announcements', 'events', 'statements', 'media'])
 export const enum_redirects_to_type = pgEnum('enum_redirects_to_type', ['reference', 'custom'])
 export const enum_forms_confirmation_type = pgEnum('enum_forms_confirmation_type', ['message', 'redirect'])
 export const enum_payload_jobs_log_task_slug = pgEnum('enum_payload_jobs_log_task_slug', ['inline', 'schedulePublish'])
@@ -43,17 +44,23 @@ export const enum_payload_folders_folder_type = pgEnum('enum_payload_folders_fol
 export const enum_homepage_show_you_cards_label_color = pgEnum('enum_homepage_show_you_cards_label_color', ['green', 'blue', 'orange'])
 export const enum_homepage_initiatives_cards_icon = pgEnum('enum_homepage_initiatives_cards_icon', ['briefcase', 'target', 'users', 'trending-up'])
 export const enum_about_page_text_image_sections_image_position = pgEnum('enum_about_page_text_image_sections_image_position', ['left', 'right'])
-export const enum_about_page_mission_cards_icon = pgEnum('enum_about_page_mission_cards_icon', ['briefcase', 'target', 'users', 'trending-up', 'bar-chart', 'building', 'smartphone', 'shield', 'monitor', 'refresh-cw', 'calendar', 'lightbulb', 'folder', 'cpu', 'graduation-cap', 'book-open'])
-export const enum_about_page_departments_items_icon = pgEnum('enum_about_page_departments_items_icon', ['briefcase', 'target', 'users', 'trending-up', 'bar-chart', 'building', 'smartphone', 'shield', 'monitor', 'refresh-cw', 'calendar', 'lightbulb', 'folder', 'cpu', 'graduation-cap', 'book-open'])
-export const enum_progress_page_status_cards_icon = pgEnum('enum_progress_page_status_cards_icon', ['briefcase', 'target', 'users', 'trending-up', 'bar-chart', 'building', 'smartphone', 'shield', 'monitor', 'refresh-cw', 'calendar', 'lightbulb', 'folder', 'cpu', 'graduation-cap', 'book-open'])
-export const enum_progress_page_modernize_government_cards_icon = pgEnum('enum_progress_page_modernize_government_cards_icon', ['briefcase', 'target', 'users', 'trending-up', 'bar-chart', 'building', 'smartphone', 'shield', 'monitor', 'refresh-cw', 'calendar', 'lightbulb', 'folder', 'cpu', 'graduation-cap', 'book-open'])
+export const enum_about_page_mission_cards_icon = pgEnum('enum_about_page_mission_cards_icon', ['briefcase', 'target', 'users', 'trending-up', 'bar-chart', 'building', 'smartphone', 'shield', 'monitor', 'refresh-cw', 'calendar', 'lightbulb', 'folder', 'cpu', 'graduation-cap', 'book-open', 'handshake', 'megaphone'])
+export const enum_about_page_policy_areas_policies_status = pgEnum('enum_about_page_policy_areas_policies_status', ['active', 'comingSoon'])
+export const enum_about_page_departments_items_icon = pgEnum('enum_about_page_departments_items_icon', ['briefcase', 'target', 'users', 'trending-up', 'bar-chart', 'building', 'smartphone', 'shield', 'monitor', 'refresh-cw', 'calendar', 'lightbulb', 'folder', 'cpu', 'graduation-cap', 'book-open', 'handshake', 'megaphone'])
+export const enum_progress_page_status_cards_icon = pgEnum('enum_progress_page_status_cards_icon', ['briefcase', 'target', 'users', 'trending-up', 'bar-chart', 'building', 'smartphone', 'shield', 'monitor', 'refresh-cw', 'calendar', 'lightbulb', 'folder', 'cpu', 'graduation-cap', 'book-open', 'handshake', 'megaphone'])
+export const enum_progress_page_modernize_government_cards_icon = pgEnum('enum_progress_page_modernize_government_cards_icon', ['briefcase', 'target', 'users', 'trending-up', 'bar-chart', 'building', 'smartphone', 'shield', 'monitor', 'refresh-cw', 'calendar', 'lightbulb', 'folder', 'cpu', 'graduation-cap', 'book-open', 'handshake', 'megaphone'])
 export const enum_progress_page_modernize_government_cards_label_color = pgEnum('enum_progress_page_modernize_government_cards_label_color', ['green', 'blue', 'orange', 'dark', 'planned'])
-export const enum_progress_page_build_future_readiness_cards_icon = pgEnum('enum_progress_page_build_future_readiness_cards_icon', ['briefcase', 'target', 'users', 'trending-up', 'bar-chart', 'building', 'smartphone', 'shield', 'monitor', 'refresh-cw', 'calendar', 'lightbulb', 'folder', 'cpu', 'graduation-cap', 'book-open'])
+export const enum_progress_page_build_future_readiness_cards_icon = pgEnum('enum_progress_page_build_future_readiness_cards_icon', ['briefcase', 'target', 'users', 'trending-up', 'bar-chart', 'building', 'smartphone', 'shield', 'monitor', 'refresh-cw', 'calendar', 'lightbulb', 'folder', 'cpu', 'graduation-cap', 'book-open', 'handshake', 'megaphone'])
 export const enum_progress_page_build_future_readiness_cards_label_color = pgEnum('enum_progress_page_build_future_readiness_cards_label_color', ['green', 'blue', 'orange', 'dark', 'planned'])
-export const enum_progress_page_develop_bahamian_talent_cards_icon = pgEnum('enum_progress_page_develop_bahamian_talent_cards_icon', ['briefcase', 'target', 'users', 'trending-up', 'bar-chart', 'building', 'smartphone', 'shield', 'monitor', 'refresh-cw', 'calendar', 'lightbulb', 'folder', 'cpu', 'graduation-cap', 'book-open'])
+export const enum_progress_page_develop_bahamian_talent_cards_icon = pgEnum('enum_progress_page_develop_bahamian_talent_cards_icon', ['briefcase', 'target', 'users', 'trending-up', 'bar-chart', 'building', 'smartphone', 'shield', 'monitor', 'refresh-cw', 'calendar', 'lightbulb', 'folder', 'cpu', 'graduation-cap', 'book-open', 'handshake', 'megaphone'])
 export const enum_progress_page_develop_bahamian_talent_cards_label_color = pgEnum('enum_progress_page_develop_bahamian_talent_cards_label_color', ['green', 'blue', 'orange', 'dark', 'planned'])
-export const enum_progress_page_drive_national_development_cards_icon = pgEnum('enum_progress_page_drive_national_development_cards_icon', ['briefcase', 'target', 'users', 'trending-up', 'bar-chart', 'building', 'smartphone', 'shield', 'monitor', 'refresh-cw', 'calendar', 'lightbulb', 'folder', 'cpu', 'graduation-cap', 'book-open'])
+export const enum_progress_page_drive_national_development_cards_icon = pgEnum('enum_progress_page_drive_national_development_cards_icon', ['briefcase', 'target', 'users', 'trending-up', 'bar-chart', 'building', 'smartphone', 'shield', 'monitor', 'refresh-cw', 'calendar', 'lightbulb', 'folder', 'cpu', 'graduation-cap', 'book-open', 'handshake', 'megaphone'])
 export const enum_progress_page_drive_national_development_cards_label_color = pgEnum('enum_progress_page_drive_national_development_cards_label_color', ['green', 'blue', 'orange', 'dark', 'planned'])
+export const enum_get_involved_page_categories_section_categories_icon = pgEnum('enum_get_involved_page_categories_section_categories_icon', ['briefcase', 'target', 'users', 'trending-up', 'bar-chart', 'building', 'smartphone', 'shield', 'monitor', 'refresh-cw', 'calendar', 'lightbulb', 'folder', 'cpu', 'graduation-cap', 'book-open', 'handshake', 'megaphone'])
+export const enum_get_involved_page_follow_the_work_social_links_platform = pgEnum('enum_get_involved_page_follow_the_work_social_links_platform', ['facebook', 'instagram', 'linkedin', 'x'])
+export const enum_get_involved_page_reach_out_image_position = pgEnum('enum_get_involved_page_reach_out_image_position', ['left', 'right'])
+export const enum_contact_page_enquiries_icon = pgEnum('enum_contact_page_enquiries_icon', ['briefcase', 'target', 'users', 'trending-up', 'bar-chart', 'building', 'smartphone', 'shield', 'monitor', 'refresh-cw', 'calendar', 'lightbulb', 'folder', 'cpu', 'graduation-cap', 'book-open', 'handshake', 'megaphone'])
+export const enum_contact_page_follow_us_social_links_platform = pgEnum('enum_contact_page_follow_us_social_links_platform', ['facebook', 'instagram', 'linkedin', 'x'])
 
 export const pages_hero_links = pgTable('pages_hero_links', {
   _order: integer('_order').notNull(),
@@ -628,6 +635,40 @@ export const _posts_v_rels = pgTable('_posts_v_rels', {
       foreignColumns: [users.id],
       name: '_posts_v_rels_users_fk'
     }).onDelete('cascade'),
+]
+)
+
+
+export const updates_content = pgTable('updates_content', {
+  _order: integer('_order').notNull(),
+  _parentID: integer('_parent_id').notNull(),
+  id: varchar('id').primaryKey(),
+  text: varchar('text').notNull(),
+}, (columns) => [
+    index('updates_content_order_idx').on(columns._order), index('updates_content_parent_id_idx').on(columns._parentID), foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [updates.id],
+      name: 'updates_content_parent_id_fk'
+    }).onDelete('cascade'),
+]
+)
+
+
+export const updates = pgTable('updates', {
+  id: serial('id').primaryKey(),
+  title: varchar('title').notNull(),
+  generateSlug: boolean('generate_slug').default(true),
+  slug: varchar('slug').notNull(),
+  image: integer('image_id').notNull().references(() => media.id, {
+      onDelete: 'set null'
+  }),
+  date: timestamp('date', {mode: 'string',withTimezone: true,precision: 3}).notNull(),
+  category: enum_updates_category('category').notNull().default("announcements"),
+  excerpt: varchar('excerpt').notNull(),
+  updatedAt: timestamp('updated_at', {mode: 'string',withTimezone: true,precision: 3}).defaultNow().notNull(),
+  createdAt: timestamp('created_at', {mode: 'string',withTimezone: true,precision: 3}).defaultNow().notNull(),
+}, (columns) => [
+    uniqueIndex('updates_slug_idx').on(columns.slug), index('updates_image_idx').on(columns.image), index('updates_updated_at_idx').on(columns.updatedAt), index('updates_created_at_idx').on(columns.createdAt),
 ]
 )
 
@@ -1222,6 +1263,7 @@ export const payload_locked_documents_rels = pgTable('payload_locked_documents_r
   path: varchar('path').notNull(),
   pagesID: integer('pages_id'),
   postsID: integer('posts_id'),
+  updatesID: integer('updates_id'),
   mediaID: integer('media_id'),
   categoriesID: integer('categories_id'),
   usersID: integer('users_id'),
@@ -1231,7 +1273,7 @@ export const payload_locked_documents_rels = pgTable('payload_locked_documents_r
   searchID: integer('search_id'),
   'payload-foldersID': integer('payload_folders_id'),
 }, (columns) => [
-    index('payload_locked_documents_rels_order_idx').on(columns.order), index('payload_locked_documents_rels_parent_idx').on(columns.parent), index('payload_locked_documents_rels_path_idx').on(columns.path), index('payload_locked_documents_rels_pages_id_idx').on(columns.pagesID), index('payload_locked_documents_rels_posts_id_idx').on(columns.postsID), index('payload_locked_documents_rels_media_id_idx').on(columns.mediaID), index('payload_locked_documents_rels_categories_id_idx').on(columns.categoriesID), index('payload_locked_documents_rels_users_id_idx').on(columns.usersID), index('payload_locked_documents_rels_redirects_id_idx').on(columns.redirectsID), index('payload_locked_documents_rels_forms_id_idx').on(columns.formsID), index('payload_locked_documents_rels_form_submissions_id_idx').on(columns['form-submissionsID']), index('payload_locked_documents_rels_search_id_idx').on(columns.searchID), index('payload_locked_documents_rels_payload_folders_id_idx').on(columns['payload-foldersID']), foreignKey({
+    index('payload_locked_documents_rels_order_idx').on(columns.order), index('payload_locked_documents_rels_parent_idx').on(columns.parent), index('payload_locked_documents_rels_path_idx').on(columns.path), index('payload_locked_documents_rels_pages_id_idx').on(columns.pagesID), index('payload_locked_documents_rels_posts_id_idx').on(columns.postsID), index('payload_locked_documents_rels_updates_id_idx').on(columns.updatesID), index('payload_locked_documents_rels_media_id_idx').on(columns.mediaID), index('payload_locked_documents_rels_categories_id_idx').on(columns.categoriesID), index('payload_locked_documents_rels_users_id_idx').on(columns.usersID), index('payload_locked_documents_rels_redirects_id_idx').on(columns.redirectsID), index('payload_locked_documents_rels_forms_id_idx').on(columns.formsID), index('payload_locked_documents_rels_form_submissions_id_idx').on(columns['form-submissionsID']), index('payload_locked_documents_rels_search_id_idx').on(columns.searchID), index('payload_locked_documents_rels_payload_folders_id_idx').on(columns['payload-foldersID']), foreignKey({
       columns: [columns['parent']],
       foreignColumns: [payload_locked_documents.id],
       name: 'payload_locked_documents_rels_parent_fk'
@@ -1243,6 +1285,10 @@ export const payload_locked_documents_rels = pgTable('payload_locked_documents_r
       columns: [columns['postsID']],
       foreignColumns: [posts.id],
       name: 'payload_locked_documents_rels_posts_fk'
+    }).onDelete('cascade'), foreignKey({
+      columns: [columns['updatesID']],
+      foreignColumns: [updates.id],
+      name: 'payload_locked_documents_rels_updates_fk'
     }).onDelete('cascade'), foreignKey({
       columns: [columns['mediaID']],
       foreignColumns: [media.id],
@@ -1408,8 +1454,11 @@ export const footer = pgTable('footer', {
       onDelete: 'set null'
   }),
   tagline: varchar('tagline').notNull(),
+  secondaryTagline: varchar('secondary_tagline'),
   contact_phoneLabel: varchar('contact_phone_label'),
   contact_phoneHref: varchar('contact_phone_href'),
+  contact_tollFreeLabel: varchar('contact_toll_free_label'),
+  contact_tollFreeHref: varchar('contact_toll_free_href'),
   contact_email: varchar('contact_email'),
   contact_address: varchar('contact_address'),
   copyrightText: varchar('copyright_text').notNull(),
@@ -1643,7 +1692,8 @@ export const about_page_policy_areas_policies = pgTable('about_page_policy_areas
   _parentID: integer('_parent_id').notNull(),
   id: varchar('id').primaryKey(),
   label: varchar('label').notNull(),
-  href: varchar('href').notNull(),
+  status: enum_about_page_policy_areas_policies_status('status').notNull().default("active"),
+  href: varchar('href'),
 }, (columns) => [
     index('about_page_policy_areas_policies_order_idx').on(columns._order), index('about_page_policy_areas_policies_parent_id_idx').on(columns._parentID), foreignKey({
       columns: [columns['_parentID']],
@@ -1866,6 +1916,190 @@ export const progress_page = pgTable('progress_page', {
   createdAt: timestamp('created_at', {mode: 'string',withTimezone: true,precision: 3}),
 }, (columns) => [
     index('progress_page_develop_bahamian_talent_develop_bahamian_t_idx').on(columns.developBahamianTalent_backgroundImage),
+]
+)
+
+
+export const updates_page = pgTable('updates_page', {
+  id: serial('id').primaryKey(),
+  hero_title: varchar('hero_title').notNull(),
+  hero_subtitle: varchar('hero_subtitle').notNull(),
+  closing_heading: varchar('closing_heading').notNull(),
+  closing_subtitle: varchar('closing_subtitle').notNull(),
+  closing_primaryButton_label: varchar('closing_primary_button_label').notNull(),
+  closing_primaryButton_href: varchar('closing_primary_button_href').notNull(),
+  updatedAt: timestamp('updated_at', {mode: 'string',withTimezone: true,precision: 3}),
+  createdAt: timestamp('created_at', {mode: 'string',withTimezone: true,precision: 3}),
+}
+)
+
+
+export const get_involved_page_hero_subtitle = pgTable('get_involved_page_hero_subtitle', {
+  _order: integer('_order').notNull(),
+  _parentID: integer('_parent_id').notNull(),
+  id: varchar('id').primaryKey(),
+  text: varchar('text').notNull(),
+}, (columns) => [
+    index('get_involved_page_hero_subtitle_order_idx').on(columns._order), index('get_involved_page_hero_subtitle_parent_id_idx').on(columns._parentID), foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [get_involved_page.id],
+      name: 'get_involved_page_hero_subtitle_parent_id_fk'
+    }).onDelete('cascade'),
+]
+)
+
+
+export const get_involved_page_categories_section_categories = pgTable('get_involved_page_categories_section_categories', {
+  _order: integer('_order').notNull(),
+  _parentID: integer('_parent_id').notNull(),
+  id: varchar('id').primaryKey(),
+  icon: enum_get_involved_page_categories_section_categories_icon('icon').notNull(),
+  image: integer('image_id').notNull().references(() => media.id, {
+      onDelete: 'set null'
+  }),
+  title: varchar('title').notNull(),
+  description: varchar('description').notNull(),
+  href: varchar('href').notNull().default("#send-message"),
+}, (columns) => [
+    index('get_involved_page_categories_section_categories_order_idx').on(columns._order), index('get_involved_page_categories_section_categories_parent_id_idx').on(columns._parentID), index('get_involved_page_categories_section_categories_image_idx').on(columns.image), foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [get_involved_page.id],
+      name: 'get_involved_page_categories_section_categories_parent_id_fk'
+    }).onDelete('cascade'),
+]
+)
+
+
+export const get_involved_page_reach_out_text = pgTable('get_involved_page_reach_out_text', {
+  _order: integer('_order').notNull(),
+  _parentID: integer('_parent_id').notNull(),
+  id: varchar('id').primaryKey(),
+  text: varchar('text').notNull(),
+}, (columns) => [
+    index('get_involved_page_reach_out_text_order_idx').on(columns._order), index('get_involved_page_reach_out_text_parent_id_idx').on(columns._parentID), foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [get_involved_page.id],
+      name: 'get_involved_page_reach_out_text_parent_id_fk'
+    }).onDelete('cascade'),
+]
+)
+
+
+export const get_involved_page_follow_the_work_social_links = pgTable('get_involved_page_follow_the_work_social_links', {
+  _order: integer('_order').notNull(),
+  _parentID: integer('_parent_id').notNull(),
+  id: varchar('id').primaryKey(),
+  platform: enum_get_involved_page_follow_the_work_social_links_platform('platform').notNull(),
+  label: varchar('label').notNull(),
+  href: varchar('href').notNull(),
+}, (columns) => [
+    index('get_involved_page_follow_the_work_social_links_order_idx').on(columns._order), index('get_involved_page_follow_the_work_social_links_parent_id_idx').on(columns._parentID), foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [get_involved_page.id],
+      name: 'get_involved_page_follow_the_work_social_links_parent_id_fk'
+    }).onDelete('cascade'),
+]
+)
+
+
+export const get_involved_page = pgTable('get_involved_page', {
+  id: serial('id').primaryKey(),
+  hero_title: varchar('hero_title').notNull(),
+  categoriesSection_heading: varchar('categories_section_heading').notNull(),
+  form_formTitle: varchar('form_form_title').notNull().default("Send us a message"),
+  form_illustrationImage: integer('form_illustration_image_id').notNull().references(() => media.id, {
+      onDelete: 'set null'
+  }),
+  reachOut_heading: varchar('reach_out_heading').notNull(),
+  reachOut_image: integer('reach_out_image_id').notNull().references(() => media.id, {
+      onDelete: 'set null'
+  }),
+  reachOut_imagePosition: enum_get_involved_page_reach_out_image_position('reach_out_image_position').default("right"),
+  followTheWork_heading: varchar('follow_the_work_heading').notNull(),
+  followTheWork_description: varchar('follow_the_work_description').notNull(),
+  followTheWork_backgroundImage: integer('follow_the_work_background_image_id').notNull().references(() => media.id, {
+      onDelete: 'set null'
+  }),
+  updatedAt: timestamp('updated_at', {mode: 'string',withTimezone: true,precision: 3}),
+  createdAt: timestamp('created_at', {mode: 'string',withTimezone: true,precision: 3}),
+}, (columns) => [
+    index('get_involved_page_form_form_illustration_image_idx').on(columns.form_illustrationImage), index('get_involved_page_reach_out_reach_out_image_idx').on(columns.reachOut_image), index('get_involved_page_follow_the_work_follow_the_work_backgr_idx').on(columns.followTheWork_backgroundImage),
+]
+)
+
+
+export const contact_page_office_info_hours = pgTable('contact_page_office_info_hours', {
+  _order: integer('_order').notNull(),
+  _parentID: integer('_parent_id').notNull(),
+  id: varchar('id').primaryKey(),
+  text: varchar('text').notNull(),
+}, (columns) => [
+    index('contact_page_office_info_hours_order_idx').on(columns._order), index('contact_page_office_info_hours_parent_id_idx').on(columns._parentID), foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [contact_page.id],
+      name: 'contact_page_office_info_hours_parent_id_fk'
+    }).onDelete('cascade'),
+]
+)
+
+
+export const contact_page_enquiries = pgTable('contact_page_enquiries', {
+  _order: integer('_order').notNull(),
+  _parentID: integer('_parent_id').notNull(),
+  id: varchar('id').primaryKey(),
+  icon: enum_contact_page_enquiries_icon('icon').notNull(),
+  title: varchar('title').notNull(),
+  description: varchar('description').notNull(),
+  email: varchar('email').notNull(),
+}, (columns) => [
+    index('contact_page_enquiries_order_idx').on(columns._order), index('contact_page_enquiries_parent_id_idx').on(columns._parentID), foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [contact_page.id],
+      name: 'contact_page_enquiries_parent_id_fk'
+    }).onDelete('cascade'),
+]
+)
+
+
+export const contact_page_follow_us_social_links = pgTable('contact_page_follow_us_social_links', {
+  _order: integer('_order').notNull(),
+  _parentID: integer('_parent_id').notNull(),
+  id: varchar('id').primaryKey(),
+  platform: enum_contact_page_follow_us_social_links_platform('platform').notNull(),
+  label: varchar('label').notNull(),
+  href: varchar('href').notNull(),
+}, (columns) => [
+    index('contact_page_follow_us_social_links_order_idx').on(columns._order), index('contact_page_follow_us_social_links_parent_id_idx').on(columns._parentID), foreignKey({
+      columns: [columns['_parentID']],
+      foreignColumns: [contact_page.id],
+      name: 'contact_page_follow_us_social_links_parent_id_fk'
+    }).onDelete('cascade'),
+]
+)
+
+
+export const contact_page = pgTable('contact_page', {
+  id: serial('id').primaryKey(),
+  hero_title: varchar('hero_title').notNull(),
+  hero_subtitle: varchar('hero_subtitle').notNull(),
+  hero_secondaryCTA_label: varchar('hero_secondary_c_t_a_label'),
+  hero_secondaryCTA_href: varchar('hero_secondary_c_t_a_href'),
+  officeInfo_address: varchar('office_info_address').notNull(),
+  officeInfo_phone: varchar('office_info_phone').notNull(),
+  officeInfo_email: varchar('office_info_email').notNull(),
+  officeInfo_image: integer('office_info_image_id').notNull().references(() => media.id, {
+      onDelete: 'set null'
+  }),
+  followUs_heading: varchar('follow_us_heading').notNull(),
+  followUs_subtitle: varchar('follow_us_subtitle').notNull(),
+  closing_heading: varchar('closing_heading').notNull(),
+  closing_subtitle: varchar('closing_subtitle'),
+  closing_primaryButton_label: varchar('closing_primary_button_label').notNull(),
+  closing_primaryButton_href: varchar('closing_primary_button_href').notNull(),
+  updatedAt: timestamp('updated_at', {mode: 'string',withTimezone: true,precision: 3}),
+  createdAt: timestamp('created_at', {mode: 'string',withTimezone: true,precision: 3}),
+}, (columns) => [
+    index('contact_page_office_info_office_info_image_idx').on(columns.officeInfo_image),
 ]
 )
 
@@ -2275,6 +2509,25 @@ export const relations__posts_v = relations(_posts_v, ({ one, many }) => ({
             relationName: '_rels',
     }),
       }))
+export const relations_updates_content = relations(updates_content, ({ one }) => ({
+  _parentID: one(updates, {
+    
+    fields: [updates_content._parentID],
+    references: [updates.id],
+    relationName: 'content',
+    }),
+      }))
+export const relations_updates = relations(updates, ({ one, many }) => ({
+  image: one(media, {
+    
+    fields: [updates.image],
+    references: [media.id],
+    relationName: 'image',
+    }),
+    content: many(updates_content, {
+            relationName: 'content',
+    }),
+      }))
 export const relations_media = relations(media, ({ one }) => ({
   folder: one(payload_folders, {
     
@@ -2577,6 +2830,12 @@ export const relations_payload_locked_documents_rels = relations(payload_locked_
     fields: [payload_locked_documents_rels.postsID],
     references: [posts.id],
     relationName: 'posts',
+    }),
+    updatesID: one(updates, {
+    
+    fields: [payload_locked_documents_rels.updatesID],
+    references: [updates.id],
+    relationName: 'updates',
     }),
     mediaID: one(media, {
     
@@ -2983,6 +3242,120 @@ export const relations_progress_page = relations(progress_page, ({ one, many }) 
             relationName: 'driveNationalDevelopment_cards',
     }),
       }))
+export const relations_updates_page = relations(updates_page, () => ({
+  
+      }))
+export const relations_get_involved_page_hero_subtitle = relations(get_involved_page_hero_subtitle, ({ one }) => ({
+  _parentID: one(get_involved_page, {
+    
+    fields: [get_involved_page_hero_subtitle._parentID],
+    references: [get_involved_page.id],
+    relationName: 'hero_subtitle',
+    }),
+      }))
+export const relations_get_involved_page_categories_section_categories = relations(get_involved_page_categories_section_categories, ({ one }) => ({
+  _parentID: one(get_involved_page, {
+    
+    fields: [get_involved_page_categories_section_categories._parentID],
+    references: [get_involved_page.id],
+    relationName: 'categoriesSection_categories',
+    }),
+    image: one(media, {
+    
+    fields: [get_involved_page_categories_section_categories.image],
+    references: [media.id],
+    relationName: 'image',
+    }),
+      }))
+export const relations_get_involved_page_reach_out_text = relations(get_involved_page_reach_out_text, ({ one }) => ({
+  _parentID: one(get_involved_page, {
+    
+    fields: [get_involved_page_reach_out_text._parentID],
+    references: [get_involved_page.id],
+    relationName: 'reachOut_text',
+    }),
+      }))
+export const relations_get_involved_page_follow_the_work_social_links = relations(get_involved_page_follow_the_work_social_links, ({ one }) => ({
+  _parentID: one(get_involved_page, {
+    
+    fields: [get_involved_page_follow_the_work_social_links._parentID],
+    references: [get_involved_page.id],
+    relationName: 'followTheWork_socialLinks',
+    }),
+      }))
+export const relations_get_involved_page = relations(get_involved_page, ({ one, many }) => ({
+  hero_subtitle: many(get_involved_page_hero_subtitle, {
+            relationName: 'hero_subtitle',
+    }),
+    categoriesSection_categories: many(get_involved_page_categories_section_categories, {
+            relationName: 'categoriesSection_categories',
+    }),
+    form_illustrationImage: one(media, {
+    
+    fields: [get_involved_page.form_illustrationImage],
+    references: [media.id],
+    relationName: 'form_illustrationImage',
+    }),
+    reachOut_text: many(get_involved_page_reach_out_text, {
+            relationName: 'reachOut_text',
+    }),
+    reachOut_image: one(media, {
+    
+    fields: [get_involved_page.reachOut_image],
+    references: [media.id],
+    relationName: 'reachOut_image',
+    }),
+    followTheWork_backgroundImage: one(media, {
+    
+    fields: [get_involved_page.followTheWork_backgroundImage],
+    references: [media.id],
+    relationName: 'followTheWork_backgroundImage',
+    }),
+    followTheWork_socialLinks: many(get_involved_page_follow_the_work_social_links, {
+            relationName: 'followTheWork_socialLinks',
+    }),
+      }))
+export const relations_contact_page_office_info_hours = relations(contact_page_office_info_hours, ({ one }) => ({
+  _parentID: one(contact_page, {
+    
+    fields: [contact_page_office_info_hours._parentID],
+    references: [contact_page.id],
+    relationName: 'officeInfo_hours',
+    }),
+      }))
+export const relations_contact_page_enquiries = relations(contact_page_enquiries, ({ one }) => ({
+  _parentID: one(contact_page, {
+    
+    fields: [contact_page_enquiries._parentID],
+    references: [contact_page.id],
+    relationName: 'enquiries',
+    }),
+      }))
+export const relations_contact_page_follow_us_social_links = relations(contact_page_follow_us_social_links, ({ one }) => ({
+  _parentID: one(contact_page, {
+    
+    fields: [contact_page_follow_us_social_links._parentID],
+    references: [contact_page.id],
+    relationName: 'followUs_socialLinks',
+    }),
+      }))
+export const relations_contact_page = relations(contact_page, ({ one, many }) => ({
+  officeInfo_hours: many(contact_page_office_info_hours, {
+            relationName: 'officeInfo_hours',
+    }),
+    officeInfo_image: one(media, {
+    
+    fields: [contact_page.officeInfo_image],
+    references: [media.id],
+    relationName: 'officeInfo_image',
+    }),
+    enquiries: many(contact_page_enquiries, {
+            relationName: 'enquiries',
+    }),
+    followUs_socialLinks: many(contact_page_follow_us_social_links, {
+            relationName: 'followUs_socialLinks',
+    }),
+      }))
 
 type DatabaseSchema = {
   enum_pages_hero_links_link_type: typeof enum_pages_hero_links_link_type
@@ -3009,6 +3382,7 @@ type DatabaseSchema = {
   enum__pages_v_version_status: typeof enum__pages_v_version_status
   enum_posts_status: typeof enum_posts_status
   enum__posts_v_version_status: typeof enum__posts_v_version_status
+  enum_updates_category: typeof enum_updates_category
   enum_redirects_to_type: typeof enum_redirects_to_type
   enum_forms_confirmation_type: typeof enum_forms_confirmation_type
   enum_payload_jobs_log_task_slug: typeof enum_payload_jobs_log_task_slug
@@ -3019,6 +3393,7 @@ type DatabaseSchema = {
   enum_homepage_initiatives_cards_icon: typeof enum_homepage_initiatives_cards_icon
   enum_about_page_text_image_sections_image_position: typeof enum_about_page_text_image_sections_image_position
   enum_about_page_mission_cards_icon: typeof enum_about_page_mission_cards_icon
+  enum_about_page_policy_areas_policies_status: typeof enum_about_page_policy_areas_policies_status
   enum_about_page_departments_items_icon: typeof enum_about_page_departments_items_icon
   enum_progress_page_status_cards_icon: typeof enum_progress_page_status_cards_icon
   enum_progress_page_modernize_government_cards_icon: typeof enum_progress_page_modernize_government_cards_icon
@@ -3029,6 +3404,11 @@ type DatabaseSchema = {
   enum_progress_page_develop_bahamian_talent_cards_label_color: typeof enum_progress_page_develop_bahamian_talent_cards_label_color
   enum_progress_page_drive_national_development_cards_icon: typeof enum_progress_page_drive_national_development_cards_icon
   enum_progress_page_drive_national_development_cards_label_color: typeof enum_progress_page_drive_national_development_cards_label_color
+  enum_get_involved_page_categories_section_categories_icon: typeof enum_get_involved_page_categories_section_categories_icon
+  enum_get_involved_page_follow_the_work_social_links_platform: typeof enum_get_involved_page_follow_the_work_social_links_platform
+  enum_get_involved_page_reach_out_image_position: typeof enum_get_involved_page_reach_out_image_position
+  enum_contact_page_enquiries_icon: typeof enum_contact_page_enquiries_icon
+  enum_contact_page_follow_us_social_links_platform: typeof enum_contact_page_follow_us_social_links_platform
   pages_hero_links: typeof pages_hero_links
   pages_blocks_cta_links: typeof pages_blocks_cta_links
   pages_blocks_cta: typeof pages_blocks_cta
@@ -3055,6 +3435,8 @@ type DatabaseSchema = {
   _posts_v_version_populated_authors: typeof _posts_v_version_populated_authors
   _posts_v: typeof _posts_v
   _posts_v_rels: typeof _posts_v_rels
+  updates_content: typeof updates_content
+  updates: typeof updates
   media: typeof media
   categories_breadcrumbs: typeof categories_breadcrumbs
   categories: typeof categories
@@ -3117,6 +3499,16 @@ type DatabaseSchema = {
   progress_page_develop_bahamian_talent_cards: typeof progress_page_develop_bahamian_talent_cards
   progress_page_drive_national_development_cards: typeof progress_page_drive_national_development_cards
   progress_page: typeof progress_page
+  updates_page: typeof updates_page
+  get_involved_page_hero_subtitle: typeof get_involved_page_hero_subtitle
+  get_involved_page_categories_section_categories: typeof get_involved_page_categories_section_categories
+  get_involved_page_reach_out_text: typeof get_involved_page_reach_out_text
+  get_involved_page_follow_the_work_social_links: typeof get_involved_page_follow_the_work_social_links
+  get_involved_page: typeof get_involved_page
+  contact_page_office_info_hours: typeof contact_page_office_info_hours
+  contact_page_enquiries: typeof contact_page_enquiries
+  contact_page_follow_us_social_links: typeof contact_page_follow_us_social_links
+  contact_page: typeof contact_page
   relations_pages_hero_links: typeof relations_pages_hero_links
   relations_pages_blocks_cta_links: typeof relations_pages_blocks_cta_links
   relations_pages_blocks_cta: typeof relations_pages_blocks_cta
@@ -3143,6 +3535,8 @@ type DatabaseSchema = {
   relations__posts_v_version_populated_authors: typeof relations__posts_v_version_populated_authors
   relations__posts_v_rels: typeof relations__posts_v_rels
   relations__posts_v: typeof relations__posts_v
+  relations_updates_content: typeof relations_updates_content
+  relations_updates: typeof relations_updates
   relations_media: typeof relations_media
   relations_categories_breadcrumbs: typeof relations_categories_breadcrumbs
   relations_categories: typeof relations_categories
@@ -3205,6 +3599,16 @@ type DatabaseSchema = {
   relations_progress_page_develop_bahamian_talent_cards: typeof relations_progress_page_develop_bahamian_talent_cards
   relations_progress_page_drive_national_development_cards: typeof relations_progress_page_drive_national_development_cards
   relations_progress_page: typeof relations_progress_page
+  relations_updates_page: typeof relations_updates_page
+  relations_get_involved_page_hero_subtitle: typeof relations_get_involved_page_hero_subtitle
+  relations_get_involved_page_categories_section_categories: typeof relations_get_involved_page_categories_section_categories
+  relations_get_involved_page_reach_out_text: typeof relations_get_involved_page_reach_out_text
+  relations_get_involved_page_follow_the_work_social_links: typeof relations_get_involved_page_follow_the_work_social_links
+  relations_get_involved_page: typeof relations_get_involved_page
+  relations_contact_page_office_info_hours: typeof relations_contact_page_office_info_hours
+  relations_contact_page_enquiries: typeof relations_contact_page_enquiries
+  relations_contact_page_follow_us_social_links: typeof relations_contact_page_follow_us_social_links
+  relations_contact_page: typeof relations_contact_page
 }
     
 

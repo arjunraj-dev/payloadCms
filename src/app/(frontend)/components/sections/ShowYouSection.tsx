@@ -78,13 +78,19 @@ export function ShowYouSection({
                       index > 0 && 'lg:border-l lg:border-white/10',
                     )}
                   >
-                    <div className="flex items-start justify-between gap-3">
+                    <span
+                      aria-hidden="true"
+                      className="text-sm font-normal tabular-nums tracking-wide text-white/25"
+                    >
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
+                    <div className="mt-4 flex items-start justify-between gap-3">
                       <h3 className="min-w-0 flex-1 text-base font-bold leading-snug text-white sm:text-lg">
                         {card.title}
                       </h3>
                       <span
                         className={cn(
-                          'mt-0.5 shrink-0  px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide whitespace-nowrap sm:text-[11px]',
+                          'mt-0.5 shrink-0 rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide whitespace-nowrap sm:text-[11px]',
                           labelColorClasses[card.labelColor],
                         )}
                       >

@@ -29,7 +29,7 @@ export function DrawThreadsSection({
     <section className="bg-[#F8F9FA] py-12 md:py-16 lg:py-20">
       <div className="container">
         <div className="mx-auto max-w-3xl text-center">
-          <h2 className="text-2xl font-bold leading-tight text-[#001529] sm:text-3xl lg:text-4xl">
+          <h2 className="text-center text-[clamp(1.75rem,4vw,40px)] font-normal leading-[47px] tracking-normal text-[#001529] lg:text-[40px]">
             {heading}
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-[#4B5563] sm:text-lg">

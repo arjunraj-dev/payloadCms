@@ -120,23 +120,25 @@ export async function Footer() {
       </div>
 
       <div className="border-t border-[#E5E7EB]">
-        <div className="container flex flex-col gap-4 py-6 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-sm text-[#6B7280]">
-            © {year} {footer.copyrightText}
-          </p>
-          {legalLinks.length > 0 && (
-            <div className="flex gap-6">
-              {legalLinks.map((link) => (
-                <Link
-                  key={link.id ?? link.href}
-                  href={link.href}
-                  className="text-sm text-[#6B7280] transition-colors hover:text-[#008C95]"
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </div>
-          )}
+        <div className="container py-6">
+          <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-6 sm:gap-y-2">
+            <p className="text-sm text-[#6B7280]">
+              © {year} {footer.copyrightText}
+            </p>
+            {legalLinks.length > 0 && (
+              <div className="flex flex-wrap gap-6">
+                {legalLinks.map((link) => (
+                  <Link
+                    key={link.id ?? link.href}
+                    href={link.href}
+                    className="text-sm text-[#6B7280] transition-colors hover:text-[#008C95]"
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </footer>

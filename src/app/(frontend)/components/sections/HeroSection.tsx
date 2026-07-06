@@ -42,6 +42,7 @@ export function HeroSection({
   align = 'left',
   titleVariant = 'default',
 }: HeroSectionProps) {
+  const titleLines = title.split('\n').map((line) => line.trim()).filter(Boolean)
   const subtitleParagraphs = (Array.isArray(subtitle) ? subtitle : [subtitle]).filter(Boolean)
   const showCTAs = primaryCTA || secondaryCTA
   const isCentered = align === 'center'
@@ -84,14 +85,15 @@ export function HeroSection({
       >
         <div
           className={cn(
-            'grid grid-cols-1 items-center gap-1',
-            hasImage && 'lg:grid-cols-2 lg:gap-1',
+            'grid grid-cols-1 gap-1',
+            hasImage ? 'items-stretch lg:grid-cols-2 lg:gap-1' : 'items-center',
             !hasImage && isCentered && 'justify-items-center',
           )}
         >
           <div
             className={cn(
-              'relative flex h-full w-full items-center',
+              'relative flex h-full w-full',
+              hasImage ? 'items-center px-6 py-8 md:px-8 md:py-10 lg:px-10 lg:py-12' : 'items-center',
               !hasImage && isCentered && 'mx-auto max-w-3xl justify-center',
               !hasImage && !isCentered && 'max-w-3xl',
               isCentered && 'text-center',
@@ -102,10 +104,10 @@ export function HeroSection({
                 src={patternImage}
                 alt=""
                 aria-hidden="true"
-                className="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover"
+                className="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover object-left"
               />
             )}
-            <div className="relative z-10">
+            <div className="relative z-10 w-full">
               <h1
                 className={cn(
                   'text-[#001529]',
@@ -114,7 +116,12 @@ export function HeroSection({
                     : 'text-3xl font-normal leading-tight sm:text-4xl lg:text-5xl',
                 )}
               >
-                {title}
+                {titleLines.map((line, index) => (
+                  <React.Fragment key={index}>
+                    {index > 0 && <br />}
+                    {line}
+                  </React.Fragment>
+                ))}
               </h1>
               {subtitleParagraphs.map((paragraph, index) => (
                 <p

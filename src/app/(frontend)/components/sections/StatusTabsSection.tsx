@@ -1,11 +1,9 @@
-import type { LucideIcon } from 'lucide-react'
 import React from 'react'
 
 export interface StatusCard {
   status: string
   color: string
   backgroundImage: string
-  icon: LucideIcon
   title: string
   description: string
 }
@@ -14,6 +12,19 @@ export interface StatusTabsSectionProps {
   statusCards: StatusCard[]
   heading?: string
   description?: string
+}
+
+const STATUS_ACCENT_COLORS: { match: RegExp; color: string }[] = [
+  { match: /^live$/i, color: '#37A359' },
+  { match: /in\s*progress/i, color: '#2084FF' },
+  { match: /^coming$/i, color: '#E46E19' },
+  { match: /^planned$/i, color: '#DFDFDF' },
+
+]
+
+function getStatusAccentColor(title: string): string {
+  const match = STATUS_ACCENT_COLORS.find(({ match: pattern }) => pattern.test(title.trim()))
+  return match?.color ?? '#2084FF'
 }
 
 export function StatusTabsSection({
@@ -37,9 +48,9 @@ export function StatusTabsSection({
           <p className="mt-4 text-base leading-relaxed text-[#4B5563] sm:text-lg">{description}</p>
         </div>
 
-        <div className="mx-auto mt-10 max-w-5xl grid grid-cols-1 gap-4 md:mt-12 md:grid-cols-2 md:gap-5 lg:grid-cols-4">
+        <div className="mx-auto mt-10 grid max-w-5xl grid-cols-1 gap-4 md:mt-12 md:grid-cols-2 md:gap-5 lg:grid-cols-4">
           {statusCards.map((card) => {
-            const Icon = card.icon
+            const accentColor = getStatusAccentColor(card.title)
 
             return (
               <article
@@ -65,9 +76,11 @@ export function StatusTabsSection({
                 />
 
                 <div className="relative z-10 flex flex-col items-center">
-                  <div className="flex size-10 items-center justify-center rounded-lg border border-white/20 bg-white/15 backdrop-blur-[2px]">
-                    <Icon className="size-5" aria-hidden="true" strokeWidth={1.75} />
-                  </div>
+                  <div
+                    className="size-10 shrink-0 rounded-lg"
+                    style={{ backgroundColor: accentColor }}
+                    aria-hidden="true"
+                  />
                   <h3 className="mt-4 text-lg font-bold drop-shadow-sm">{card.title}</h3>
                   <p className="mt-2 text-sm leading-relaxed text-white/90 drop-shadow-sm">
                     {card.description}

@@ -3,7 +3,8 @@ import { cn } from '@/utilities/ui'
 import React from 'react'
 
 export interface InitiativeCard {
-  icon: LucideIcon
+  icon?: LucideIcon
+  iconSrc?: string
   title: string
   description: string
 }
@@ -39,7 +40,19 @@ export function InitiativeCardsGrid({
                 'border border-[#E5E7EB] bg-white transition-all duration-200 hover:scale-[1.02] hover:shadow-lg',
             )}
           >
-            <Icon className="size-6 text-[#001529]" aria-hidden="true" />
+            {card.iconSrc ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={card.iconSrc}
+                alt=""
+                aria-hidden="true"
+                className="h-6 w-auto"
+                loading="lazy"
+                decoding="async"
+              />
+            ) : Icon ? (
+              <Icon className="size-6 text-[#001529]" aria-hidden="true" />
+            ) : null}
             <h3
               className={cn(
                 'mt-4 text-[#001529]',

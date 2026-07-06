@@ -7,9 +7,8 @@ import { MinisterProfileSection } from '@/app/(frontend)/components/sections/Min
 import { PolicyAreasSection } from '@/app/(frontend)/components/sections/PolicyAreasSection'
 import { TextImageSection } from '@/app/(frontend)/components/sections/TextImageSection'
 import { getCachedGlobalSafe } from '@/utilities/getGlobals'
-import { iconMap } from '@/utilities/iconMap'
 import { mediaUrl, paragraphs } from '@/utilities/cms'
-import { Briefcase } from 'lucide-react'
+import { getDepartmentCardIconSrc, getPillarCardIconSrc } from '@/utilities/pillarCardIcons'
 
 import { notFound } from 'next/navigation'
 
@@ -31,7 +30,8 @@ export default async function AboutPage() {
         title={about.hero.title}
         subtitle={paragraphs(about.hero.subtitle)}
         backgroundImage={mediaUrl(about.hero.image)}
-        showPattern={false}
+        showPattern
+        patternImage="/images/Isolation_Mode.png"
         imageClassName="object-right"
       />
 
@@ -41,23 +41,24 @@ export default async function AboutPage() {
           heading={section.heading}
           text={paragraphs(section.text)}
           image={mediaUrl(section.image)}
-          imagePosition={section.imagePosition ?? 'right'}
+          imagePosition={section.imagePosition ?? (index === 0 ? 'left' : 'right')}
+          contained={index === 0}
         />
       ))}
 
       <section className="bg-white py-12 md:py-16 lg:py-20">
         <div className="container">
-          <h2 className="text-2xl font-bold text-[#001529] sm:text-3xl lg:text-4xl">
+          <h2 className="text-center text-[clamp(1.75rem,4vw,40px)] font-normal leading-[47px] tracking-normal text-[#001529] lg:text-[40px]">
             {about.mission.heading}
           </h2>
-          <p className="mt-4 max-w-3xl text-base text-[#4B5563] sm:text-lg">
+          <p className="mx-auto mt-4 max-w-3xl text-center text-base text-[#4B5563] sm:text-lg">
             {about.mission.description}
           </p>
           <div className="mt-10 md:mt-12">
             <InitiativeCardsGrid
-              variant="muted"
+              variant="home"
               cards={(about.mission.cards ?? []).map((card) => ({
-                icon: iconMap[card.icon] ?? Briefcase,
+                iconSrc: getPillarCardIconSrc(card.title),
                 title: card.title,
                 description: card.description,
               }))}
@@ -87,14 +88,19 @@ export default async function AboutPage() {
         heading={about.policyAreas.heading}
         ctaLabel={about.policyAreas.cta.label}
         ctaHref={about.policyAreas.cta.href}
-        policies={about.policyAreas.policies ?? []}
+        policies={(about.policyAreas.policies ?? []).map((policy, index) => ({
+          label: policy.label,
+          href: policy.href,
+          status:
+            policy.status ?? (index < 5 ? ('active' as const) : ('comingSoon' as const)),
+        }))}
       />
 
       <DepartmentCardsSection
         heading={about.departments.heading}
         description={about.departments.description}
-        departments={(about.departments.items ?? []).map((item) => ({
-          icon: iconMap[item.icon] ?? Briefcase,
+        departments={(about.departments.items ?? []).map((item, index) => ({
+          iconSrc: getDepartmentCardIconSrc(index),
           title: item.title,
           description: item.description,
           linkLabel: item.linkLabel,

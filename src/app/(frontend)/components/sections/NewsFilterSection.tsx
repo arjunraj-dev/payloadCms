@@ -25,7 +25,9 @@ export function NewsFilterSection({
 }: NewsFilterSectionProps) {
   const content = (
     <>
-      <h2 className="text-2xl font-bold text-[#001529] sm:text-3xl">{heading}</h2>
+      <h2 className="text-[clamp(1.75rem,4vw,40px)] font-normal leading-[47px] tracking-normal text-[#001529] lg:text-[40px]">
+        {heading}
+      </h2>
 
       <div
         role="tablist"

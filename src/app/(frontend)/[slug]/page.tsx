@@ -19,9 +19,8 @@ import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { RenderHero } from '@/heros/RenderHero'
 import { generateMeta } from '@/utilities/generateMeta'
 import { getCachedGlobalSafe } from '@/utilities/getGlobals'
-import { iconMap } from '@/utilities/iconMap'
 import { mediaUrl, paragraphs } from '@/utilities/cms'
-import { Briefcase } from 'lucide-react'
+import { getPillarCardIconSrc } from '@/utilities/pillarCardIcons'
 import Link from 'next/link'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
@@ -154,7 +153,7 @@ export default async function Page({ params: paramsPromise }: Args) {
                 variant="home"
                 className="min-h-0 flex-1 gap-[40px]"
                 cards={(homepage.initiatives.cards ?? []).map((card) => ({
-                  icon: iconMap[card.icon] ?? Briefcase,
+                  iconSrc: getPillarCardIconSrc(card.title),
                   title: card.title,
                   description: card.description,
                 }))}
