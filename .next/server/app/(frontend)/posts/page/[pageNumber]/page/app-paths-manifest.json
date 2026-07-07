@@ -1,3 +1,0 @@
-{
-  "/(frontend)/posts/page/[pageNumber]/page": "app/(frontend)/posts/page/[pageNumber]/page.js"
-}
