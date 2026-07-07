@@ -74,11 +74,16 @@ case "$DUMP" in
     psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f "$DUMP"
     ;;
   *.dump|*.backup|*.tar|*.custom)
-    RESTORE_FLAGS=(--no-owner --no-acl -d "$DATABASE_URL" "$DUMP")
+    RESTORE_FLAGS=(--no-owner --no-acl -d "$DATABASE_URL" "/workspace/$DUMP")
     if [[ "$FRESH" != true ]]; then
       RESTORE_FLAGS=(--clean --if-exists "${RESTORE_FLAGS[@]}")
     fi
-    pg_restore "${RESTORE_FLAGS[@]}"
+    # The target DB may run a newer Postgres major version than the locally
+    # installed client tools support (pg_restore requires client version >=
+    # dump format version). Run pg_restore from a matching postgres:18-alpine
+    # container instead of requiring a system package upgrade.
+    docker run --rm --user "$(id -u):$(id -g)" -v "$ROOT:/workspace" --network host \
+      postgres:18-alpine pg_restore "${RESTORE_FLAGS[@]}"
     ;;
   *)
     echo "ERROR: Unknown dump format. Rename to .sql or .dump, or ask your colleague which format they exported."
@@ -90,4 +95,4 @@ echo ""
 echo "==> Restore complete."
 echo "    Sync media files: node scripts/sync-media-from-images.mjs"
 echo "    Start the app: pnpm dev"
-echo "    Admin panel:   http://localhost:3000/admin"
+echo "    Admin panel:   http://localhost:3000/manage"
