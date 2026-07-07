@@ -1,0 +1,43 @@
+{
+  "app": {
+    "[project]/src/app/(frontend)/[slug]/page": [
+      "static/media/f141b5b7abe57afc-s.p.0-k1k9nod8chc.woff2"
+    ],
+    "[project]/src/app/(frontend)/about/page": [
+      "static/media/f141b5b7abe57afc-s.p.0-k1k9nod8chc.woff2"
+    ],
+    "[project]/src/app/(frontend)/contact/page": [
+      "static/media/f141b5b7abe57afc-s.p.0-k1k9nod8chc.woff2"
+    ],
+    "[project]/src/app/(frontend)/get-involved/page": [
+      "static/media/f141b5b7abe57afc-s.p.0-k1k9nod8chc.woff2"
+    ],
+    "[project]/src/app/(frontend)/page": [
+      "static/media/f141b5b7abe57afc-s.p.0-k1k9nod8chc.woff2"
+    ],
+    "[project]/src/app/(frontend)/posts/[slug]/page": [
+      "static/media/f141b5b7abe57afc-s.p.0-k1k9nod8chc.woff2"
+    ],
+    "[project]/src/app/(frontend)/posts/page": [
+      "static/media/f141b5b7abe57afc-s.p.0-k1k9nod8chc.woff2"
+    ],
+    "[project]/src/app/(frontend)/posts/page/[pageNumber]/page": [
+      "static/media/f141b5b7abe57afc-s.p.0-k1k9nod8chc.woff2"
+    ],
+    "[project]/src/app/(frontend)/progress/page": [
+      "static/media/f141b5b7abe57afc-s.p.0-k1k9nod8chc.woff2"
+    ],
+    "[project]/src/app/(frontend)/search/page": [
+      "static/media/f141b5b7abe57afc-s.p.0-k1k9nod8chc.woff2"
+    ],
+    "[project]/src/app/(frontend)/updates/[slug]/page": [
+      "static/media/f141b5b7abe57afc-s.p.0-k1k9nod8chc.woff2"
+    ],
+    "[project]/src/app/(frontend)/updates/page": [
+      "static/media/f141b5b7abe57afc-s.p.0-k1k9nod8chc.woff2"
+    ]
+  },
+  "appUsingSizeAdjust": true,
+  "pages": {},
+  "pagesUsingSizeAdjust": false
+}

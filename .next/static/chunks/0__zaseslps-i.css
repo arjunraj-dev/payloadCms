@@ -1,0 +1,3 @@
+@layer payload-default{.icon--check{width:1.53846rem;height:1.53846rem}.icon--check .stroke{fill:none;stroke:currentColor;stroke-width:2px}}
+@layer payload-default{.plugin-seo__field .field-label{display:inline!important}}
+@layer payload-default{.folder-edit-field{display:none}.edit-many-bulk-uploads__main .folder-edit-field,.edit-many__main .folder-edit-field{display:initial}}
