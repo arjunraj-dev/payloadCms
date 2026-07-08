@@ -1,6 +1,6 @@
 'use client'
 
-import { useReducedMotion } from 'framer-motion'
+import { useInView, useReducedMotion } from 'framer-motion'
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 
 import { cn } from '@/utilities/ui'
@@ -14,6 +14,13 @@ export interface TypewriterTextProps {
   startDelay?: number
   /** Typing only begins once this is true; nothing is typed while false. */
   start?: boolean
+  /**
+   * If true, typing also waits until the element has scrolled into view (in addition to
+   * `start`). Use this for below-the-fold copy so it doesn't type out before it's visible.
+   */
+  startOnView?: boolean
+  /** `useInView` margin, only used when `startOnView` is true. */
+  viewMargin?: string
   onDone?: () => void
   className?: string
   cursorClassName?: string
@@ -31,6 +38,8 @@ export function TypewriterText({
   speed = 26,
   startDelay = 0,
   start = true,
+  startOnView = false,
+  viewMargin = '-80px',
   onDone,
   className,
   cursorClassName,
@@ -42,6 +51,10 @@ export function TypewriterText({
   const onDoneRef = useRef(onDone)
   onDoneRef.current = onDone
   const hasFinishedRef = useRef(false)
+  const containerRef = useRef<HTMLElement>(null)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const isInView = useInView(containerRef as any, { once: true, margin: viewMargin as any })
+  const shouldStart = start && (!startOnView || isInView)
 
   useEffect(() => {
     if (prefersReducedMotion) {
@@ -53,7 +66,7 @@ export function TypewriterText({
       return
     }
 
-    if (!start) {
+    if (!shouldStart) {
       setTypedLength(0)
       return
     }
@@ -88,14 +101,14 @@ export function TypewriterText({
       cancelled = true
       cancelAnimationFrame(rafId)
     }
-  }, [fullText, speed, startDelay, start, prefersReducedMotion])
+  }, [fullText, speed, startDelay, shouldStart, prefersReducedMotion])
 
-  const isTyping = start && !prefersReducedMotion && typedLength < fullText.length
+  const isTyping = shouldStart && !prefersReducedMotion && typedLength < fullText.length
   const typedLines = fullText.slice(0, typedLength).split('\n')
   const Tag = as as React.ElementType
 
   return (
-    <Tag className={className}>
+    <Tag ref={containerRef} className={className}>
       <span aria-hidden="true">
         {typedLines.map((line, index) => (
           <React.Fragment key={index}>

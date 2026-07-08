@@ -1,9 +1,9 @@
 import { cn } from '@/utilities/ui'
 import Link from 'next/link'
 import React from 'react'
-import { DURATION } from '@/app/(frontend)/components/motion/config'
 import { DrawLine } from '@/app/(frontend)/components/motion/DrawLine'
 import { Reveal } from '@/app/(frontend)/components/motion/Reveal'
+import { ScrollRise } from '@/app/(frontend)/components/motion/ScrollRise'
 import { StaggerGroup, StaggerItem } from '@/app/(frontend)/components/motion/StaggerGroup'
 import {
   GRADIENT_CTA_BASE_CLASSNAME,
@@ -61,14 +61,9 @@ export function ShowYouSection({
   ctaHref = '/progress',
 }: ShowYouSectionProps) {
   return (
-    <section className="bg-white py-12 md:py-16 lg:py-20">
+    <section className="bg-white pt-2 pb-12 md:pt-3 md:pb-16 lg:pt-4 lg:pb-20">
       <div className="container">
-        <Reveal
-          as="div"
-          scale={0.98}
-          duration={DURATION.slow}
-          className="relative overflow-hidden rounded-3xl bg-[#001529] px-6 py-10 md:px-10 md:py-14 lg:px-12 lg:py-16"
-        >
+        <ScrollRise className="relative overflow-hidden rounded-3xl bg-[#001529] px-6 py-10 md:px-10 md:py-14 lg:px-12 lg:py-16">
           <ShowYouChevron />
           <div className="relative z-10">
             <Reveal as="div">
@@ -134,7 +129,7 @@ export function ShowYouSection({
               </Link>
             </Reveal>
           </div>
-        </Reveal>
+        </ScrollRise>
       </div>
     </section>
   )

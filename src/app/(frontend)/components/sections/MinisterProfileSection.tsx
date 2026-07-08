@@ -1,6 +1,10 @@
+'use client'
+
 import { cn } from '@/utilities/ui'
-import React from 'react'
+import React, { useCallback, useState } from 'react'
 import { Reveal } from '@/app/(frontend)/components/motion/Reveal'
+import { ScrollRise } from '@/app/(frontend)/components/motion/ScrollRise'
+import { TypewriterText } from '@/app/(frontend)/components/motion/TypewriterText'
 
 export interface MinisterProfileSectionProps {
   label: string
@@ -27,12 +31,20 @@ export function MinisterProfileSection({
   const bioParagraphs = Array.isArray(bio) ? bio : [bio]
   const isBanner = layout === 'banner'
 
+  const [doneCount, setDoneCount] = useState(0)
+  const advance = useCallback(() => setDoneCount((count) => count + 1), [])
+
   if (isBanner) {
     return (
       <section className="bg-white py-12 md:py-16 lg:py-20">
         <div className="container">
           <div className="mx-auto flex w-full max-w-[1132px] flex-col lg:h-[440px] lg:flex-row lg:items-stretch lg:gap-[90px]">
-            <div className="h-[280px] w-full shrink-0 overflow-hidden rounded-3xl bg-[#B8C5CE] sm:h-[340px] lg:h-[440px] lg:w-[352px]">
+            <ScrollRise
+              distance={70}
+              fromScale={0.88}
+              offset={['start 95%', 'start 55%']}
+              className="h-[280px] w-full shrink-0 overflow-hidden rounded-3xl bg-[#B8C5CE] sm:h-[340px] lg:h-[440px] lg:w-[443px]"
+            >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 alt={name}
@@ -41,15 +53,35 @@ export function MinisterProfileSection({
                 decoding="async"
                 className="h-full w-full object-cover object-top"
               />
-            </div>
+            </ScrollRise>
 
-            <Reveal as="div" className="flex flex-1 flex-col justify-center px-6 py-8 sm:px-0 lg:py-0">
-              <p className="text-lg leading-relaxed text-[#13181D] sm:text-xl lg:text-[1.375rem] lg:leading-[1.65]">
-                {bioParagraphs[0]}
-              </p>
-              <p className="mt-6 text-base font-bold text-[#001529] sm:text-lg">{name}</p>
-              <p className="mt-1 text-sm text-[#4B5563] sm:text-base">{title}</p>
-            </Reveal>
+            <div className="flex flex-1 flex-col justify-center gap-6 px-6 py-8 sm:px-0 lg:max-w-[599px] lg:gap-[31px] lg:py-0">
+              <TypewriterText
+                as="p"
+                lines={[bioParagraphs[0] ?? '']}
+                startOnView
+                speed={14}
+                onDone={advance}
+                className="text-lg leading-relaxed text-[#13181D] sm:text-xl lg:text-[32px] lg:leading-[38px] lg:font-normal"
+              />
+              <div className="flex flex-col gap-1 lg:max-w-[420px] lg:gap-[7px]">
+                <TypewriterText
+                  as="p"
+                  lines={[name]}
+                  start={doneCount >= 1}
+                  speed={28}
+                  onDone={advance}
+                  className="text-base font-bold text-[#13181D] sm:text-lg lg:text-[20px] lg:leading-[22px]"
+                />
+                <TypewriterText
+                  as="p"
+                  lines={[title]}
+                  start={doneCount >= 2}
+                  speed={28}
+                  className="text-sm text-[#53585C] sm:text-base lg:text-[16px] lg:leading-[22px] lg:font-normal"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -79,7 +111,9 @@ export function MinisterProfileSection({
           <Reveal as="div" className="order-2">
             {variant === 'quote' ? (
               <>
-                <p className="text-xs font-semibold uppercase tracking-wider text-[#4B5563]">{label}</p>
+                <p className="text-xs font-semibold uppercase tracking-wider text-[#4B5563]">
+                  {label}
+                </p>
                 <p className="mt-4 text-xl leading-relaxed text-[#001529] sm:text-2xl">
                   {bioParagraphs[0]}
                 </p>
