@@ -90,8 +90,7 @@ export default async function AboutPage() {
         policies={(about.policyAreas.policies ?? []).map((policy, index) => ({
           label: policy.label,
           href: policy.href,
-          status:
-            policy.status ?? (index < 5 ? ('active' as const) : ('comingSoon' as const)),
+          status: policy.status ?? (index < 5 ? ('active' as const) : ('comingSoon' as const)),
         }))}
       />
 

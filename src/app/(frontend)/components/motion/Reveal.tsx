@@ -19,6 +19,9 @@ export interface RevealProps extends Omit<HTMLMotionProps<'div'>, 'variants' | '
   variant?: RevealVariant
   delay?: number
   once?: boolean
+  /** Optional starting scale (e.g. 0.97) that eases up to 1 alongside the fade/slide. */
+  scale?: number
+  duration?: number
 }
 
 /** Fade/slide entrance triggered once an element scrolls into view. Skips to final state under prefers-reduced-motion. */
@@ -27,6 +30,8 @@ export function Reveal({
   variant = 'fade-up',
   delay = 0,
   once = true,
+  scale,
+  duration = DURATION.base,
   children,
   ...rest
 }: RevealProps) {
@@ -41,10 +46,10 @@ export function Reveal({
 
   return (
     <MotionTag
-      initial={{ opacity: 0, ...offset }}
-      whileInView={{ opacity: 1, x: 0, y: 0 }}
+      initial={{ opacity: 0, ...offset, ...(scale != null ? { scale } : {}) }}
+      whileInView={{ opacity: 1, x: 0, y: 0, ...(scale != null ? { scale: 1 } : {}) }}
       viewport={{ ...REVEAL_VIEWPORT, once }}
-      transition={{ duration: DURATION.base, ease: EASE_OUT, delay }}
+      transition={{ duration, ease: EASE_OUT, delay }}
       {...rest}
     >
       {children}

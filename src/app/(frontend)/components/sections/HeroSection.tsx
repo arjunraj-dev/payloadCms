@@ -9,6 +9,11 @@ import { DURATION, EASE_OUT, STAGGER_CHILDREN } from '@/app/(frontend)/component
 import { StaggerGroup, StaggerItem } from '@/app/(frontend)/components/motion/StaggerGroup'
 import { TypewriterText } from '@/app/(frontend)/components/motion/TypewriterText'
 import { useCursorParallax } from '@/app/(frontend)/components/motion/useCursorParallax'
+import {
+  GRADIENT_CTA_BASE_CLASSNAME,
+  NAVY_GRADIENT_CTA_STYLE,
+  TEAL_GRADIENT_CTA_STYLE,
+} from '@/app/(frontend)/components/shared/gradientCta'
 
 export interface HeroCTA {
   label: string
@@ -83,27 +88,10 @@ function HeroPattern({
 const ctaBaseClassName =
   'inline-flex items-center justify-center rounded-lg px-5 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90'
 
-// Figma-exact CTA styling used by the "display" hero (homepage): gradient fill + gradient border,
-// achieved via the padding-box/border-box double-background trick since `border-image` gradients
-// aren't reliable on interactive elements across browsers.
-const displayCtaBaseClassName =
-  'inline-flex items-center justify-center gap-2.5 rounded-md px-[18px] py-2.5 text-sm font-semibold text-white transition-opacity hover:opacity-90 lg:h-[50px]'
-
-const displayPrimaryCtaStyle: React.CSSProperties = {
-  border: '1px solid transparent',
-  backgroundImage:
-    'linear-gradient(90deg, #0C3538 0%, #0F848D 35.56%, #169EA9 49.52%, #169EA9 53.78%, #0F848D 64.92%, #0C3538 100%), linear-gradient(90deg, #08747D 0%, #67B5BB 48.08%, #08747D 100%)',
-  backgroundOrigin: 'border-box',
-  backgroundClip: 'padding-box, border-box',
-}
-
-const displaySecondaryCtaStyle: React.CSSProperties = {
-  border: '1px solid transparent',
-  backgroundImage:
-    'linear-gradient(90deg, #0D1B2A 0%, #0D1B2A 0%, #22364D 49.52%, #22364D 53.78%, #293C51 64.92%, #0D1B2A 100%), linear-gradient(90deg, #1F344C 0%, #587799 48.08%, #1F344C 100%)',
-  backgroundOrigin: 'border-box',
-  backgroundClip: 'padding-box, border-box',
-}
+// Figma-exact CTA styling used by the "display" hero (homepage). See gradientCta.ts.
+const displayCtaBaseClassName = cn(GRADIENT_CTA_BASE_CLASSNAME, 'lg:h-[50px]')
+const displayPrimaryCtaStyle = TEAL_GRADIENT_CTA_STYLE
+const displaySecondaryCtaStyle = NAVY_GRADIENT_CTA_STYLE
 
 /**
  * The "display" hero (homepage): types the title out, then each subtitle paragraph in turn,

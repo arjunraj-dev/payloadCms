@@ -5,6 +5,7 @@ import { Menu, X } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import React, { useCallback, useEffect, useState } from 'react'
+import { TEAL_GRADIENT_CTA_STYLE } from '@/app/(frontend)/components/shared/gradientCta'
 
 interface NavLinkItem {
   label: string
@@ -67,13 +68,7 @@ function GovernmentServicesCTA({
         'inline-flex items-center justify-center gap-2.5 rounded-md px-2.5 py-2.5 text-sm font-semibold text-white transition-opacity hover:opacity-90 lg:h-[50px] lg:w-[214px]',
         className,
       )}
-      style={{
-        border: '1px solid transparent',
-        backgroundImage:
-          'linear-gradient(90deg, #0C3538 0%, #0F848D 35.56%, #169EA9 49.52%, #169EA9 53.78%, #0F848D 64.92%, #0C3538 100%), linear-gradient(90deg, #08747D 0%, #67B5BB 48.08%, #08747D 100%)',
-        backgroundOrigin: 'border-box',
-        backgroundClip: 'padding-box, border-box',
-      }}
+      style={TEAL_GRADIENT_CTA_STYLE}
     >
       {cta.label}
     </Link>
