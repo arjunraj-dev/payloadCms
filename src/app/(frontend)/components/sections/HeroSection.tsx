@@ -3,10 +3,11 @@
 import { cn } from '@/utilities/ui'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import React, { useEffect, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { GravityWaveBackground } from '@/app/(frontend)/components/shared/GravityWaveBackground'
-import { STAGGER_CHILDREN } from '@/app/(frontend)/components/motion/config'
+import { DURATION, EASE_OUT, STAGGER_CHILDREN } from '@/app/(frontend)/components/motion/config'
 import { StaggerGroup, StaggerItem } from '@/app/(frontend)/components/motion/StaggerGroup'
+import { TypewriterText } from '@/app/(frontend)/components/motion/TypewriterText'
 import { useCursorParallax } from '@/app/(frontend)/components/motion/useCursorParallax'
 
 export interface HeroCTA {
@@ -104,6 +105,85 @@ const displaySecondaryCtaStyle: React.CSSProperties = {
   backgroundClip: 'padding-box, border-box',
 }
 
+/**
+ * The "display" hero (homepage): types the title out, then each subtitle paragraph in turn,
+ * then reveals the CTAs — instead of the scroll-triggered fade-up used by the default hero.
+ */
+function DisplayHeroCopy({
+  titleLines,
+  subtitleParagraphs,
+  showCTAs,
+  isCentered,
+  primaryCTA,
+  secondaryCTA,
+}: {
+  titleLines: string[]
+  subtitleParagraphs: string[]
+  showCTAs: boolean
+  isCentered: boolean
+  primaryCTA?: HeroCTA
+  secondaryCTA?: HeroCTA
+}) {
+  const totalSegments = 1 + subtitleParagraphs.length
+  const [doneCount, setDoneCount] = useState(0)
+  const advance = useCallback(() => setDoneCount((count) => count + 1), [])
+  const ctasReady = doneCount >= totalSegments
+
+  return (
+    <div className="relative z-10 w-full">
+      <TypewriterText
+        as="h1"
+        lines={titleLines}
+        speed={30}
+        onDone={advance}
+        className="text-[clamp(2rem,5vw,56.69px)] font-normal leading-[1.084] tracking-normal text-[#13181D] lg:max-w-[573px] lg:text-[56.69px] lg:leading-[61.42px]"
+      />
+      {subtitleParagraphs.map((paragraph, index) => (
+        <TypewriterText
+          key={index}
+          as="p"
+          lines={[paragraph]}
+          start={doneCount >= index + 1}
+          speed={18}
+          onDone={advance}
+          className={cn(
+            index === 0 ? 'mt-4' : 'mt-3',
+            'text-start text-[20px] font-semibold leading-none tracking-normal text-black',
+          )}
+        />
+      ))}
+      {showCTAs && (
+        <div
+          className={cn(
+            'mt-8 flex flex-col gap-2.5 font-semibold transition-all duration-500 ease-out sm:flex-row sm:flex-wrap',
+            isCentered && 'items-center justify-center',
+            ctasReady ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-3 opacity-0',
+          )}
+        >
+          {primaryCTA && (
+            <Link
+              href={primaryCTA.href}
+              className={cn(displayCtaBaseClassName, 'lg:w-[256px]')}
+              style={displayPrimaryCtaStyle}
+            >
+              {primaryCTA.label}
+            </Link>
+          )}
+          {secondaryCTA && (
+            <Link
+              href={secondaryCTA.href}
+              className={cn(displayCtaBaseClassName, 'lg:w-[173px]')}
+              style={displaySecondaryCtaStyle}
+            >
+              {secondaryCTA.label}
+            </Link>
+          )}
+        </div>
+      )}
+    </div>
+  )
+}
+
 export function HeroSection({
   title,
   subtitle,
@@ -194,61 +274,54 @@ export function HeroSection({
                 patternFollowDamping={patternFollowDamping}
               />
             )}
-            <StaggerGroup
-              as="div"
-              staggerChildren={STAGGER_CHILDREN}
-              className="relative z-10 w-full"
-            >
-              <StaggerItem as="h1"
-                className={cn(
-                  titleVariant === 'display'
-                    ? 'text-[clamp(2rem,5vw,56.69px)] font-normal leading-[1.084] tracking-normal text-[#13181D] lg:max-w-[573px] lg:text-[56.69px] lg:leading-[61.42px]'
-                    : 'text-3xl font-normal leading-tight text-[#001529] sm:text-4xl lg:text-5xl',
-                )}
+            {titleVariant === 'display' ? (
+              <DisplayHeroCopy
+                titleLines={titleLines}
+                subtitleParagraphs={subtitleParagraphs}
+                showCTAs={Boolean(showCTAs)}
+                isCentered={isCentered}
+                primaryCTA={primaryCTA}
+                secondaryCTA={secondaryCTA}
+              />
+            ) : (
+              <StaggerGroup
+                as="div"
+                staggerChildren={STAGGER_CHILDREN}
+                className="relative z-10 w-full"
               >
-                {titleLines.map((line, index) => (
-                  <React.Fragment key={index}>
-                    {index > 0 && <br />}
-                    {line}
-                  </React.Fragment>
-                ))}
-              </StaggerItem>
-              {subtitleParagraphs.map((paragraph, index) => (
                 <StaggerItem
-                  as="p"
-                  key={index}
-                  className={cn(
-                    index === 0 ? 'mt-4' : 'mt-3',
-                    titleVariant === 'display'
-                      ? 'text-center text-[20px] font-semibold leading-none tracking-normal text-black'
-                      : cn(
-                          'text-base text-[#4B5563] sm:text-lg',
-                          isCentered ? 'font-normal leading-relaxed' : 'font-semibold',
-                        ),
-                  )}
+                  as="h1"
+                  className="text-3xl font-normal leading-tight text-[#001529] sm:text-4xl lg:text-5xl"
                 >
-                  {paragraph}
+                  {titleLines.map((line, index) => (
+                    <React.Fragment key={index}>
+                      {index > 0 && <br />}
+                      {line}
+                    </React.Fragment>
+                  ))}
                 </StaggerItem>
-              ))}
-              {showCTAs && (
-                <StaggerItem
-                  as="div"
-                  className={cn(
-                    'mt-8 flex flex-col font-semibold sm:flex-row sm:flex-wrap',
-                    titleVariant === 'display' ? 'gap-2.5' : 'gap-4',
-                    isCentered && 'items-center justify-center',
-                  )}
-                >
-                  {primaryCTA &&
-                    (titleVariant === 'display' ? (
-                      <Link
-                        href={primaryCTA.href}
-                        className={cn(displayCtaBaseClassName, 'lg:w-[256px]')}
-                        style={displayPrimaryCtaStyle}
-                      >
-                        {primaryCTA.label}
-                      </Link>
-                    ) : (
+                {subtitleParagraphs.map((paragraph, index) => (
+                  <StaggerItem
+                    as="p"
+                    key={index}
+                    className={cn(
+                      index === 0 ? 'mt-4' : 'mt-3',
+                      'text-base text-[#4B5563] sm:text-lg',
+                      isCentered ? 'font-normal leading-relaxed' : 'font-semibold',
+                    )}
+                  >
+                    {paragraph}
+                  </StaggerItem>
+                ))}
+                {showCTAs && (
+                  <StaggerItem
+                    as="div"
+                    className={cn(
+                      'mt-8 flex flex-col gap-4 font-semibold sm:flex-row sm:flex-wrap',
+                      isCentered && 'items-center justify-center',
+                    )}
+                  >
+                    {primaryCTA && (
                       <Link
                         href={primaryCTA.href}
                         className={cn(
@@ -258,32 +331,30 @@ export function HeroSection({
                       >
                         {primaryCTA.label}
                       </Link>
-                    ))}
-                  {secondaryCTA &&
-                    (titleVariant === 'display' ? (
-                      <Link
-                        href={secondaryCTA.href}
-                        className={cn(displayCtaBaseClassName, 'lg:w-[173px]')}
-                        style={displaySecondaryCtaStyle}
-                      >
-                        {secondaryCTA.label}
-                      </Link>
-                    ) : (
+                    )}
+                    {secondaryCTA && (
                       <Link
                         href={secondaryCTA.href}
                         className={cn(ctaBaseClassName, 'bg-[#001529]')}
                       >
                         {secondaryCTA.label}
                       </Link>
-                    ))}
-                </StaggerItem>
-              )}
-            </StaggerGroup>
+                    )}
+                  </StaggerItem>
+                )}
+              </StaggerGroup>
+            )}
           </div>
 
           {hasImage && (
             <motion.div
-              style={{ x: parallax.x, y: parallax.y }}
+              initial={{ opacity: 0, scale: 0.96 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{
+                duration: DURATION.slow,
+                ease: EASE_OUT,
+                delay: titleVariant === 'display' ? 0.2 : 0,
+              }}
               className={cn(
                 'relative aspect-[4/3] overflow-hidden rounded-3xl lg:aspect-auto',
                 titleVariant === 'display'
@@ -291,23 +362,26 @@ export function HeroSection({
                   : 'lg:min-h-[420px]',
               )}
             >
-              {backgroundImages.map((src, index) => (
-                <motion.img
-                  key={src}
-                  alt=""
-                  role="presentation"
-                  src={src}
-                  loading={index === 0 ? 'eager' : 'lazy'}
-                  fetchPriority={index === 0 ? 'high' : 'low'}
-                  decoding="async"
-                  animate={{
-                    opacity: index === activeImageIndex ? 1 : 0,
-                    scale: index === activeImageIndex ? 1 : 1.03,
-                  }}
-                  transition={{ duration: 1, ease: 'easeInOut' }}
-                  className={cn('absolute inset-0 h-full w-full object-cover', imageClassName)}
-                />
-              ))}
+              <motion.div style={{ x: parallax.x, y: parallax.y }} className="relative h-full w-full">
+                {backgroundImages.map((src, index) => (
+                  <motion.img
+                    key={src}
+                    alt=""
+                    role="presentation"
+                    src={src}
+                    loading={index === 0 ? 'eager' : 'lazy'}
+                    fetchPriority={index === 0 ? 'high' : 'low'}
+                    decoding="async"
+                    initial={false}
+                    animate={{
+                      opacity: index === activeImageIndex ? 1 : 0,
+                      scale: index === activeImageIndex ? 1 : 1.03,
+                    }}
+                    transition={{ duration: 1, ease: 'easeInOut' }}
+                    className={cn('absolute inset-0 h-full w-full object-cover', imageClassName)}
+                  />
+                ))}
+              </motion.div>
             </motion.div>
           )}
         </div>
