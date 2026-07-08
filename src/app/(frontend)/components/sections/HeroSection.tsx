@@ -28,6 +28,10 @@ export interface HeroSectionProps {
   patternColor?: string
   /** "aurora" (default) is the flowing brand-colored gradient effect. "solid" uses a single flat `patternColor`. */
   patternVariant?: 'solid' | 'aurora'
+  /** How quickly the background pattern chases the pointer. Lower = slower, more delayed reaction. */
+  patternFollowSpeed?: number
+  /** Damping applied to the pattern's follow velocity each frame (0-1). Higher = more glide/inertia. */
+  patternFollowDamping?: number
   imageClassName?: string
   align?: 'left' | 'center'
   /** Figma display heading — Nunito Sans 56.69px / 61.42px line-height */
@@ -36,6 +40,28 @@ export interface HeroSectionProps {
 
 const ctaBaseClassName =
   'inline-flex items-center justify-center rounded-lg px-5 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90'
+
+// Figma-exact CTA styling used by the "display" hero (homepage): gradient fill + gradient border,
+// achieved via the padding-box/border-box double-background trick since `border-image` gradients
+// aren't reliable on interactive elements across browsers.
+const displayCtaBaseClassName =
+  'inline-flex items-center justify-center gap-2.5 rounded-md px-[18px] py-2.5 text-sm font-semibold text-white transition-opacity hover:opacity-90 lg:h-[50px]'
+
+const displayPrimaryCtaStyle: React.CSSProperties = {
+  border: '1px solid transparent',
+  backgroundImage:
+    'linear-gradient(90deg, #0C3538 0%, #0F848D 35.56%, #169EA9 49.52%, #169EA9 53.78%, #0F848D 64.92%, #0C3538 100%), linear-gradient(90deg, #08747D 0%, #67B5BB 48.08%, #08747D 100%)',
+  backgroundOrigin: 'border-box',
+  backgroundClip: 'padding-box, border-box',
+}
+
+const displaySecondaryCtaStyle: React.CSSProperties = {
+  border: '1px solid transparent',
+  backgroundImage:
+    'linear-gradient(90deg, #0D1B2A 0%, #0D1B2A 0%, #22364D 49.52%, #22364D 53.78%, #293C51 64.92%, #0D1B2A 100%), linear-gradient(90deg, #1F344C 0%, #587799 48.08%, #1F344C 100%)',
+  backgroundOrigin: 'border-box',
+  backgroundClip: 'padding-box, border-box',
+}
 
 export function HeroSection({
   title,
@@ -47,6 +73,8 @@ export function HeroSection({
   showPattern = true,
   patternColor,
   patternVariant,
+  patternFollowSpeed = 0.005,
+  patternFollowDamping = 0.95,
   imageClassName,
   align = 'left',
   titleVariant = 'default',
@@ -85,6 +113,8 @@ export function HeroSection({
           className="pointer-events-none absolute inset-0 z-0 h-full w-full"
           particleColor={patternColor}
           variant={patternVariant}
+          followSpeed={patternFollowSpeed}
+          followDamping={patternFollowDamping}
         />
       )}
       <div
@@ -119,6 +149,8 @@ export function HeroSection({
                 className="pointer-events-none absolute inset-0 z-0 h-full w-full"
                 particleColor={patternColor}
                 variant={patternVariant}
+                followSpeed={patternFollowSpeed}
+                followDamping={patternFollowDamping}
               />
             )}
             <StaggerGroup
@@ -128,10 +160,9 @@ export function HeroSection({
             >
               <StaggerItem as="h1"
                 className={cn(
-                  'text-[#001529]',
                   titleVariant === 'display'
-                    ? 'text-[clamp(2rem,5vw,56.69px)] font-normal leading-[1.084] tracking-normal lg:text-[56.69px] lg:leading-[61.42px]'
-                    : 'text-3xl font-normal leading-tight sm:text-4xl lg:text-5xl',
+                    ? 'text-[clamp(2rem,5vw,56.69px)] font-normal leading-[1.084] tracking-normal text-[#13181D] lg:max-w-[573px] lg:text-[56.69px] lg:leading-[61.42px]'
+                    : 'text-3xl font-normal leading-tight text-[#001529] sm:text-4xl lg:text-5xl',
                 )}
               >
                 {titleLines.map((line, index) => (
@@ -148,7 +179,7 @@ export function HeroSection({
                   className={cn(
                     index === 0 ? 'mt-4' : 'mt-3',
                     titleVariant === 'display'
-                      ? 'text-[20px] font-semibold leading-none tracking-normal text-[#4B5563]'
+                      ? 'text-center text-[20px] font-semibold leading-none tracking-normal text-black'
                       : cn(
                           'text-base text-[#4B5563] sm:text-lg',
                           isCentered ? 'font-normal leading-relaxed' : 'font-semibold',
@@ -162,26 +193,48 @@ export function HeroSection({
                 <StaggerItem
                   as="div"
                   className={cn(
-                    'mt-8 flex flex-col gap-4 font-semibold sm:flex-row sm:flex-wrap',
+                    'mt-8 flex flex-col font-semibold sm:flex-row sm:flex-wrap',
+                    titleVariant === 'display' ? 'gap-2.5' : 'gap-4',
                     isCentered && 'items-center justify-center',
                   )}
                 >
-                  {primaryCTA && (
-                    <Link
-                      href={primaryCTA.href}
-                      className={cn(
-                        ctaBaseClassName,
-                        'bg-gradient-to-r from-[#004B4D] to-[#008C95]',
-                      )}
-                    >
-                      {primaryCTA.label}
-                    </Link>
-                  )}
-                  {secondaryCTA && (
-                    <Link href={secondaryCTA.href} className={cn(ctaBaseClassName, 'bg-[#001529]')}>
-                      {secondaryCTA.label}
-                    </Link>
-                  )}
+                  {primaryCTA &&
+                    (titleVariant === 'display' ? (
+                      <Link
+                        href={primaryCTA.href}
+                        className={cn(displayCtaBaseClassName, 'lg:w-[256px]')}
+                        style={displayPrimaryCtaStyle}
+                      >
+                        {primaryCTA.label}
+                      </Link>
+                    ) : (
+                      <Link
+                        href={primaryCTA.href}
+                        className={cn(
+                          ctaBaseClassName,
+                          'bg-gradient-to-r from-[#004B4D] to-[#008C95]',
+                        )}
+                      >
+                        {primaryCTA.label}
+                      </Link>
+                    ))}
+                  {secondaryCTA &&
+                    (titleVariant === 'display' ? (
+                      <Link
+                        href={secondaryCTA.href}
+                        className={cn(displayCtaBaseClassName, 'lg:w-[173px]')}
+                        style={displaySecondaryCtaStyle}
+                      >
+                        {secondaryCTA.label}
+                      </Link>
+                    ) : (
+                      <Link
+                        href={secondaryCTA.href}
+                        className={cn(ctaBaseClassName, 'bg-[#001529]')}
+                      >
+                        {secondaryCTA.label}
+                      </Link>
+                    ))}
                 </StaggerItem>
               )}
             </StaggerGroup>
@@ -190,7 +243,12 @@ export function HeroSection({
           {hasImage && (
             <motion.div
               style={{ x: parallax.x, y: parallax.y }}
-              className="relative aspect-[4/3] overflow-hidden rounded-3xl lg:aspect-auto lg:min-h-[420px]"
+              className={cn(
+                'relative aspect-[4/3] overflow-hidden rounded-3xl lg:aspect-auto',
+                titleVariant === 'display'
+                  ? 'lg:-mt-[7px] lg:aspect-[707/566] lg:max-w-[707px] lg:min-h-0'
+                  : 'lg:min-h-[420px]',
+              )}
             >
               {backgroundImages.map((src, index) => (
                 <motion.img

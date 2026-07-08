@@ -37,6 +37,16 @@ export interface GravityWaveBackgroundProps {
    * surface instead of one flat tone. "solid" renders every particle in `particleColor`.
    */
   variant?: 'solid' | 'aurora'
+  /**
+   * How quickly the wave "chases" the pointer, like spring stiffness. Lower = slower,
+   * more delayed reaction to mouse movement. Defaults to a slow, dreamy follow.
+   */
+  followSpeed?: number
+  /**
+   * Damping applied to the follow velocity each frame (0-1). Higher = more inertia/glide,
+   * lower = snaps to a stop faster.
+   */
+  followDamping?: number
 }
 
 /**
@@ -49,6 +59,8 @@ export function GravityWaveBackground({
   className,
   particleColor = '12,27,58',
   variant = 'aurora',
+  followSpeed: followSpeedProp = 0.005,
+  followDamping: followDampingProp = 0.95,
 }: GravityWaveBackgroundProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
@@ -72,8 +84,8 @@ export function GravityWaveBackground({
     const gridCols = 72
     const gridRows = 48
     const waveAmplitude = 132
-    const followSpeed = 0.012
-    const followDamping = 0.91
+    const followSpeed = followSpeedProp
+    const followDamping = followDampingProp
 
     let width = 0
     let height = 0
@@ -259,7 +271,7 @@ export function GravityWaveBackground({
       window.removeEventListener('pointermove', handlePointerMove)
       window.removeEventListener('pointerleave', handlePointerLeave)
     }
-  }, [particleColor, variant])
+  }, [particleColor, variant, followSpeedProp, followDampingProp])
 
   return <canvas ref={canvasRef} aria-hidden="true" className={className} />
 }
