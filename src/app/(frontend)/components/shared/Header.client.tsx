@@ -104,7 +104,7 @@ export function HeaderClient({ logoUrl, logoAlt, navLinks, cta }: HeaderClientPr
   }, [closeMobileMenu])
 
   return (
-    <header className="sticky top-0 z-50 border-b border-[#E5E7EB] bg-white">
+    <header className="sticky top-0 z-50 bg-white">
       <div className="container flex items-center py-3 lg:py-4">
         <Link href="/" className="shrink-0">
           {logoUrl ? (

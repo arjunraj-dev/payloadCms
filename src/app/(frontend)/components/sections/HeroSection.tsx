@@ -38,6 +38,47 @@ export interface HeroSectionProps {
   titleVariant?: 'default' | 'display'
 }
 
+// `GravityWaveBackground`'s canvas sizes itself off its parent element's box, so pinning it to
+// the Figma-exact 876x602 box (rather than filling the whole hero) requires a positioned wrapper
+// for the canvas to measure against, instead of sizing the canvas element directly.
+function HeroPattern({
+  titleVariant,
+  patternColor,
+  patternVariant,
+  patternFollowSpeed,
+  patternFollowDamping,
+}: {
+  titleVariant: 'default' | 'display'
+  patternColor?: string
+  patternVariant?: 'solid' | 'aurora'
+  patternFollowSpeed: number
+  patternFollowDamping: number
+}) {
+  if (titleVariant === 'display') {
+    return (
+      <div className="pointer-events-none absolute top-[11px] left-[-84px] z-0 h-[602px] w-[876px] opacity-50">
+        <GravityWaveBackground
+          className="h-full w-full"
+          particleColor={patternColor}
+          variant={patternVariant}
+          followSpeed={patternFollowSpeed}
+          followDamping={patternFollowDamping}
+        />
+      </div>
+    )
+  }
+
+  return (
+    <GravityWaveBackground
+      className="pointer-events-none absolute inset-0 z-0 h-full w-full"
+      particleColor={patternColor}
+      variant={patternVariant}
+      followSpeed={patternFollowSpeed}
+      followDamping={patternFollowDamping}
+    />
+  )
+}
+
 const ctaBaseClassName =
   'inline-flex items-center justify-center rounded-lg px-5 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90'
 
@@ -109,12 +150,12 @@ export function HeroSection({
   return (
     <section className="relative overflow-hidden bg-white">
       {showPattern && !hasImage && (
-        <GravityWaveBackground
-          className="pointer-events-none absolute inset-0 z-0 h-full w-full"
-          particleColor={patternColor}
-          variant={patternVariant}
-          followSpeed={patternFollowSpeed}
-          followDamping={patternFollowDamping}
+        <HeroPattern
+          titleVariant={titleVariant}
+          patternColor={patternColor}
+          patternVariant={patternVariant}
+          patternFollowSpeed={patternFollowSpeed}
+          patternFollowDamping={patternFollowDamping}
         />
       )}
       <div
@@ -145,12 +186,12 @@ export function HeroSection({
             )}
           >
             {showPattern && hasImage && (
-              <GravityWaveBackground
-                className="pointer-events-none absolute inset-0 z-0 h-full w-full"
-                particleColor={patternColor}
-                variant={patternVariant}
-                followSpeed={patternFollowSpeed}
-                followDamping={patternFollowDamping}
+              <HeroPattern
+                titleVariant={titleVariant}
+                patternColor={patternColor}
+                patternVariant={patternVariant}
+                patternFollowSpeed={patternFollowSpeed}
+                patternFollowDamping={patternFollowDamping}
               />
             )}
             <StaggerGroup
