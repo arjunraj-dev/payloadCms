@@ -69,6 +69,7 @@ export default async function ProgressPage() {
         cardSurface="muted"
         sectionTypography="nunito"
         iconSrc="/Mordernize-gov.svg"
+        sectionClassName="pt-4 md:pt-6 lg:pt-8"
         cards={(progress.buildFutureReadiness.cards ?? []).map((card) => ({
           label: card.label,
           labelColor: card.labelColor as ProgramLabelColor,
