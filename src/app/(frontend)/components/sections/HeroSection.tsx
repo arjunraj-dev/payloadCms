@@ -118,13 +118,13 @@ function DisplayHeroCopy({
   const ctasReady = doneCount >= totalSegments
 
   return (
-    <div className="relative z-10 w-full">
+    <div className="relative z-10 w-full text-center lg:text-left">
       <TypewriterText
         as="h1"
         lines={titleLines}
         speed={30}
         onDone={advance}
-        className="text-[clamp(2rem,5vw,56.69px)] font-normal leading-[1.084] tracking-normal text-[#13181D] lg:max-w-[573px] lg:text-[56.69px] lg:leading-[61.42px]"
+        className="mx-auto text-[clamp(2rem,5vw,56.69px)] font-normal leading-[1.084] tracking-normal text-[#13181D] lg:mx-0 lg:max-w-[573px] lg:text-[56.69px] lg:leading-[61.42px]"
       />
       {subtitleParagraphs.map((paragraph, index) => (
         <TypewriterText
@@ -136,7 +136,7 @@ function DisplayHeroCopy({
           onDone={advance}
           className={cn(
             index === 0 ? 'mt-4' : 'mt-3',
-            'text-start text-[20px] font-semibold leading-none tracking-normal text-black',
+            'text-center text-[20px] font-semibold leading-none tracking-normal text-black lg:text-start',
           )}
         />
       ))}
@@ -144,7 +144,8 @@ function DisplayHeroCopy({
         <div
           className={cn(
             'mt-8 flex flex-col gap-2.5 font-semibold transition-all duration-500 ease-out sm:flex-row sm:flex-wrap',
-            isCentered && 'items-center justify-center',
+            'items-center justify-center lg:items-start lg:justify-start',
+            isCentered && 'lg:items-center lg:justify-center',
             ctasReady ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-3 opacity-0',
           )}
         >

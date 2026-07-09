@@ -66,11 +66,11 @@ export function ShowYouSection({
         <ScrollRise className="relative overflow-hidden rounded-3xl bg-[#001529] px-6 py-10 md:px-10 md:py-14 lg:px-12 lg:py-16">
           <ShowYouChevron />
           <div className="relative z-10">
-            <Reveal as="div">
-              <h2 className="max-w-[665px] text-[clamp(1.75rem,4vw,40px)] font-normal leading-[1.625] tracking-normal text-white lg:text-[40px] lg:leading-[65px]">
+            <Reveal as="div" className="text-center lg:text-left">
+              <h2 className="mx-auto max-w-[665px] text-[clamp(1.75rem,4vw,40px)] font-normal leading-[1.625] tracking-normal text-white lg:mx-0 lg:text-[40px] lg:leading-[65px]">
                 {heading}
               </h2>
-              <p className="mt-4 max-w-[753px] text-base leading-relaxed text-[#AAB5C1] sm:text-lg lg:text-[18px] lg:leading-[28px]">
+              <p className="mx-auto mt-4 max-w-[753px] text-base leading-relaxed text-[#AAB5C1] sm:text-lg lg:mx-0 lg:text-[18px] lg:leading-[28px]">
                 {description}
               </p>
             </Reveal>
@@ -117,7 +117,7 @@ export function ShowYouSection({
               ))}
             </StaggerGroup>
 
-            <Reveal as="div" className="mt-8 md:mt-10">
+            <Reveal as="div" className="mt-8 flex justify-center md:mt-10 lg:justify-start">
               <Link
                 href={ctaHref}
                 className={cn(

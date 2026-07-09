@@ -47,10 +47,10 @@ export function MinistryBuiltSection({
           </ScrollRise>
 
           {/* Text on RIGHT */}
-          <StaggerGroup as="div" className="order-2">
+          <StaggerGroup as="div" className="order-2 text-center lg:text-left">
             <StaggerItem
               as="h2"
-              className="max-w-[454px] text-2xl font-[400] leading-tight text-[#13181D] sm:text-3xl lg:text-[40px] lg:leading-[65px]"
+              className="mx-auto max-w-[454px] text-2xl font-[400] leading-tight text-[#13181D] sm:text-3xl lg:mx-0 lg:text-[40px] lg:leading-[65px]"
             >
               {heading}
             </StaggerItem>
@@ -59,14 +59,14 @@ export function MinistryBuiltSection({
                 key={index}
                 as="p"
                 className={cn(
-                  'max-w-[537px] text-base leading-relaxed text-[#53585C] sm:text-lg lg:text-[18px] lg:leading-[25px] lg:font-medium',
+                  'mx-auto max-w-[537px] text-base leading-relaxed text-[#53585C] sm:text-lg lg:mx-0 lg:text-[18px] lg:leading-[25px] lg:font-medium',
                   index === 0 ? 'mt-4' : 'mt-3',
                 )}
               >
                 {paragraph}
               </StaggerItem>
             ))}
-            <StaggerItem as="div">
+            <StaggerItem as="div" className="flex justify-center lg:justify-start">
               <Link
                 href={buttonHref}
                 className={cn(GRADIENT_CTA_BASE_CLASSNAME, 'mt-8 lg:h-[50px] lg:w-[256px]')}

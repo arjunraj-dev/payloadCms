@@ -57,9 +57,9 @@ export function CountryFutureSection({
         >
           <CountryFutureWaveBackground />
 
-          <Reveal as="div" className="relative z-10 max-w-[767px]">
+          <Reveal as="div" className="relative z-10 mx-auto max-w-[767px] text-center lg:mx-0 lg:text-left">
             {headingLines.length > 0 && (
-              <h2 className="max-w-[557px] font-normal text-white text-[clamp(1.75rem,4vw,40px)] leading-[1.175] tracking-normal lg:text-[40px] lg:leading-[47px]">
+              <h2 className="mx-auto max-w-[557px] font-normal text-white text-[clamp(1.75rem,4vw,40px)] leading-[1.175] tracking-normal lg:mx-0 lg:text-[40px] lg:leading-[47px]">
                 {headingLines.map((line, index) => (
                   <React.Fragment key={index}>
                     {index > 0 && <br />}
@@ -69,7 +69,7 @@ export function CountryFutureSection({
               </h2>
             )}
             {subtitle && (
-              <p className="mt-4 max-w-[767px] text-base font-medium leading-relaxed text-[#AAB5C1] sm:text-lg lg:mt-[16px] lg:text-[18px] lg:leading-[26px]">
+              <p className="mx-auto mt-4 max-w-[767px] text-base font-medium leading-relaxed text-[#AAB5C1] sm:text-lg lg:mx-0 lg:mt-[16px] lg:text-[18px] lg:leading-[26px]">
                 {subtitle}
               </p>
             )}
@@ -91,7 +91,7 @@ export function CountryFutureSection({
             {(hasPrimaryCTA || hasSecondaryCTA) && (
               <div
                 className={cn(
-                  'mt-8 flex flex-col gap-4 sm:flex-row sm:flex-wrap',
+                  'mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row sm:flex-wrap lg:items-start lg:justify-start',
                   !hasExtraContent && 'lg:mt-[33px]',
                 )}
               >

@@ -51,15 +51,18 @@ export function MinisterProfileSection({
 
             <StaggerGroup
               as="div"
-              className="flex flex-1 flex-col justify-center gap-6 px-6 py-8 sm:px-0 lg:max-w-[599px] lg:gap-[31px] lg:py-0"
+              className="flex flex-1 flex-col justify-center gap-6 px-6 py-8 text-center sm:px-0 lg:max-w-[599px] lg:gap-[31px] lg:py-0 lg:text-left"
             >
               <StaggerItem
                 as="p"
-                className="text-lg leading-relaxed text-[#13181D] sm:text-xl lg:text-[32px] lg:leading-[38px] lg:font-normal"
+                className="mx-auto text-lg leading-relaxed text-[#13181D] sm:text-xl lg:mx-0 lg:text-[32px] lg:leading-[38px] lg:font-normal"
               >
                 {bioParagraphs[0]}
               </StaggerItem>
-              <StaggerItem as="div" className="flex flex-col gap-1 lg:max-w-[420px] lg:gap-[7px]">
+              <StaggerItem
+                as="div"
+                className="mx-auto flex flex-col gap-1 lg:mx-0 lg:max-w-[420px] lg:gap-[7px]"
+              >
                 <p className="text-base font-bold text-[#13181D] sm:text-lg lg:text-[20px] lg:leading-[22px]">
                   {name}
                 </p>
