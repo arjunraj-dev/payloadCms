@@ -1,7 +1,10 @@
+'use client'
+
 import { cn } from '@/utilities/ui'
 import Link from 'next/link'
 import React from 'react'
-import { Reveal } from '@/app/(frontend)/components/motion/Reveal'
+import { ScrollRise } from '@/app/(frontend)/components/motion/ScrollRise'
+import { StaggerGroup, StaggerItem } from '@/app/(frontend)/components/motion/StaggerGroup'
 
 export interface TextImageSectionProps {
   heading: string
@@ -14,6 +17,37 @@ export interface TextImageSectionProps {
   buttonHref?: string
   /** Single-card layout: image flush with text panel, muted bg on text only (About) */
   contained?: boolean
+  /** Figma About page typography — 40px/65px heading, 18px/25px medium body */
+  variant?: 'default' | 'about'
+}
+
+const imageRiseProps = {
+  distance: 80,
+  fromScale: 0.85,
+  offset: ['start 95%', 'start 55%'] as [string, string],
+}
+
+function SectionImage({
+  heading,
+  image,
+  className,
+}: {
+  heading: string
+  image: string
+  className?: string
+}) {
+  return (
+    <ScrollRise {...imageRiseProps} className={cn('h-full w-full overflow-hidden', className)}>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        alt={heading}
+        src={image}
+        loading="lazy"
+        decoding="async"
+        className="h-full w-full object-cover"
+      />
+    </ScrollRise>
+  )
 }
 
 export function TextImageSection({
@@ -26,43 +60,65 @@ export function TextImageSection({
   buttonLabel,
   buttonHref,
   contained = false,
+  variant = 'default',
 }: TextImageSectionProps) {
   const paragraphs = Array.isArray(text) ? text : [text]
   const isImageLeft = imagePosition === 'left'
+  const isAbout = variant === 'about'
+  const isAboutContained = isAbout && contained
   const hasForegroundImage = Boolean(image)
   const hasBackgroundImage = Boolean(backgroundImage)
   const hasButton = Boolean(buttonLabel && buttonHref)
 
   const textContent = (
-    <Reveal as="div">
-      <h2 className="text-[clamp(1.75rem,4vw,40px)] font-normal leading-[47px] tracking-normal text-[#001529] lg:text-[40px]">
+    <StaggerGroup as="div">
+      <StaggerItem
+        as="h2"
+        className={cn(
+          'tracking-normal text-[#001529]',
+          isAbout
+            ? 'text-[clamp(1.75rem,4vw,40px)] font-normal leading-[65px] lg:text-[40px]'
+            : 'text-[clamp(1.75rem,4vw,40px)] font-normal leading-[47px] lg:text-[40px]',
+        )}
+      >
         {heading}
-      </h2>
+      </StaggerItem>
       {paragraphs.map((paragraph, index) => (
-        <p
+        <StaggerItem
+          as="p"
           key={index}
           className={cn(
-            'text-base leading-relaxed text-[#4B5563] sm:text-lg',
-            index === 0 ? 'mt-4' : 'mt-3',
+            isAbout
+              ? 'text-[18px] font-medium leading-[25px] tracking-normal text-[#4B5563]'
+              : 'text-base leading-relaxed text-[#4B5563] sm:text-lg',
+            index === 0 ? (isAbout ? 'mt-6' : 'mt-4') : isAbout ? 'mt-[25px]' : 'mt-3',
           )}
         >
           {paragraph}
-        </p>
+        </StaggerItem>
       ))}
       {hasButton && (
-        <Link
-          href={buttonHref!}
-          className="mt-8 inline-flex items-center justify-center gap-2 rounded-lg bg-[#001529] px-5 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90"
-        >
-          {buttonLabel}
-          <span aria-hidden="true">→</span>
-        </Link>
+        <StaggerItem as="div">
+          <Link
+            href={buttonHref!}
+            className="mt-8 inline-flex items-center justify-center gap-2 rounded-lg bg-[#001529] px-5 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90"
+          >
+            {buttonLabel}
+            <span aria-hidden="true">→</span>
+          </Link>
+        </StaggerItem>
       )}
-    </Reveal>
+    </StaggerGroup>
   )
 
   return (
-    <section className={cn('relative py-12 md:py-14 lg:py-16', backgroundColor)}>
+    <section
+      className={cn(
+        'relative',
+        isAboutContained ? 'py-8 md:py-10 lg:py-12' : 'py-12 md:py-14 lg:py-16',
+        backgroundColor,
+      )}
+    >
       {hasBackgroundImage && (
         /* eslint-disable-next-line @next/next/no-img-element */
         <img
@@ -74,24 +130,36 @@ export function TextImageSection({
       )}
       <div className="container relative">
         {contained && hasForegroundImage ? (
-          <div className="overflow-hidden rounded-3xl">
+          <div
+            className={cn(
+              'overflow-hidden rounded-3xl',
+              isAboutContained && 'lg:max-w-[1347px]',
+            )}
+          >
             <div
               className={cn(
                 'flex flex-col lg:flex-row lg:items-stretch',
                 !isImageLeft && 'lg:flex-row-reverse',
               )}
             >
-              <div className="relative lg:w-1/2 lg:shrink-0">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  alt={heading}
-                  src={image}
-                  loading="lazy"
-                  decoding="async"
-                  className="aspect-[4/3] h-full w-full object-cover lg:aspect-auto lg:min-h-full"
+              <div className="relative flex lg:w-1/2 lg:shrink-0">
+                <SectionImage
+                  heading={heading}
+                  image={image!}
+                  className={cn(
+                    'min-h-[280px] w-full',
+                    isAboutContained
+                      ? 'aspect-[4/3] lg:aspect-auto lg:h-full lg:min-h-0'
+                      : 'aspect-[4/3] lg:aspect-auto lg:h-full lg:min-h-0',
+                  )}
                 />
               </div>
-              <div className="flex flex-col justify-center bg-[#E9E9E980] p-6 md:p-10 lg:w-1/2 lg:p-12">
+              <div
+                className={cn(
+                  'flex flex-col justify-center bg-[#E9E9E980] lg:w-1/2 lg:self-stretch',
+                  isAboutContained ? 'p-6 md:p-10 lg:px-12 lg:py-16' : 'p-6 md:p-10 lg:p-12',
+                )}
+              >
                 {textContent}
               </div>
             </div>
@@ -101,19 +169,11 @@ export function TextImageSection({
             <div className={cn(isImageLeft ? 'order-2' : 'order-1')}>{textContent}</div>
 
             {hasForegroundImage && (
-              <div
-                className={cn(
-                  'overflow-hidden rounded-2xl lg:rounded-3xl',
-                  isImageLeft ? 'order-1' : 'order-2',
-                )}
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  alt={heading}
-                  src={image}
-                  loading="lazy"
-                  decoding="async"
-                  className="aspect-[4/3] h-full w-full object-cover lg:aspect-auto lg:min-h-[320px]"
+              <div className={cn(isImageLeft ? 'order-1' : 'order-2')}>
+                <SectionImage
+                  heading={heading}
+                  image={image!}
+                  className="aspect-[4/3] rounded-2xl lg:aspect-auto lg:min-h-[320px] lg:rounded-3xl"
                 />
               </div>
             )}
