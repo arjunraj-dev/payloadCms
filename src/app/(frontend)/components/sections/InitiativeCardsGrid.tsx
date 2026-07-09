@@ -25,7 +25,14 @@ export function InitiativeCardsGrid({
   const isMuted = variant === 'muted'
 
   return (
-    <StaggerGroup as="div" className={cn('grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4', className)}>
+    <StaggerGroup
+      as="div"
+      className={cn(
+        'grid grid-cols-1 gap-6 md:grid-cols-2',
+        isHome ? 'lg:grid-cols-4 lg:gap-5' : 'lg:grid-cols-4',
+        className,
+      )}
+    >
       {cards.map((card) => {
         const Icon = card.icon
 
@@ -33,10 +40,13 @@ export function InitiativeCardsGrid({
           <StaggerItem
             as="article"
             key={card.title}
+            whileHover={isHome ? { y: -4 } : undefined}
+            transition={isHome ? { type: 'spring', stiffness: 300, damping: 22 } : undefined}
             className={cn(
-              'rounded-2xl p-6 sm:p-8',
-              isHome && 'bg-[#E9E9E980]',
-              isMuted && 'bg-[#F3F4F6]',
+              isHome &&
+                'rounded-[24px] border border-[#DFDFDF] bg-[#E9E9E980] px-[19px] pt-8 transition-colors duration-300 hover:border-[#CFCFCF] lg:h-[278px]',
+              !isHome && 'rounded-2xl p-6 sm:p-8',
+              isMuted && !isHome && 'bg-[#F3F4F6]',
               !isHome &&
                 !isMuted &&
                 'border border-[#E5E7EB] bg-white transition-all duration-200 hover:scale-[1.02] hover:shadow-lg',
@@ -48,29 +58,30 @@ export function InitiativeCardsGrid({
                 src={card.iconSrc}
                 alt=""
                 aria-hidden="true"
-                className="h-6 w-auto"
+                className={cn(isHome ? 'h-[30px] w-[30px]' : 'h-6 w-auto')}
                 loading="lazy"
                 decoding="async"
               />
             ) : Icon ? (
-              <Icon className="size-6 text-[#001529]" aria-hidden="true" />
+              <Icon
+                className={cn(isHome ? 'size-[30px]' : 'size-6', 'text-[#001529]')}
+                aria-hidden="true"
+              />
             ) : null}
             <h3
               className={cn(
-                'mt-4 text-[#001529]',
                 isHome
-                  ? 'text-[24px] font-normal leading-[22px] tracking-normal'
-                  : 'text-lg font-bold',
+                  ? 'mt-[41px] text-[24px] font-normal leading-[22px] tracking-normal text-[#13181D]'
+                  : 'mt-4 text-lg font-bold text-[#001529]',
               )}
             >
               {card.title}
             </h3>
             <p
               className={cn(
-                'mt-2 text-[#4B5563]',
                 isHome
-                  ? 'text-[16px] font-normal leading-[24px] tracking-normal'
-                  : 'text-sm leading-relaxed',
+                  ? 'mt-[22px] text-[16px] font-normal leading-[24px] tracking-normal text-[#53585C]'
+                  : 'mt-2 text-sm leading-relaxed text-[#4B5563]',
               )}
             >
               {card.description}

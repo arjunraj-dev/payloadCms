@@ -1,10 +1,8 @@
-'use client'
-
 import { cn } from '@/utilities/ui'
 import Link from 'next/link'
-import React, { useCallback, useState } from 'react'
+import React from 'react'
 import { ScrollRise } from '@/app/(frontend)/components/motion/ScrollRise'
-import { TypewriterText } from '@/app/(frontend)/components/motion/TypewriterText'
+import { StaggerGroup, StaggerItem } from '@/app/(frontend)/components/motion/StaggerGroup'
 import {
   GRADIENT_CTA_BASE_CLASSNAME,
   NAVY_GRADIENT_CTA_STYLE,
@@ -26,10 +24,6 @@ export function MinistryBuiltSection({
   buttonHref = '/about',
 }: MinistryBuiltSectionProps) {
   const paragraphs = Array.isArray(description) ? description : [description]
-  const totalSegments = 1 + paragraphs.length
-  const [doneCount, setDoneCount] = useState(0)
-  const advance = useCallback(() => setDoneCount((count) => count + 1), [])
-  const ctaReady = doneCount >= totalSegments
 
   return (
     <section className="bg-white py-12 md:py-14 lg:py-16">
@@ -53,41 +47,35 @@ export function MinistryBuiltSection({
           </ScrollRise>
 
           {/* Text on RIGHT */}
-          <div className="order-2">
-            <TypewriterText
+          <StaggerGroup as="div" className="order-2">
+            <StaggerItem
               as="h2"
-              lines={[heading]}
-              startOnView
-              speed={26}
-              onDone={advance}
               className="max-w-[454px] text-2xl font-[400] leading-tight text-[#13181D] sm:text-3xl lg:text-[40px] lg:leading-[65px]"
-            />
+            >
+              {heading}
+            </StaggerItem>
             {paragraphs.map((paragraph, index) => (
-              <TypewriterText
+              <StaggerItem
                 key={index}
                 as="p"
-                lines={[paragraph]}
-                start={doneCount >= index + 1}
-                speed={10}
-                onDone={advance}
                 className={cn(
                   'max-w-[537px] text-base leading-relaxed text-[#53585C] sm:text-lg lg:text-[18px] lg:leading-[25px] lg:font-medium',
                   index === 0 ? 'mt-4' : 'mt-3',
                 )}
-              />
+              >
+                {paragraph}
+              </StaggerItem>
             ))}
-            <Link
-              href={buttonHref}
-              className={cn(
-                GRADIENT_CTA_BASE_CLASSNAME,
-                'mt-8 transition-all duration-500 ease-out lg:h-[50px] lg:w-[256px]',
-                ctaReady ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-3 opacity-0',
-              )}
-              style={NAVY_GRADIENT_CTA_STYLE}
-            >
-              {buttonLabel}
-            </Link>
-          </div>
+            <StaggerItem as="div">
+              <Link
+                href={buttonHref}
+                className={cn(GRADIENT_CTA_BASE_CLASSNAME, 'mt-8 lg:h-[50px] lg:w-[256px]')}
+                style={NAVY_GRADIENT_CTA_STYLE}
+              >
+                {buttonLabel}
+              </Link>
+            </StaggerItem>
+          </StaggerGroup>
         </div>
       </div>
     </section>

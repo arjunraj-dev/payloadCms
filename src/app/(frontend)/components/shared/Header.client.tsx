@@ -99,8 +99,8 @@ export function HeaderClient({ logoUrl, logoAlt, navLinks, cta }: HeaderClientPr
   }, [closeMobileMenu])
 
   return (
-    <header className="sticky top-0 z-50 bg-white">
-      <div className="container flex items-center py-3 lg:py-4">
+    <header className="sticky top-0 z-50 bg-white lg:pt-[17px]">
+      <div className="container flex items-center py-3 lg:h-[76.21px] lg:py-0">
         <Link href="/" className="shrink-0">
           {logoUrl ? (
             /* eslint-disable-next-line @next/next/no-img-element */

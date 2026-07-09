@@ -96,22 +96,23 @@ export function ShowYouSection({
                   >
                     {String(index + 1).padStart(2, '0')}
                   </span>
-                  <div className="mt-4 flex items-start justify-between gap-3">
-                    <h3 className="min-w-0 flex-1 text-[24px] leading-[22px] font-normal text-white">
+                  <div className="mt-4 flex items-start gap-2.5">
+                    <h3 className="min-w-0 flex-1 text-[24px] font-normal leading-[30px] tracking-normal text-white">
                       {card.title}
                     </h3>
                     <span
                       className={cn(
-                        'mt-0.5 shrink-0 rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide whitespace-nowrap sm:text-[11px]',
+                        'inline-flex h-[19px] shrink-0 items-center rounded-[4px] px-[6px] text-[10px] font-semibold uppercase tracking-wide whitespace-nowrap',
                         labelColorClasses[card.labelColor],
                       )}
                     >
                       {card.label}
                     </span>
                   </div>
-                  <p className="mt-4 flex-1 text-[16px] leading-[24px] font-normal text-[#AAB5C1]">
+                  <p className="mt-4 flex-1 text-[16px] font-normal leading-[24px] tracking-normal text-[#AAB5C1]">
                     {card.description}
                   </p>
+                  <DrawLine className="mt-6 border-t border-[#1E2F40]" delay={0.1 + index * 0.05} />
                 </StaggerItem>
               ))}
             </StaggerGroup>

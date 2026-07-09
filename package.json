@@ -17,6 +17,8 @@
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
     "revert:card-icon-schema": "bash scripts/revert-card-icon-schema.sh",
     "add:reach-out-button-columns": "bash scripts/add-reach-out-button-columns.sh",
+    "add:government-service-image-columns": "bash scripts/add-government-service-image-columns.sh",
+    "upload:government-service-images": "cross-env NODE_OPTIONS=\"--no-deprecation --import=tsx/esm\" PAYLOAD_DB_PUSH=false tsx scripts/upload-government-service-images.ts",
     "reinstall": "cross-env NODE_OPTIONS=--no-deprecation rm -rf node_modules && rm pnpm-lock.yaml && pnpm --ignore-workspace install",
     "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
     "test": "pnpm run test:int && pnpm run test:e2e",

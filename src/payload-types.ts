@@ -1873,7 +1873,11 @@ export interface Homepage {
       label: string;
       href: string;
     };
-    image: number | Media;
+    images: {
+      family: number | Media;
+      laptop: number | Media;
+      celebrating: number | Media;
+    };
   };
   drawThreads: {
     heading: string;
@@ -2604,7 +2608,13 @@ export interface HomepageSelect<T extends boolean = true> {
               label?: T;
               href?: T;
             };
-        image?: T;
+        images?:
+          | T
+          | {
+              family?: T;
+              laptop?: T;
+              celebrating?: T;
+            };
       };
   drawThreads?:
     | T

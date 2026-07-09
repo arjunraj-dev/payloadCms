@@ -47,6 +47,12 @@ export interface GravityWaveBackgroundProps {
    * lower = snaps to a stop faster.
    */
   followDamping?: number
+  /** Horizontal rest position for the wave cluster, as a fraction of container width (0–1). */
+  anchorXRatio?: number
+  /** Vertical rest position for the wave cluster, as a fraction of container height (0–1). */
+  anchorYRatio?: number
+  /** Optional RGB stops for the aurora gradient. Defaults to the brand palette. */
+  palette?: RGB[]
 }
 
 /**
@@ -61,8 +67,12 @@ export function GravityWaveBackground({
   variant = 'aurora',
   followSpeed: followSpeedProp = 0.005,
   followDamping: followDampingProp = 0.95,
+  anchorXRatio = 0.36,
+  anchorYRatio = 0.5,
+  palette,
 }: GravityWaveBackgroundProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
+  const activePalette = palette ?? AURORA_PALETTE
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -110,8 +120,8 @@ export function GravityWaveBackground({
 
     function initParticles() {
       particles.length = 0
-      group.anchorX = width * 0.36
-      group.anchorY = height * 0.5
+      group.anchorX = width * anchorXRatio
+      group.anchorY = height * anchorYRatio
       group.x = group.anchorX
       group.y = group.anchorY
       group.vx = 0
@@ -198,7 +208,10 @@ export function GravityWaveBackground({
 
         const color: RGB =
           variant === 'aurora'
-            ? samplePalette(AURORA_PALETTE, p.u * 0.55 + p.v * 0.25 + crest * 0.3 + time * 0.045)
+            ? samplePalette(
+                activePalette,
+                p.u * 0.55 + p.v * 0.25 + crest * 0.3 + time * 0.045,
+              )
             : solidColor
 
         drawBuffer.push({ x, y, radius, alpha, depth: h, color })
@@ -271,7 +284,15 @@ export function GravityWaveBackground({
       window.removeEventListener('pointermove', handlePointerMove)
       window.removeEventListener('pointerleave', handlePointerLeave)
     }
-  }, [particleColor, variant, followSpeedProp, followDampingProp])
+  }, [
+    particleColor,
+    variant,
+    followSpeedProp,
+    followDampingProp,
+    anchorXRatio,
+    anchorYRatio,
+    activePalette,
+  ])
 
   return <canvas ref={canvasRef} aria-hidden="true" className={className} />
 }

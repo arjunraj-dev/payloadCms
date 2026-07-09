@@ -68,6 +68,7 @@ export default buildConfig({
     pool: {
       connectionString: process.env.DATABASE_URL || '',
     },
+    push: process.env.PAYLOAD_DB_PUSH === 'true',
   }),
   collections: [Pages, Posts, Updates, Media, Categories, Users],
   cors: [getServerSideURL()].filter(Boolean),

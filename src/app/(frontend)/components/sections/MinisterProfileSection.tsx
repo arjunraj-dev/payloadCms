@@ -1,10 +1,7 @@
-'use client'
-
 import { cn } from '@/utilities/ui'
-import React, { useCallback, useState } from 'react'
-import { Reveal } from '@/app/(frontend)/components/motion/Reveal'
+import React from 'react'
 import { ScrollRise } from '@/app/(frontend)/components/motion/ScrollRise'
-import { TypewriterText } from '@/app/(frontend)/components/motion/TypewriterText'
+import { StaggerGroup, StaggerItem } from '@/app/(frontend)/components/motion/StaggerGroup'
 
 export interface MinisterProfileSectionProps {
   label: string
@@ -31,9 +28,6 @@ export function MinisterProfileSection({
   const bioParagraphs = Array.isArray(bio) ? bio : [bio]
   const isBanner = layout === 'banner'
 
-  const [doneCount, setDoneCount] = useState(0)
-  const advance = useCallback(() => setDoneCount((count) => count + 1), [])
-
   if (isBanner) {
     return (
       <section className="bg-white py-12 md:py-16 lg:py-20">
@@ -55,33 +49,25 @@ export function MinisterProfileSection({
               />
             </ScrollRise>
 
-            <div className="flex flex-1 flex-col justify-center gap-6 px-6 py-8 sm:px-0 lg:max-w-[599px] lg:gap-[31px] lg:py-0">
-              <TypewriterText
+            <StaggerGroup
+              as="div"
+              className="flex flex-1 flex-col justify-center gap-6 px-6 py-8 sm:px-0 lg:max-w-[599px] lg:gap-[31px] lg:py-0"
+            >
+              <StaggerItem
                 as="p"
-                lines={[bioParagraphs[0] ?? '']}
-                startOnView
-                speed={14}
-                onDone={advance}
                 className="text-lg leading-relaxed text-[#13181D] sm:text-xl lg:text-[32px] lg:leading-[38px] lg:font-normal"
-              />
-              <div className="flex flex-col gap-1 lg:max-w-[420px] lg:gap-[7px]">
-                <TypewriterText
-                  as="p"
-                  lines={[name]}
-                  start={doneCount >= 1}
-                  speed={28}
-                  onDone={advance}
-                  className="text-base font-bold text-[#13181D] sm:text-lg lg:text-[20px] lg:leading-[22px]"
-                />
-                <TypewriterText
-                  as="p"
-                  lines={[title]}
-                  start={doneCount >= 2}
-                  speed={28}
-                  className="text-sm text-[#53585C] sm:text-base lg:text-[16px] lg:leading-[22px] lg:font-normal"
-                />
-              </div>
-            </div>
+              >
+                {bioParagraphs[0]}
+              </StaggerItem>
+              <StaggerItem as="div" className="flex flex-col gap-1 lg:max-w-[420px] lg:gap-[7px]">
+                <p className="text-base font-bold text-[#13181D] sm:text-lg lg:text-[20px] lg:leading-[22px]">
+                  {name}
+                </p>
+                <p className="text-sm text-[#53585C] sm:text-base lg:text-[16px] lg:leading-[22px] lg:font-normal">
+                  {title}
+                </p>
+              </StaggerItem>
+            </StaggerGroup>
           </div>
         </div>
       </section>
@@ -97,7 +83,12 @@ export function MinisterProfileSection({
             variant === 'profile' ? 'lg:items-center' : 'items-start',
           )}
         >
-          <div className="order-1 overflow-hidden rounded-3xl bg-[#E8ECEF]">
+          <ScrollRise
+            distance={70}
+            fromScale={0.88}
+            offset={['start 95%', 'start 55%']}
+            className="order-1 overflow-hidden rounded-3xl bg-[#E8ECEF]"
+          >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               alt={name}
@@ -106,45 +97,59 @@ export function MinisterProfileSection({
               decoding="async"
               className="aspect-[4/5] w-full object-cover object-top"
             />
-          </div>
+          </ScrollRise>
 
-          <Reveal as="div" className="order-2">
+          <StaggerGroup as="div" className="order-2">
             {variant === 'quote' ? (
               <>
-                <p className="text-xs font-semibold uppercase tracking-wider text-[#4B5563]">
+                <StaggerItem as="p" className="text-xs font-semibold uppercase tracking-wider text-[#4B5563]">
                   {label}
-                </p>
-                <p className="mt-4 text-xl leading-relaxed text-[#001529] sm:text-2xl">
+                </StaggerItem>
+                <StaggerItem as="p" className="mt-4 text-xl leading-relaxed text-[#001529] sm:text-2xl">
                   {bioParagraphs[0]}
-                </p>
-                <p className="mt-6 text-lg font-bold text-[#001529]">{name}</p>
-                <p className="mt-1 text-base text-[#4B5563]">{title}</p>
+                </StaggerItem>
+                <StaggerItem as="p" className="mt-6 text-lg font-bold text-[#001529]">
+                  {name}
+                </StaggerItem>
+                <StaggerItem as="p" className="mt-1 text-base text-[#4B5563]">
+                  {title}
+                </StaggerItem>
               </>
             ) : (
               <>
-                <p className="text-[clamp(1.25rem,3vw,28px)] font-normal leading-[47px] tracking-normal text-[#001529] lg:text-[28px]">
+                <StaggerItem
+                  as="p"
+                  className="text-[clamp(1.25rem,3vw,28px)] font-normal leading-[47px] tracking-normal text-[#001529] lg:text-[28px]"
+                >
                   {label}
-                </p>
-                <h3 className="mt-4 text-[clamp(1.75rem,4vw,40px)] font-normal leading-[22px] tracking-normal text-[#001529] lg:text-[40px]">
+                </StaggerItem>
+                <StaggerItem
+                  as="h3"
+                  className="mt-4 text-[clamp(1.75rem,4vw,40px)] font-normal leading-[22px] tracking-normal text-[#001529] lg:text-[40px]"
+                >
                   {name}
-                </h3>
-                <p className="mt-2 text-[16px] font-medium leading-[24px] tracking-normal text-[#4B5563]">
+                </StaggerItem>
+                <StaggerItem
+                  as="p"
+                  className="mt-2 text-[16px] font-medium leading-[24px] tracking-normal text-[#4B5563]"
+                >
                   {title}
-                </p>
+                </StaggerItem>
                 {bioParagraphs.map((paragraph, index) => (
-                  <p
+                  <StaggerItem
                     key={index}
+                    as="p"
                     className={cn(
                       'text-base leading-relaxed text-[#4B5563] sm:text-lg',
                       index === 0 ? 'mt-6' : 'mt-3',
                     )}
                   >
                     {paragraph}
-                  </p>
+                  </StaggerItem>
                 ))}
               </>
             )}
-          </Reveal>
+          </StaggerGroup>
         </div>
       </div>
     </section>

@@ -42,7 +42,7 @@
   --breakpoint-md: 48rem;
   --breakpoint-lg: 64rem;
   --breakpoint-xl: 80rem;
-  --breakpoint-2xl: 91.5rem;
+  --breakpoint-2xl: 90rem;
   --font-mono: var(--font-nunito-sans);
   --font-sans: var(--font-nunito-sans);
 }
@@ -82,8 +82,8 @@
   @variant 2xl {
     .container {
       max-width: var(--breakpoint-2xl);
-      /* Figma spec: 1324px content width centered in a 1464px frame with 70px side margins. */
-      padding-inline: 4.375rem;
+      /* Figma spec: 1348px content width in a 1440px frame with 46px side margins. */
+      padding-inline: 2.875rem;
     }
   }
 }

@@ -1,5 +1,10 @@
+import { cn } from '@/utilities/ui'
 import Link from 'next/link'
 import React from 'react'
+import {
+  GRADIENT_CTA_BASE_CLASSNAME,
+  TEAL_GRADIENT_CTA_STYLE,
+} from '@/app/(frontend)/components/shared/gradientCta'
 
 export interface DrawThreadsTag {
   label: string
@@ -25,52 +30,51 @@ export function DrawThreadsSection({
   const firstRow = tags.slice(0, midpoint)
   const secondRow = tags.slice(midpoint)
 
+  const tagClassName =
+    'inline-flex min-h-[70px] items-center justify-center rounded-[12px] bg-[#0D1B2A] px-4 py-2.5 text-center text-[16px] font-semibold leading-[26px] tracking-normal text-white shadow-[0px_0px_10px_0px_#00000014] transition-opacity hover:opacity-90'
+
   return (
-    <section className="bg-[#F8F9FA] py-12 md:py-16 lg:py-20">
+    <section className="bg-white pt-2 pb-12 md:pt-3 md:pb-16 lg:pt-4 lg:pb-20">
       <div className="container">
-        <div className="mx-auto max-w-3xl text-center">
-          <h2 className="text-center text-[clamp(1.75rem,4vw,40px)] font-normal leading-[47px] tracking-normal text-[#001529] lg:text-[40px]">
-            {heading}
-          </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-[#4B5563] sm:text-lg">
-            {description}
-          </p>
-        </div>
+        <div className="flex w-full flex-col items-center justify-center rounded-[24px] bg-[#F9F9F9] px-6 py-10 md:px-10 md:py-12 lg:h-[545px] lg:px-12">
+          <div className="mx-auto flex w-full max-w-[875px] flex-col items-center text-center">
+            <h2 className="mx-auto w-full max-w-[824px] font-normal text-[#13181D] text-[clamp(1.75rem,4vw,40px)] leading-[1.175] tracking-normal lg:text-[40px] lg:leading-[47px]">
+              {heading}
+            </h2>
+            <p className="mx-auto mt-[15px] w-full max-w-[875px] text-base font-medium leading-relaxed text-[#53585C] sm:text-lg lg:text-[18px] lg:leading-[26px]">
+              {description}
+            </p>
 
-        <div className="mx-auto mt-8 flex max-w-4xl flex-col items-center gap-3 md:mt-10 md:gap-4">
-          <div className="flex flex-wrap justify-center gap-3 md:gap-4">
-            {firstRow.map((tag) => (
-              <Link
-                key={tag.label}
-                href={tag.href}
-                className="inline-flex items-center justify-center rounded-xl bg-[#001529] px-6 py-2.5 text-sm font-medium text-white transition-opacity hover:opacity-90 sm:py-3"
-              >
-                {tag.label}
-              </Link>
-            ))}
-          </div>
-          {secondRow.length > 0 && (
-            <div className="flex flex-wrap justify-center gap-3 md:gap-4">
-              {secondRow.map((tag) => (
-                <Link
-                  key={tag.label}
-                  href={tag.href}
-                  className="inline-flex items-center justify-center rounded-xl bg-[#001529] px-6 py-2.5 text-sm font-medium text-white transition-opacity hover:opacity-90 sm:py-3"
-                >
-                  {tag.label}
-                </Link>
-              ))}
+            <div className="mx-auto mt-[33px] flex w-full max-w-[826px] flex-col items-center justify-center gap-2">
+              <div className="flex w-full flex-wrap items-center justify-center gap-2">
+                {firstRow.map((tag) => (
+                  <Link key={tag.label} href={tag.href} className={tagClassName}>
+                    {tag.label}
+                  </Link>
+                ))}
+              </div>
+              {secondRow.length > 0 && (
+                <div className="flex w-full flex-wrap items-center justify-center gap-2">
+                  {secondRow.map((tag) => (
+                    <Link key={tag.label} href={tag.href} className={tagClassName}>
+                      {tag.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
             </div>
-          )}
-        </div>
 
-        <div className="mt-10 text-center md:mt-12">
-          <Link
-            href={ctaHref}
-            className="inline-flex items-center justify-center rounded-lg bg-gradient-to-r from-[#004B4D] to-[#008C95] px-5 py-3 text-sm font-medium text-white transition-opacity hover:opacity-90"
-          >
-            {ctaLabel}
-          </Link>
+            <Link
+              href={ctaHref}
+              className={cn(
+                GRADIENT_CTA_BASE_CLASSNAME,
+                'mt-10 rounded-[6px] font-semibold leading-none lg:mt-[40px] lg:h-[50px] lg:w-[299px]',
+              )}
+              style={TEAL_GRADIENT_CTA_STYLE}
+            >
+              {ctaLabel}
+            </Link>
+          </div>
         </div>
       </div>
     </section>

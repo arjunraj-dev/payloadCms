@@ -11,7 +11,7 @@ import { CountryFutureSection } from '@/app/(frontend)/components/sections/Count
 import { DrawThreadsSection } from '@/app/(frontend)/components/sections/DrawThreadsSection'
 import { GovernmentServiceSection } from '@/app/(frontend)/components/sections/GovernmentServiceSection'
 import { HeroSection } from '@/app/(frontend)/components/sections/HeroSection'
-import { InitiativeCardsGrid } from '@/app/(frontend)/components/sections/InitiativeCardsGrid'
+import { InitiativesHomeSection } from '@/app/(frontend)/components/sections/InitiativesHomeSection'
 import { MinistryBuiltSection } from '@/app/(frontend)/components/sections/MinistryBuiltSection'
 import { MinisterProfileSection } from '@/app/(frontend)/components/sections/MinisterProfileSection'
 import { ShowYouSection } from '@/app/(frontend)/components/sections/ShowYouSection'
@@ -21,9 +21,14 @@ import { generateMeta } from '@/utilities/generateMeta'
 import { getCachedGlobalSafe } from '@/utilities/getGlobals'
 import { mediaUrl, paragraphs } from '@/utilities/cms'
 import { getPillarCardIconSrc } from '@/utilities/pillarCardIcons'
-import Link from 'next/link'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
+
+const GOVERNMENT_SERVICE_IMAGE_FALLBACKS = {
+  family: '/govermant-service/39a9165c48e18d3272f1bf8fca93a48d5c38bba5.png',
+  laptop: '/govermant-service/38a45de76275c4f1afdaa13b5c28eb300c3f9ebe.png',
+  celebrating: '/govermant-service/0e3b072b9794f7bbcb2e51da77d0c3a9838f48bf.png',
+} as const
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -135,32 +140,16 @@ export default async function Page({ params: paramsPromise }: Args) {
         />
       )}
       {homepage && (
-        <section className="bg-white py-12 md:py-16 lg:py-20">
-          <div className="container">
-            <div className="mx-auto flex w-full max-w-[1348px] flex-col gap-8 lg:h-[492px] lg:gap-[40px]">
-              <div className="shrink-0 text-center">
-                <h2 className="mx-auto max-w-[880px] font-[400] text-center text-[clamp(1.75rem,4vw,40px)] font-normal leading-[1.175] tracking-normal text-[#13181D] lg:text-[40px] lg:leading-[47px]">
-                  {homepage.initiatives.heading}
-                </h2>
-                <Link
-                  href={homepage.initiatives.cta.href}
-                  className="mt-6 inline-flex items-center justify-center rounded-[6px] border border-transparent bg-[linear-gradient(90deg,rgba(13,27,42,1)_0%,rgba(13,27,42,1)_20%,rgba(34,54,77,1)_40%,rgba(34,54,77,1)_60%,rgba(41,60,81,1)_80%,rgba(13,27,42,1)_100%)] px-[18px] py-[10px] text-sm font-medium text-white transition-opacity hover:opacity-90"
-                >
-                  {homepage.initiatives.cta.label}
-                </Link>
-              </div>
-              <InitiativeCardsGrid
-                variant="home"
-                className="min-h-0 flex-1 gap-[40px]"
-                cards={(homepage.initiatives.cards ?? []).map((card) => ({
-                  iconSrc: getPillarCardIconSrc(card.title),
-                  title: card.title,
-                  description: card.description,
-                }))}
-              />
-            </div>
-          </div>
-        </section>
+        <InitiativesHomeSection
+          heading={homepage.initiatives.heading}
+          ctaLabel={homepage.initiatives.cta.label}
+          ctaHref={homepage.initiatives.cta.href}
+          cards={(homepage.initiatives.cards ?? []).map((card) => ({
+            iconSrc: getPillarCardIconSrc(card.title) ?? '',
+            title: card.title,
+            description: card.description,
+          }))}
+        />
       )}
       {homepage && (
         <GovernmentServiceSection
@@ -168,7 +157,18 @@ export default async function Page({ params: paramsPromise }: Args) {
           description={homepage.governmentService.description}
           ctaLabel={homepage.governmentService.cta.label}
           ctaHref={homepage.governmentService.cta.href}
-          image={mediaUrl(homepage.governmentService.image)}
+          familyImage={
+            mediaUrl(homepage.governmentService.images?.family) ||
+            GOVERNMENT_SERVICE_IMAGE_FALLBACKS.family
+          }
+          laptopImage={
+            mediaUrl(homepage.governmentService.images?.laptop) ||
+            GOVERNMENT_SERVICE_IMAGE_FALLBACKS.laptop
+          }
+          celebratingImage={
+            mediaUrl(homepage.governmentService.images?.celebrating) ||
+            GOVERNMENT_SERVICE_IMAGE_FALLBACKS.celebrating
+          }
         />
       )}
       {homepage && (
