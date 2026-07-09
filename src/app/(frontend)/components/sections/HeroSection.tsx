@@ -41,7 +41,33 @@ export interface HeroSectionProps {
   imageClassName?: string
   align?: 'left' | 'center'
   /** Figma display heading — Nunito Sans 56.69px / 61.42px line-height */
-  titleVariant?: 'default' | 'display'
+  titleVariant?: 'default' | 'display' | 'about'
+}
+
+/** About hero: always two lines — CMS newline, or split after "Ministry." */
+function getAboutTitleLines(title: string): [string, string] {
+  const lines = title
+    .split('\n')
+    .map((line) => line.trim())
+    .filter(Boolean)
+
+  if (lines.length >= 2) {
+    return [lines[0], lines[1]]
+  }
+
+  if (lines.length === 1) {
+    const ministryMatch = lines[0].match(/^(.+?Ministry\.)\s*(.+)$/i)
+    if (ministryMatch) {
+      return [ministryMatch[1], ministryMatch[2]]
+    }
+
+    const dotIndex = lines[0].indexOf('. ')
+    if (dotIndex !== -1) {
+      return [lines[0].slice(0, dotIndex + 1), lines[0].slice(dotIndex + 2)]
+    }
+  }
+
+  return [lines[0] ?? title, '']
 }
 
 // `GravityWaveBackground`'s canvas sizes itself off its parent element's box, so pinning it to
@@ -54,13 +80,13 @@ function HeroPattern({
   patternFollowSpeed,
   patternFollowDamping,
 }: {
-  titleVariant: 'default' | 'display'
+  titleVariant: 'default' | 'display' | 'about'
   patternColor?: string
   patternVariant?: 'solid' | 'aurora'
   patternFollowSpeed: number
   patternFollowDamping: number
 }) {
-  if (titleVariant === 'display') {
+  if (titleVariant === 'display' || titleVariant === 'about') {
     return (
       <div className="pointer-events-none absolute top-[11px] left-[-84px] z-0 h-[602px] w-[876px] opacity-50">
         <GravityWaveBackground
@@ -92,6 +118,45 @@ const ctaBaseClassName =
 const displayCtaBaseClassName = cn(GRADIENT_CTA_BASE_CLASSNAME, 'lg:h-[50px]')
 const displayPrimaryCtaStyle = TEAL_GRADIENT_CTA_STYLE
 const displaySecondaryCtaStyle = NAVY_GRADIENT_CTA_STYLE
+
+/**
+ * About page hero — Figma: 56.69px/61.42px title (2 lines, max 450px),
+ * 18px/25px medium description (max 655px).
+ */
+function AboutHeroCopy({
+  title,
+  subtitleParagraphs,
+}: {
+  title: string
+  subtitleParagraphs: string[]
+}) {
+  const [lineOne, lineTwo] = getAboutTitleLines(title)
+
+  return (
+    <StaggerGroup as="div" staggerChildren={STAGGER_CHILDREN} className="relative z-10 w-full">
+      <StaggerItem
+        as="h1"
+        className="max-w-[450px] text-[clamp(2rem,5vw,56.69px)] font-normal leading-[1.084] tracking-normal text-[#13181D] lg:text-[56.69px] lg:leading-[61.42px]"
+      >
+        {lineOne}
+        <br />
+        {lineTwo}
+      </StaggerItem>
+      {subtitleParagraphs.map((paragraph, index) => (
+        <StaggerItem
+          as="p"
+          key={index}
+          className={cn(
+            index === 0 ? 'mt-[22px]' : 'mt-[25px]',
+            'max-w-[655px] text-[18px] font-medium leading-[25px] tracking-normal text-[#4B5563]',
+          )}
+        >
+          {paragraph}
+        </StaggerItem>
+      ))}
+    </StaggerGroup>
+  )
+}
 
 /**
  * The "display" hero (homepage): types the title out, then each subtitle paragraph in turn,
@@ -254,7 +319,7 @@ export function HeroSection({
               isCentered && 'text-center',
             )}
           >
-            {showPattern && hasImage && (
+            {(showPattern || titleVariant === 'about') && hasImage && (
               <HeroPattern
                 titleVariant={titleVariant}
                 patternColor={patternColor}
@@ -272,6 +337,8 @@ export function HeroSection({
                 primaryCTA={primaryCTA}
                 secondaryCTA={secondaryCTA}
               />
+            ) : titleVariant === 'about' ? (
+              <AboutHeroCopy title={title} subtitleParagraphs={subtitleParagraphs} />
             ) : (
               <StaggerGroup
                 as="div"

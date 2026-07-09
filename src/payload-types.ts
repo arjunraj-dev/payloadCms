@@ -1919,6 +1919,9 @@ export interface Homepage {
 export interface AboutPage {
   id: number;
   hero: {
+    /**
+     * Press Enter for a new line. Example: "A new Ministry." on line 1, "A clear mandate." on line 2.
+     */
     title: string;
     subtitle?:
       | {

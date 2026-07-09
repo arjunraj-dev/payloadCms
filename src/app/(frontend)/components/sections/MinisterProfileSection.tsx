@@ -80,10 +80,62 @@ export function MinisterProfileSection({
   return (
     <section className={cn('py-12 md:py-16 lg:py-20', backgroundColor)}>
       <div className="container">
+        {variant === 'profile' ? (
+          <div className="mx-auto flex w-full max-w-[1348px] flex-col gap-8 lg:flex-row lg:items-center lg:gap-[72px]">
+            <ScrollRise
+              distance={70}
+              fromScale={0.88}
+              offset={['start 95%', 'start 55%']}
+              className="aspect-[700/594] w-full shrink-0 overflow-hidden rounded-3xl bg-[#E8ECEF] lg:aspect-auto lg:h-[594px] lg:w-[700px]"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                alt={name}
+                src={image}
+                loading="lazy"
+                decoding="async"
+                className="h-full w-full object-cover object-top"
+              />
+            </ScrollRise>
+
+            <StaggerGroup as="div" className="flex w-full max-w-[576px] flex-col lg:pt-0">
+              <StaggerItem
+                as="p"
+                className="text-[28px] font-normal leading-[47px] tracking-normal text-[#13181D]"
+              >
+                {label}
+              </StaggerItem>
+              <StaggerItem
+                as="h3"
+                className="mt-[30px] text-[40px] font-normal leading-[22px] tracking-normal text-[#001529]"
+              >
+                {name}
+              </StaggerItem>
+              <StaggerItem
+                as="p"
+                className="mt-[18px] text-[16px] font-medium leading-[24px] tracking-normal text-[#53585C]"
+              >
+                {title}
+              </StaggerItem>
+              {bioParagraphs.map((paragraph, index) => (
+                <StaggerItem
+                  key={index}
+                  as="p"
+                  className={cn(
+                    'text-[18px] font-medium leading-[28px] tracking-normal text-[#13181D]',
+                    index === 0 ? 'mt-[26px]' : 'mt-4',
+                  )}
+                >
+                  {paragraph}
+                </StaggerItem>
+              ))}
+            </StaggerGroup>
+          </div>
+        ) : (
         <div
           className={cn(
             'grid grid-cols-1 gap-8 lg:grid-cols-[2fr_3fr] lg:gap-16',
-            variant === 'profile' ? 'lg:items-center' : 'items-start',
+            'items-start',
           )}
         >
           <ScrollRise
@@ -103,57 +155,23 @@ export function MinisterProfileSection({
           </ScrollRise>
 
           <StaggerGroup as="div" className="order-2">
-            {variant === 'quote' ? (
-              <>
-                <StaggerItem as="p" className="text-xs font-semibold uppercase tracking-wider text-[#4B5563]">
-                  {label}
-                </StaggerItem>
-                <StaggerItem as="p" className="mt-4 text-xl leading-relaxed text-[#001529] sm:text-2xl">
-                  {bioParagraphs[0]}
-                </StaggerItem>
-                <StaggerItem as="p" className="mt-6 text-lg font-bold text-[#001529]">
-                  {name}
-                </StaggerItem>
-                <StaggerItem as="p" className="mt-1 text-base text-[#4B5563]">
-                  {title}
-                </StaggerItem>
-              </>
-            ) : (
-              <>
-                <StaggerItem
-                  as="p"
-                  className="text-[clamp(1.25rem,3vw,28px)] font-normal leading-[47px] tracking-normal text-[#001529] lg:text-[28px]"
-                >
-                  {label}
-                </StaggerItem>
-                <StaggerItem
-                  as="h3"
-                  className="mt-4 text-[clamp(1.75rem,4vw,40px)] font-normal leading-[22px] tracking-normal text-[#001529] lg:text-[40px]"
-                >
-                  {name}
-                </StaggerItem>
-                <StaggerItem
-                  as="p"
-                  className="mt-2 text-[16px] font-medium leading-[24px] tracking-normal text-[#4B5563]"
-                >
-                  {title}
-                </StaggerItem>
-                {bioParagraphs.map((paragraph, index) => (
-                  <StaggerItem
-                    key={index}
-                    as="p"
-                    className={cn(
-                      'text-base leading-relaxed text-[#4B5563] sm:text-lg',
-                      index === 0 ? 'mt-6' : 'mt-3',
-                    )}
-                  >
-                    {paragraph}
-                  </StaggerItem>
-                ))}
-              </>
-            )}
+            <>
+              <StaggerItem as="p" className="text-xs font-semibold uppercase tracking-wider text-[#4B5563]">
+                {label}
+              </StaggerItem>
+              <StaggerItem as="p" className="mt-4 text-xl leading-relaxed text-[#001529] sm:text-2xl">
+                {bioParagraphs[0]}
+              </StaggerItem>
+              <StaggerItem as="p" className="mt-6 text-lg font-bold text-[#001529]">
+                {name}
+              </StaggerItem>
+              <StaggerItem as="p" className="mt-1 text-base text-[#4B5563]">
+                {title}
+              </StaggerItem>
+            </>
           </StaggerGroup>
         </div>
+        )}
       </div>
     </section>
   )

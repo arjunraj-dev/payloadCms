@@ -44,7 +44,7 @@ export function InitiativeCardsGrid({
             transition={isHome ? { type: 'spring', stiffness: 300, damping: 22 } : undefined}
             className={cn(
               isHome &&
-                'rounded-[24px] border border-[#DFDFDF] bg-[#E9E9E980] px-[19px] pt-8 transition-colors duration-300 hover:border-[#CFCFCF] lg:h-[278px]',
+                'rounded-[24px] border border-[#DFDFDF] bg-[#E9E9E980] px-[19px] py-8 transition-colors duration-300 hover:border-[#CFCFCF]',
               !isHome && 'rounded-2xl p-6 sm:p-8',
               isMuted && !isHome && 'bg-[#F3F4F6]',
               !isHome &&

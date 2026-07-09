@@ -5,6 +5,9 @@ import { StaggerGroup, StaggerItem } from '@/app/(frontend)/components/motion/St
 
 const POLICY_AREA_ICON = '/Mordernize-gov.svg'
 
+const POLICY_ACTIVE_GRADIENT =
+  'linear-gradient(90deg, #0C3538 0%, #0F848D 35.56%, #169EA9 49.52%, #169EA9 53.78%, #0F848D 64.92%, #0C3538 100%)'
+
 export type PolicyAreaStatus = 'active' | 'comingSoon'
 
 export interface PolicyArea {
@@ -16,76 +19,77 @@ export interface PolicyArea {
 export interface PolicyAreasSectionProps {
   policies: PolicyArea[]
   heading?: string
-  ctaLabel?: string
-  ctaHref?: string
 }
 
 export function PolicyAreasSection({
   policies,
   heading = 'Policy areas this Ministry leads',
-  ctaLabel = 'See all policies →',
-  ctaHref = '/policies',
 }: PolicyAreasSectionProps) {
   return (
-    <section className="bg-[#F8F9FA] py-12 md:py-16 lg:py-20">
+    <section className="bg-white py-12 md:py-16 lg:py-20">
       <div className="container">
-        <Reveal as="h2" className="text-[clamp(1.75rem,4vw,40px)] font-normal leading-[47px] tracking-normal text-[#001529] lg:text-[40px]">
-          {heading}
-        </Reveal>
-
-        <StaggerGroup as="div" className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 md:mt-10 md:grid-cols-3 md:gap-5 lg:grid-cols-5">
-          {policies.map((policy) => {
-            const isComingSoon = policy.status === 'comingSoon'
-
-            return (
-              <StaggerItem
-                as="article"
-                key={policy.label}
-                className="flex min-h-[148px] flex-col overflow-hidden rounded-xl border border-[#E5E7EB] bg-white shadow-sm"
-              >
-                <div className="flex flex-1 items-start gap-3 p-4">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={POLICY_AREA_ICON}
-                    alt=""
-                    aria-hidden="true"
-                    className="h-6 w-auto shrink-0"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                  <span className="text-sm font-semibold leading-snug text-[#001529]">
-                    {policy.label}
-                  </span>
-                </div>
-
-                {isComingSoon ? (
-                  <span
-                    className="flex w-full cursor-not-allowed items-center justify-center bg-[#F3F4F6] px-3 py-2.5 text-sm font-medium text-[#9CA3AF]"
-                    aria-disabled="true"
-                  >
-                    Coming soon
-                  </span>
-                ) : (
-                  <Link
-                    href={policy.href ?? '#'}
-                    className="flex w-full items-center justify-center bg-gradient-to-r from-[#004B4D] to-[#008C95] px-3 py-2.5 text-sm font-medium text-white transition-opacity hover:opacity-90"
-                  >
-                    View progress →
-                  </Link>
-                )}
-              </StaggerItem>
-            )
-          })}
-        </StaggerGroup>
-
-        <Reveal as="div" className="mt-10 text-center md:mt-12">
-          <Link
-            href={ctaHref}
-            className="inline-flex items-center justify-center text-sm font-medium text-[#008C95] transition-opacity hover:opacity-80"
+        <div className="mx-auto flex w-full max-w-[1350px] flex-col gap-10">
+          <Reveal
+            as="h2"
+            className="text-left text-[clamp(1.75rem,4vw,40px)] font-normal leading-[47px] tracking-normal text-[#001529] lg:text-[40px]"
           >
-            {ctaLabel}
-          </Link>
-        </Reveal>
+            {heading}
+          </Reveal>
+
+          <StaggerGroup
+            as="div"
+            className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5"
+          >
+            {policies.map((policy) => {
+              const isComingSoon = policy.status === 'comingSoon'
+
+              return (
+                <StaggerItem
+                  as="article"
+                  key={policy.label}
+                  className="flex w-full flex-col lg:h-[131px] lg:w-[254px]"
+                >
+                  <div className="flex h-[95px] items-center gap-[10px] rounded-t-[24px] border border-b-0 border-[#DFDFDF] p-[10px]">
+                    <div className="flex w-full max-w-[234px] items-center gap-5">
+                      <div className="flex h-[50px] w-[50px] shrink-0 items-center justify-center rounded-full px-[6px] py-[7px]">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={POLICY_AREA_ICON}
+                          alt=""
+                          aria-hidden="true"
+                          className="h-full w-full object-contain"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </div>
+                      <span className="min-w-0 flex-1 text-[18px] font-normal leading-[22px] tracking-normal text-[#001529] line-clamp-2">
+                        {policy.label}
+                      </span>
+                    </div>
+                  </div>
+
+                  {isComingSoon ? (
+                    <span
+                      className="flex h-[36px] w-full items-center justify-center gap-[7px] rounded-b-[24px] border border-[#DFDFDF] bg-[#F3F4F6] px-[18px] py-[10px] text-sm font-medium leading-[22px] text-[#9CA3AF]"
+                      aria-disabled="true"
+                    >
+                      Coming soon
+                    </span>
+                  ) : (
+                    <Link
+                      href={policy.href ?? '#'}
+                      className="flex h-[36px] w-full items-center justify-center gap-[7px] rounded-b-[24px] border border-[#DFDFDF] px-[18px] py-[10px] text-sm font-medium leading-[22px] text-white transition-opacity hover:opacity-90"
+                      style={{ background: POLICY_ACTIVE_GRADIENT }}
+                    >
+                      View progress
+                      <span aria-hidden="true">→</span>
+                    </Link>
+                  )}
+                </StaggerItem>
+              )
+            })}
+          </StaggerGroup>
+        </div>
       </div>
     </section>
   )

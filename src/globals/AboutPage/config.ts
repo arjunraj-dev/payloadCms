@@ -33,7 +33,15 @@ export const AboutPage: GlobalConfig = {
               name: 'hero',
               type: 'group',
               fields: [
-                { name: 'title', type: 'text', required: true },
+                {
+                  name: 'title',
+                  type: 'textarea',
+                  required: true,
+                  admin: {
+                    description:
+                      'Press Enter for a new line. Example: "A new Ministry." on line 1, "A clear mandate." on line 2.',
+                  },
+                },
                 paragraphsField('subtitle'),
                 { name: 'image', type: 'upload', relationTo: 'media', required: true },
               ],
