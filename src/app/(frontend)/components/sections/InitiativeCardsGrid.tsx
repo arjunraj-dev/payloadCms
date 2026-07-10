@@ -29,7 +29,7 @@ export function InitiativeCardsGrid({
       as="div"
       className={cn(
         'grid grid-cols-1 gap-6 md:grid-cols-2',
-        isHome ? 'lg:grid-cols-4 lg:gap-5' : 'lg:grid-cols-4',
+        isHome ? 'xl:grid-cols-4 xl:gap-5' : 'lg:grid-cols-4',
         className,
       )}
     >
@@ -71,7 +71,7 @@ export function InitiativeCardsGrid({
             <h3
               className={cn(
                 isHome
-                  ? 'mt-[41px] text-[24px] font-normal leading-[22px] tracking-normal text-[#13181D]'
+                  ? 'mt-[41px] text-[24px] font-normal leading-[30px] tracking-normal text-[#13181D]'
                   : 'mt-4 text-lg font-bold text-[#001529]',
               )}
             >

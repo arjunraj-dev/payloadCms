@@ -66,7 +66,15 @@ function getFiveCardItemClass(index: number, total: number) {
   return ''
 }
 
-function ProgramIcon({ iconSrc, icon, className }: { iconSrc?: string; icon?: LucideIcon; className?: string }) {
+function ProgramIcon({
+  iconSrc,
+  icon,
+  className,
+}: {
+  iconSrc?: string
+  icon?: LucideIcon
+  className?: string
+}) {
   const Icon = icon
 
   return (
@@ -91,6 +99,7 @@ function ProgramIcon({ iconSrc, icon, className }: { iconSrc?: string; icon?: Lu
       ) : null}
     </div>
   )
+  return 'grid-cols-1 md:grid-cols-2 xl:grid-cols-4'
 }
 
 const ProgramSectionCards: React.FC<ProgramSectionCardsProps> = ({
@@ -110,6 +119,9 @@ const ProgramSectionCards: React.FC<ProgramSectionCardsProps> = ({
   const isCream = cardSurface === 'cream'
   const isMuted = cardSurface === 'muted'
   const isNunito = sectionTypography === 'nunito'
+  const hasPanel = Boolean(backgroundImage || backgroundColor)
+  /** Figma Progress “Build Future Readiness” / light nunito sections */
+  const isFigmaLight = isNunito && !isAccent && !hasPanel
 
   if (isNunito) {
     const isPhotoSection = isAccent && Boolean(backgroundImage)
@@ -154,7 +166,10 @@ const ProgramSectionCards: React.FC<ProgramSectionCardsProps> = ({
                   style={{ backgroundImage: `url(${backgroundImage})` }}
                 />
                 {!isPhotoSection && (
-                  <div className="pointer-events-none absolute inset-0 bg-[#FF8C00]/10" aria-hidden="true" />
+                  <div
+                    className="pointer-events-none absolute inset-0 bg-[#FF8C00]/10"
+                    aria-hidden="true"
+                  />
                 )}
               </>
             )}
@@ -307,48 +322,73 @@ const ProgramSectionCards: React.FC<ProgramSectionCardsProps> = ({
   return (
     <section
       className={cn(
-        'bg-white pb-8 md:pb-10 lg:pb-12',
-        sectionClassName ?? 'pt-8 md:pt-10 lg:pt-12',
+        'bg-white',
+        isFigmaLight ? 'py-8 md:py-10 lg:py-[35px]' : 'py-8 md:py-10 lg:py-12',
       )}
     >
       <div className="container">
         <div
           className={cn(
-            'relative overflow-hidden px-6 py-10 md:px-10 md:py-12 lg:px-12 lg:py-14',
-            backgroundImage && 'rounded-[2rem] bg-cover bg-center bg-no-repeat',
-            !backgroundImage && backgroundColor && 'rounded-[2rem]',
+            'relative',
+            hasPanel &&
+              'overflow-hidden rounded-[24px] px-5 py-8 sm:rounded-[2rem] sm:px-6 sm:py-10 md:px-10 md:py-12 lg:px-12 lg:py-14',
+            backgroundImage && 'bg-cover bg-center bg-no-repeat',
             !backgroundImage && backgroundColor,
+            isFigmaLight && 'mx-auto w-full max-w-[1351px]',
           )}
           style={backgroundImage ? { backgroundImage: `url(${backgroundImage})` } : undefined}
         >
           {backgroundImage && (
-            <div className="pointer-events-none absolute inset-0 bg-[#FF8C00]/10" aria-hidden="true" />
+            <div
+              className="pointer-events-none absolute inset-0 bg-[#FF8C00]/10"
+              aria-hidden="true"
+            />
           )}
 
           <div className="relative z-10">
-            <Reveal
-              as="h2"
+            <div
               className={cn(
-                'text-2xl font-bold sm:text-3xl lg:text-4xl',
-                isAccent ? 'text-white' : 'text-[#001529]',
+                isFigmaLight ? 'flex w-full max-w-[842px] flex-col gap-3 sm:gap-[15px]' : undefined,
               )}
             >
-              {title}
-            </Reveal>
-            <Reveal
-              as="p"
-              delay={0.08}
-              className={cn(
-                'mt-4 max-w-2xl text-base leading-relaxed sm:text-lg',
-                isAccent ? 'text-white/90' : 'text-[#4B5563]',
-              )}
-            >
-              {description}
-            </Reveal>
+              <Reveal
+                as="h2"
+                className={cn(
+                  isNunito
+                    ? isFigmaLight
+                      ? 'w-full max-w-[842px] text-[clamp(1.75rem,4vw,40px)] font-normal leading-[1.2] tracking-normal text-[#13181D] lg:text-[40px] lg:leading-[47px]'
+                      : 'text-[clamp(1.75rem,4vw,40px)] font-normal leading-[1.2] tracking-normal lg:text-[40px] lg:leading-[47px]'
+                    : 'text-2xl font-bold sm:text-3xl lg:text-4xl',
+                  !isFigmaLight && (isAccent ? 'text-white' : 'text-[#001529]'),
+                )}
+              >
+                {title}
+              </Reveal>
+              <Reveal
+                as="p"
+                delay={0.08}
+                className={cn(
+                  isNunito
+                    ? isFigmaLight
+                      ? 'w-full max-w-[824px] text-[16px] font-medium leading-[25px] tracking-normal text-[#53585C] sm:text-[18px]'
+                      : 'mt-3 max-w-2xl text-[16px] font-medium leading-[25px] tracking-normal sm:mt-4 sm:text-[18px]'
+                    : 'mt-4 max-w-2xl text-base leading-relaxed sm:text-lg',
+                  !isFigmaLight && (isAccent ? 'text-white/90' : 'text-[#4B5563]'),
+                )}
+              >
+                {description}
+              </Reveal>
+            </div>
 
             <StaggerGroup
               as="div"
-              className={cn('mt-8 grid gap-5 md:mt-10 md:gap-6', getGridClass(cards.length))}
+              className={cn(
+                'grid',
+                isFigmaLight
+                  ? 'mt-8 w-full max-w-[1351px] gap-5 sm:mt-10 lg:mt-[48px] lg:gap-[20px]'
+                  : 'mt-8 gap-5 md:mt-10 md:gap-6',
+                getGridClass(cards.length),
+              )}
             >
               {cards.map((card) => {
                 const Icon = card.icon
@@ -358,7 +398,10 @@ const ProgramSectionCards: React.FC<ProgramSectionCardsProps> = ({
                     as="article"
                     key={card.title}
                     className={cn(
-                      'flex h-full flex-col rounded-2xl border p-6 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg',
+                      'flex h-full min-w-0 flex-col rounded-2xl border p-5 transition-all duration-200 sm:p-6',
+                      isFigmaLight
+                        ? 'min-h-0 shadow-none hover:opacity-95 lg:min-h-[446px] lg:rounded-[24px]'
+                        : 'shadow-sm hover:-translate-y-0.5 hover:shadow-lg',
                       isMuted
                         ? 'border-transparent bg-[#E9E9E980]'
                         : isCream
@@ -370,17 +413,31 @@ const ProgramSectionCards: React.FC<ProgramSectionCardsProps> = ({
                       <ProgramIcon iconSrc={iconSrc} icon={Icon} />
                       <span
                         className={cn(
-                          'shrink-0 rounded px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide',
+                          'max-w-[50%] rounded px-2.5 py-1 text-center text-[10px] font-semibold uppercase leading-tight tracking-wide',
                           labelColorClasses[card.labelColor],
                         )}
                       >
                         {card.label}
                       </span>
                     </div>
-                    <h3 className="mt-5 text-base font-bold leading-snug text-[#001529] sm:text-lg">
+                    <h3
+                      className={cn(
+                        'mt-4 sm:mt-5',
+                        isNunito
+                          ? isFigmaLight
+                            ? 'text-[22px] font-normal leading-[30px] tracking-normal text-[#13181D] sm:text-[24px]'
+                            : 'text-[22px] font-normal leading-[30px] tracking-normal text-[#001529] sm:text-[24px]'
+                          : 'text-base font-bold leading-snug text-[#001529] sm:text-lg',
+                      )}
+                    >
                       {card.title}
                     </h3>
-                    <p className="mt-3 flex-1 text-sm leading-relaxed text-[#4B5563]">
+                    <p
+                      className={cn(
+                        'mt-3 flex-1 text-[14px] leading-relaxed sm:text-sm',
+                        isFigmaLight ? 'text-[#53585C]' : 'text-[#4B5563]',
+                      )}
+                    >
                       {card.description}
                     </p>
                   </StaggerItem>

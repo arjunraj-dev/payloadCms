@@ -76,10 +76,10 @@ export function TextImageSection({
   const hasButton = Boolean(buttonLabel && buttonHref)
 
   const getInvolvedTextContent = (
-    <StaggerGroup as="div" className="flex h-full flex-col">
+    <StaggerGroup as="div" className="flex h-full min-w-0 w-full flex-col">
       <StaggerItem
         as="h2"
-        className="max-w-[527px] text-[clamp(1.75rem,4vw,40px)] font-normal leading-[47px] tracking-normal text-[#13181D] lg:text-[40px]"
+        className="w-full text-[clamp(1.625rem,5.5vw,40px)] font-normal leading-[1.2] tracking-normal text-[#13181D] xl:max-w-[527px] xl:text-[40px] xl:leading-[47px]"
       >
         {heading}
       </StaggerItem>
@@ -88,18 +88,21 @@ export function TextImageSection({
           as="p"
           key={index}
           className={cn(
-            'max-w-[571px] text-[18px] font-medium leading-[25px] tracking-normal text-[#53585C]',
-            index === 0 ? 'mt-[26px]' : 'mt-[25px]',
+            'w-full text-[15px] font-medium leading-[1.55] tracking-normal text-[#53585C] sm:text-[16px] sm:leading-[25px] md:text-[18px] xl:max-w-[571px]',
+            index === 0 ? 'mt-3 sm:mt-5 xl:mt-[26px]' : 'mt-3 sm:mt-4 xl:mt-[25px]',
           )}
         >
           {paragraph}
         </StaggerItem>
       ))}
       {hasButton && (
-        <StaggerItem as="div" className="mt-[33px]">
+        <StaggerItem as="div" className="mt-5 sm:mt-6 xl:mt-[33px]">
           <Link
             href={buttonHref!}
-            className={cn(GRADIENT_CTA_BASE_CLASSNAME, 'h-[50px] w-[227px] rounded-[6px]')}
+            className={cn(
+              GRADIENT_CTA_BASE_CLASSNAME,
+              'h-[50px] w-full rounded-[6px] sm:w-[227px]',
+            )}
             style={NAVY_GRADIENT_CTA_STYLE}
           >
             {buttonLabel}
@@ -112,13 +115,13 @@ export function TextImageSection({
   const textContent = isGetInvolved ? (
     getInvolvedTextContent
   ) : (
-    <StaggerGroup as="div">
+    <StaggerGroup as="div" className={cn(isAbout && 'w-full min-w-0')}>
       <StaggerItem
         as="h2"
         className={cn(
           'tracking-normal text-[#001529]',
           isAbout
-            ? 'text-[clamp(1.75rem,4vw,40px)] font-normal leading-[65px] lg:text-[40px]'
+            ? 'w-full text-[clamp(1.625rem,5.5vw,40px)] font-normal leading-[1.2] lg:text-[40px] lg:leading-[47px]'
             : 'text-[clamp(1.75rem,4vw,40px)] font-normal leading-[47px] lg:text-[40px]',
         )}
       >
@@ -130,9 +133,15 @@ export function TextImageSection({
           key={index}
           className={cn(
             isAbout
-              ? 'text-[18px] font-medium leading-[25px] tracking-normal text-[#4B5563]'
+              ? 'w-full text-[15px] font-medium leading-[1.55] tracking-normal text-[#4B5563] sm:text-[16px] sm:leading-[25px] md:text-[18px]'
               : 'text-base leading-relaxed text-[#4B5563] sm:text-lg',
-            index === 0 ? (isAbout ? 'mt-6' : 'mt-4') : isAbout ? 'mt-[25px]' : 'mt-3',
+            index === 0
+              ? isAbout
+                ? 'mt-3 sm:mt-4'
+                : 'mt-4'
+              : isAbout
+                ? 'mt-3 sm:mt-4 md:mt-[25px]'
+                : 'mt-3',
           )}
         >
           {paragraph}
@@ -158,17 +167,17 @@ export function TextImageSection({
         <div className="container relative">
           <div
             className={cn(
-              'mx-auto flex w-full max-w-[1347px] flex-col gap-8 lg:h-[594px] lg:flex-row lg:items-center lg:gap-[76px]',
-              isImageLeft && 'lg:flex-row-reverse',
+              'mx-auto flex w-full max-w-[1347px] flex-col gap-8 xl:h-[594px] xl:flex-row xl:items-center xl:gap-[76px]',
+              isImageLeft && 'xl:flex-row-reverse',
             )}
           >
-            <div className="flex w-full max-w-[571px] shrink-0 flex-col justify-center lg:h-[403px]">
+            <div className="flex min-w-0 w-full flex-col justify-center xl:h-[403px] xl:max-w-[571px]">
               {getInvolvedTextContent}
             </div>
             <SectionImage
               heading={heading}
               image={image!}
-              className="h-[280px] w-full shrink-0 overflow-hidden rounded-2xl sm:h-[360px] lg:h-[594px] lg:w-[700px] lg:rounded-3xl"
+              className="h-[280px] w-full min-w-0 overflow-hidden rounded-2xl sm:h-[360px] xl:h-[594px] xl:w-[700px] xl:max-w-[700px] xl:shrink-0 xl:rounded-3xl"
             />
           </div>
         </div>
@@ -207,26 +216,28 @@ export function TextImageSection({
           >
             <div
               className={cn(
-                'flex flex-col lg:flex-row lg:items-stretch',
-                !isImageLeft && 'lg:flex-row-reverse',
+                'flex flex-col xl:flex-row xl:items-stretch',
+                !isImageLeft && 'xl:flex-row-reverse',
               )}
             >
-              <div className="relative flex lg:w-1/2 lg:shrink-0">
+              <div className="relative flex min-w-0 xl:w-1/2">
                 <SectionImage
                   heading={heading}
                   image={image!}
                   className={cn(
-                    'min-h-[280px] w-full',
+                    'min-h-[240px] w-full sm:min-h-[280px]',
                     isAboutContained
-                      ? 'aspect-[4/3] lg:aspect-auto lg:h-full lg:min-h-0'
-                      : 'aspect-[4/3] lg:aspect-auto lg:h-full lg:min-h-0',
+                      ? 'aspect-[4/3] xl:aspect-auto xl:h-full xl:min-h-0'
+                      : 'aspect-[4/3] xl:aspect-auto xl:h-full xl:min-h-0',
                   )}
                 />
               </div>
               <div
                 className={cn(
-                  'flex flex-col justify-center bg-[#E9E9E980] lg:w-1/2 lg:self-stretch',
-                  isAboutContained ? 'p-6 md:p-10 lg:px-12 lg:py-16' : 'p-6 md:p-10 lg:p-12',
+                  'flex min-w-0 flex-col justify-center bg-[#E9E9E980] xl:w-1/2 xl:self-stretch',
+                  isAboutContained
+                    ? 'px-5 py-7 sm:p-6 md:p-10 xl:px-12 xl:py-16'
+                    : 'p-5 sm:p-6 md:p-10 xl:p-12',
                 )}
               >
                 {textContent}
@@ -234,15 +245,47 @@ export function TextImageSection({
             </div>
           </div>
         ) : (
-          <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-12 xl:gap-16">
-            <div className={cn(isImageLeft ? 'order-2' : 'order-1')}>{textContent}</div>
+          <div
+            className={cn(
+              'grid grid-cols-1 items-center',
+              isAbout
+                ? 'mx-auto w-full max-w-[1347px] gap-6 sm:gap-8 xl:grid-cols-2 xl:gap-12'
+                : 'gap-8 lg:grid-cols-2 lg:gap-12 xl:gap-16',
+            )}
+          >
+            <div
+              className={cn(
+                'min-w-0 w-full',
+                isImageLeft
+                  ? 'order-2'
+                  : isAbout
+                    ? 'order-2 xl:order-1'
+                    : 'order-1',
+              )}
+            >
+              {textContent}
+            </div>
 
             {hasForegroundImage && (
-              <div className={cn(isImageLeft ? 'order-1' : 'order-2')}>
+              <div
+                className={cn(
+                  'min-w-0 w-full',
+                  isImageLeft
+                    ? 'order-1'
+                    : isAbout
+                      ? 'order-1 xl:order-2'
+                      : 'order-2',
+                )}
+              >
                 <SectionImage
                   heading={heading}
                   image={image!}
-                  className="aspect-[4/3] rounded-2xl lg:aspect-auto lg:min-h-[320px] lg:rounded-3xl"
+                  className={cn(
+                    'w-full overflow-hidden rounded-2xl',
+                    isAbout
+                      ? 'aspect-[4/3] sm:aspect-[16/10] xl:aspect-auto xl:min-h-[320px] xl:rounded-3xl'
+                      : 'aspect-[4/3] lg:aspect-auto lg:min-h-[320px] lg:rounded-3xl',
+                  )}
                 />
               </div>
             )}
