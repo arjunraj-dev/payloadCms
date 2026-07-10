@@ -41,7 +41,7 @@ export interface HeroSectionProps {
   imageClassName?: string
   align?: 'left' | 'center'
   /** Figma display heading — Nunito Sans 56.69px / 61.42px line-height */
-  titleVariant?: 'default' | 'display' | 'about' | 'getInvolved' | 'updates'
+  titleVariant?: 'default' | 'display' | 'about' | 'getInvolved' | 'updates' | 'contact'
 }
 
 /** About hero: always two lines — CMS newline, or split after "Ministry." */
@@ -80,7 +80,7 @@ function HeroPattern({
   patternFollowSpeed,
   patternFollowDamping,
 }: {
-  titleVariant: 'default' | 'display' | 'about' | 'getInvolved' | 'updates'
+  titleVariant: 'default' | 'display' | 'about' | 'getInvolved' | 'updates' | 'contact'
   patternColor?: string
   patternVariant?: 'solid' | 'aurora'
   patternFollowSpeed: number
@@ -120,15 +120,19 @@ const displayPrimaryCtaStyle = TEAL_GRADIENT_CTA_STYLE
 const displaySecondaryCtaStyle = NAVY_GRADIENT_CTA_STYLE
 
 /**
- * Centered page hero (Get Involved / Updates) — Figma: 56.69px/61.42px title (max 701px),
- * 18px/25px medium description (max 863px, #53585C).
+ * Centered page hero (Get Involved / Updates / Contact) — Figma: 56.69px/61.42px title,
+ * 18px/25px medium description (max 863px, #53585C). Contact optionally includes a navy CTA.
  */
 function CenteredPageHeroCopy({
   title,
   subtitleParagraphs,
+  cta,
+  headingMaxWidthClassName = 'max-w-[701px]',
 }: {
   title: string
   subtitleParagraphs: string[]
+  cta?: HeroCTA
+  headingMaxWidthClassName?: string
 }) {
   const titleLines = title
     .split('\n')
@@ -139,7 +143,10 @@ function CenteredPageHeroCopy({
     <StaggerGroup as="div" staggerChildren={STAGGER_CHILDREN} className="relative z-10 w-full">
       <StaggerItem
         as="h1"
-        className="mx-auto max-w-[701px] text-center text-[clamp(2rem,5vw,56.69px)] font-normal leading-[1.084] tracking-normal text-[#13181D] lg:text-[56.69px] lg:leading-[61.42px]"
+        className={cn(
+          'mx-auto text-center text-[clamp(2rem,5vw,56.69px)] font-normal leading-[1.084] tracking-normal text-[#13181D] lg:text-[56.69px] lg:leading-[61.42px]',
+          headingMaxWidthClassName,
+        )}
       >
         {titleLines.map((line, index) => (
           <React.Fragment key={index}>
@@ -151,7 +158,7 @@ function CenteredPageHeroCopy({
       {subtitleParagraphs.length > 0 && (
         <StaggerItem
           as="p"
-          className="mx-auto mt-[25px] max-w-[863px] text-center text-[18px] font-medium leading-[25px] tracking-normal text-[#53585C]"
+          className="mx-auto mt-4 max-w-full text-center text-[16px] font-medium leading-[25px] tracking-normal text-[#53585C] sm:mt-[25px] sm:text-[18px] lg:max-w-[863px]"
         >
           {subtitleParagraphs.map((paragraph, index) => (
             <React.Fragment key={index}>
@@ -161,12 +168,26 @@ function CenteredPageHeroCopy({
           ))}
         </StaggerItem>
       )}
+      {cta && (
+        <StaggerItem as="div" className="mt-8 flex justify-center sm:mt-[43px]">
+          <Link
+            href={cta.href}
+            className={cn(
+              GRADIENT_CTA_BASE_CLASSNAME,
+              'h-[50px] w-full max-w-[173px] rounded-[6px] sm:w-[173px]',
+            )}
+            style={NAVY_GRADIENT_CTA_STYLE}
+          >
+            {cta.label}
+          </Link>
+        </StaggerItem>
+      )}
     </StaggerGroup>
   )
 }
 
 const isCenteredPageHero = (variant: HeroSectionProps['titleVariant']) =>
-  variant === 'getInvolved' || variant === 'updates'
+  variant === 'getInvolved' || variant === 'updates' || variant === 'contact'
 
 /**
  * About page hero — Figma: 56.69px/61.42px title (2 lines, max 450px),
@@ -334,7 +355,11 @@ export function HeroSection({
     <section
       className={cn(
         'relative overflow-hidden bg-white',
-        titleVariant === 'getInvolved' || titleVariant === 'updates' ? 'lg:min-h-[507px]' : undefined,
+        titleVariant === 'getInvolved' ||
+          titleVariant === 'updates' ||
+          titleVariant === 'contact'
+          ? 'lg:min-h-[507px]'
+          : undefined,
       )}
     >
       {showPattern && !hasImage && (
@@ -356,7 +381,9 @@ export function HeroSection({
             : isCenteredPageHero(titleVariant)
               ? titleVariant === 'updates'
                 ? 'py-10 md:py-12 lg:pt-[136px] lg:pb-[234px]'
-                : 'py-10 md:py-12 lg:pt-[136px] lg:pb-[209px]'
+                : titleVariant === 'contact'
+                  ? 'px-4 py-12 sm:px-0 md:py-16 lg:px-0 lg:pt-[136px] lg:pb-[123px]'
+                  : 'py-10 md:py-12 lg:pt-[136px] lg:pb-[209px]'
               : 'py-12 md:py-16 lg:py-20',
         )}
       >
@@ -406,7 +433,18 @@ export function HeroSection({
             ) : titleVariant === 'about' ? (
               <AboutHeroCopy title={title} subtitleParagraphs={subtitleParagraphs} />
             ) : isCenteredPageHero(titleVariant) ? (
-              <CenteredPageHeroCopy title={title} subtitleParagraphs={subtitleParagraphs} />
+              <CenteredPageHeroCopy
+                title={title}
+                subtitleParagraphs={subtitleParagraphs}
+                cta={
+                  titleVariant === 'contact'
+                    ? secondaryCTA ?? primaryCTA
+                    : undefined
+                }
+                headingMaxWidthClassName={
+                  titleVariant === 'contact' ? 'max-w-full lg:max-w-[523px]' : 'max-w-[701px]'
+                }
+              />
             ) : (
               <StaggerGroup
                 as="div"
