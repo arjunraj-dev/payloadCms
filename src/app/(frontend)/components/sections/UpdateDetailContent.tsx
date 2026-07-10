@@ -12,12 +12,13 @@ export function UpdateDetailContent({ image, imageAlt, paragraphs }: UpdateDetai
   return (
     <>
       <ScrollRise className="w-full max-w-[1026px] overflow-hidden rounded-2xl lg:rounded-3xl">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={image}
           alt={imageAlt}
           loading="eager"
           decoding="async"
-          className="h-[240px] w-full object-cover sm:h-[360px] lg:h-[483px]"
+          className="aspect-[16/9] h-auto w-full object-cover sm:aspect-auto sm:h-[360px] lg:h-[483px]"
         />
       </ScrollRise>
 
@@ -25,7 +26,7 @@ export function UpdateDetailContent({ image, imageAlt, paragraphs }: UpdateDetai
         {paragraphs.map((paragraph, index) => (
           <p
             key={index}
-            className="text-[16px] font-normal leading-[24px] tracking-normal text-[#53585C] [&+&]:mt-4"
+            className="text-[15px] font-normal leading-[24px] tracking-normal text-[#53585C] sm:text-[16px] [&+&]:mt-4"
           >
             {paragraph}
           </p>

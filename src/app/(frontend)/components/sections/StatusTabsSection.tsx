@@ -1,6 +1,7 @@
 import React from 'react'
 import { Reveal } from '@/app/(frontend)/components/motion/Reveal'
 import { StaggerGroup, StaggerItem } from '@/app/(frontend)/components/motion/StaggerGroup'
+import { GravityWaveBackground } from '@/app/(frontend)/components/shared/GravityWaveBackground'
 
 export interface StatusCard {
   status: string
@@ -21,7 +22,6 @@ const STATUS_ACCENT_COLORS: { match: RegExp; color: string }[] = [
   { match: /in\s*progress/i, color: '#2084FF' },
   { match: /^coming$/i, color: '#E46E19' },
   { match: /^planned$/i, color: '#DFDFDF' },
-
 ]
 
 function getStatusAccentColor(title: string): string {
@@ -35,22 +35,25 @@ export function StatusTabsSection({
   description = "We said we'd show you rather than tell you. This page is how we keep that promise — an honest account of what's live, what we're building, and what's still being planned.",
 }: StatusTabsSectionProps) {
   return (
-    <section className="relative overflow-hidden bg-white py-12 md:py-16 lg:py-20">
-      <img
-        src="/images/Isolation_Mode.png"
-        alt=""
-        aria-hidden="true"
-        className="pointer-events-none absolute left-1/2 top-1/2 z-0 w-[min(100%,900px)] max-w-none -translate-x-1/2 -translate-y-1/2 opacity-[0.07]"
+    <section className="relative overflow-hidden bg-white py-10 md:py-16 lg:py-20">
+      <GravityWaveBackground
+        className="pointer-events-none absolute inset-0 z-0 h-full w-full opacity-50"
+        variant="aurora"
       />
       <div className="container relative z-10">
-        <Reveal as="div" className="mx-auto max-w-3xl text-center">
+        <Reveal as="div" className="mx-auto max-w-3xl px-1 text-center sm:px-0">
           <h1 className="text-[clamp(2rem,5vw,56.69px)] font-normal leading-[1.084] tracking-normal text-[#001529] lg:text-[56.69px] lg:leading-[61.42px]">
             {heading}
           </h1>
-          <p className="mt-4 text-base leading-relaxed text-[#4B5563] sm:text-lg">{description}</p>
+          <p className="mt-3 text-[15px] leading-relaxed text-[#4B5563] sm:mt-4 sm:text-base md:text-lg">
+            {description}
+          </p>
         </Reveal>
 
-        <StaggerGroup as="div" className="mx-auto mt-10 grid max-w-5xl grid-cols-1 gap-4 md:mt-12 md:grid-cols-2 md:gap-5 lg:grid-cols-4">
+        <StaggerGroup
+          as="div"
+          className="mx-auto mt-8 grid max-w-5xl grid-cols-1 gap-4 sm:mt-10 md:mt-12 md:grid-cols-2 md:gap-5 xl:grid-cols-4"
+        >
           {statusCards.map((card) => {
             const accentColor = getStatusAccentColor(card.title)
 
@@ -58,7 +61,7 @@ export function StatusTabsSection({
               <StaggerItem
                 as="article"
                 key={card.status}
-                className="relative flex min-h-[168px] flex-col items-center justify-center overflow-hidden rounded-2xl px-5 py-8 text-center text-white sm:min-h-[180px]"
+                className="relative flex min-h-[150px] flex-col items-center justify-center overflow-hidden rounded-2xl px-4 py-7 text-center text-white sm:min-h-[168px] sm:px-5 sm:py-8 md:min-h-[180px]"
                 style={{ boxShadow: `0 8px 24px -4px ${card.color}66` }}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -78,7 +81,7 @@ export function StatusTabsSection({
                   aria-hidden="true"
                 />
 
-                <div className="relative z-10 flex flex-col items-center">
+                <div className="relative z-10 flex min-w-0 flex-col items-center">
                   <div
                     className="size-10 shrink-0 rounded-lg"
                     style={{ backgroundColor: accentColor }}

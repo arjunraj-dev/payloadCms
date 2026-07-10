@@ -26,7 +26,7 @@ export function NewsFilterSection({
   embedded = false,
 }: NewsFilterSectionProps) {
   const content = (
-    <div className="flex w-full max-w-[1348px] flex-col gap-10">
+    <div className="flex w-full max-w-[1348px] flex-col gap-6 sm:gap-8 lg:gap-10">
       <Reveal
         as="h2"
         className="w-full text-[clamp(1.75rem,4vw,40px)] font-normal leading-[47px] tracking-normal text-[#13181D] lg:text-[40px]"
@@ -37,7 +37,7 @@ export function NewsFilterSection({
       <div
         role="tablist"
         aria-label="Filter updates by category"
-        className="flex max-w-[643px] gap-2 overflow-x-auto pb-1 -mx-1 px-1 lg:gap-2 lg:overflow-visible lg:flex-wrap"
+        className="flex max-w-full gap-2 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] sm:max-w-[643px] sm:flex-wrap sm:overflow-visible lg:gap-2 [&::-webkit-scrollbar]:hidden"
       >
         {categories.map((category) => {
           const isSelected = selectedCategory === category.value
@@ -51,8 +51,8 @@ export function NewsFilterSection({
               aria-selected={isSelected}
               onClick={() => onCategoryChange(category.value)}
               className={cn(
-                'inline-flex h-[46px] shrink-0 items-center justify-center gap-2.5 rounded-full border py-[10px] text-[16px] font-medium leading-none whitespace-nowrap transition-opacity hover:opacity-90',
-                isAll ? 'min-w-[89px] px-[18px]' : 'px-6',
+                'inline-flex h-[46px] shrink-0 items-center justify-center gap-2.5 rounded-full border py-[10px] text-[15px] font-medium leading-none whitespace-nowrap transition-opacity hover:opacity-90 sm:text-[16px]',
+                isAll ? 'min-w-[89px] px-[18px]' : 'px-5 sm:px-6',
                 isSelected
                   ? 'border-transparent text-white'
                   : 'border-[#3E3E3E] bg-white text-[#13181D]',

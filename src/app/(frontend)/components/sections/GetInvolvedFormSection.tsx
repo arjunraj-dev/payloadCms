@@ -88,8 +88,9 @@ export function GetInvolvedFormSection({
   return (
     <section id="send-message" className="bg-white py-8 md:py-10 lg:py-[35px]">
       <div className="container">
-        <div className="relative mx-auto flex w-full max-w-[1348px] flex-col overflow-hidden rounded-[24px] bg-[#001529] lg:h-[619px] lg:flex-row">
-          <ScrollRise className="relative h-[240px] w-full shrink-0 sm:h-[300px] lg:h-[619px] lg:w-[576px]">
+        <div className="relative mx-auto flex w-full max-w-[1348px] flex-col overflow-hidden rounded-[24px] bg-[#001529] xl:h-[619px] xl:flex-row">
+          <ScrollRise className="relative h-[220px] w-full shrink-0 sm:h-[280px] md:h-[320px] xl:h-[619px] xl:w-[576px]">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={resolvedIllustrationImage}
               alt=""
@@ -98,21 +99,18 @@ export function GetInvolvedFormSection({
             />
           </ScrollRise>
 
-          <div className="flex flex-1 justify-center px-6 py-8 sm:px-8 lg:px-10 lg:py-0 lg:pt-[57px] xl:px-[82px]">
-            <div className="flex w-full max-w-[612px] flex-col gap-[30px] lg:h-[490px]">
+          <div className="flex min-w-0 flex-1 justify-center px-5 py-8 sm:px-8 xl:px-10 xl:py-0 xl:pt-[57px] 2xl:px-[82px]">
+            <div className="flex w-full max-w-[612px] flex-col gap-6 sm:gap-[30px] xl:h-[490px]">
               <Reveal
                 as="h2"
-                className="h-[47px] text-center text-[40px] font-normal leading-[47px] tracking-normal text-white"
+                className="text-center text-[clamp(1.75rem,4vw,40px)] font-normal leading-[47px] tracking-normal text-white lg:text-[40px]"
               >
                 {formTitle}
               </Reveal>
 
-              <form
-                className="flex h-auto flex-col gap-[24px] lg:h-[413px]"
-                onSubmit={handleSubmit}
-              >
-                <div className="grid h-[80px] grid-cols-1 gap-4 sm:grid-cols-2 lg:gap-4">
-                  <FormField label="YOUR NAME *" htmlFor={nameId} className="h-[80px] lg:max-w-[298px]">
+              <form className="flex flex-col gap-5 sm:gap-[24px]" onSubmit={handleSubmit}>
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  <FormField label="YOUR NAME *" htmlFor={nameId} className="min-w-0">
                     <input
                       id={nameId}
                       name="name"
@@ -124,7 +122,7 @@ export function GetInvolvedFormSection({
                       className={inputClassName}
                     />
                   </FormField>
-                  <FormField label="YOUR EMAIL *" htmlFor={emailId} className="h-[80px] lg:max-w-[298px]">
+                  <FormField label="YOUR EMAIL *" htmlFor={emailId} className="min-w-0">
                     <input
                       id={emailId}
                       name="email"
@@ -138,7 +136,7 @@ export function GetInvolvedFormSection({
                   </FormField>
                 </div>
 
-                <FormField label="I AM A *" htmlFor={categoryId} className="h-[80px]">
+                <FormField label="I AM A *" htmlFor={categoryId}>
                   <select
                     id={categoryId}
                     name="category"
@@ -158,7 +156,7 @@ export function GetInvolvedFormSection({
                   </select>
                 </FormField>
 
-                <FormField label="YOUR MESSAGE *" htmlFor={messageId} className="h-[131px]">
+                <FormField label="YOUR MESSAGE *" htmlFor={messageId}>
                   <textarea
                     id={messageId}
                     name="message"

@@ -27,7 +27,7 @@ export function AboutMissionSection({ heading, description, cards }: AboutMissio
           </StaggerItem>
           <StaggerItem
             as="p"
-            className="mt-4 max-w-3xl text-left text-[18px] font-medium leading-[25px] tracking-normal text-[#4B5563]"
+            className="mt-4 max-w-3xl text-left text-[16px] font-medium leading-[25px] tracking-normal text-[#4B5563] sm:text-[18px]"
           >
             {description}
           </StaggerItem>

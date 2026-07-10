@@ -32,12 +32,12 @@ export function MinisterProfileSection({
     return (
       <section className="bg-white py-8 md:py-10 lg:py-[35px]">
         <div className="container">
-          <div className="mx-auto flex w-full max-w-[1132px] flex-col lg:h-[440px] lg:flex-row lg:items-stretch lg:gap-[90px]">
+          <div className="mx-auto flex w-full max-w-[1132px] flex-col gap-8 xl:flex-row xl:items-stretch xl:gap-[90px]">
             <ScrollRise
               distance={70}
-              fromScale={0.88}
+              fromScale={0.94}
               offset={['start 95%', 'start 55%']}
-              className="h-[280px] w-full shrink-0 overflow-hidden rounded-3xl bg-[#B8C5CE] sm:h-[340px] lg:h-[440px] lg:w-[443px]"
+              className="w-full min-w-0 overflow-hidden rounded-3xl bg-[#B8C5CE] xl:w-[443px] xl:max-w-[443px] xl:shrink-0"
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
@@ -45,28 +45,28 @@ export function MinisterProfileSection({
                 src={image}
                 loading="lazy"
                 decoding="async"
-                className="h-full w-full object-cover object-top"
+                className="aspect-[4/5] h-auto w-full object-cover object-[center_15%] sm:aspect-[443/440] sm:object-top xl:aspect-auto xl:h-[440px]"
               />
             </ScrollRise>
 
             <StaggerGroup
               as="div"
-              className="flex flex-1 flex-col justify-center gap-6 px-6 py-8 text-center sm:px-0 lg:max-w-[599px] lg:gap-[31px] lg:py-0 lg:text-left"
+              className="flex min-w-0 w-full flex-1 flex-col justify-center gap-5 py-2 text-left sm:gap-6 sm:text-center xl:max-w-[599px] xl:gap-[31px] xl:py-0 xl:text-left"
             >
               <StaggerItem
                 as="p"
-                className="mx-auto text-lg leading-relaxed text-[#13181D] sm:text-xl lg:mx-0 lg:text-[32px] lg:leading-[38px] lg:font-normal"
+                className="w-full text-lg leading-relaxed break-words text-[#13181D] sm:mx-auto sm:text-xl xl:mx-0 xl:text-[32px] xl:leading-[38px] xl:font-normal"
               >
                 {bioParagraphs[0]}
               </StaggerItem>
               <StaggerItem
                 as="div"
-                className="mx-auto flex flex-col gap-1 lg:mx-0 lg:max-w-[420px] lg:gap-[7px]"
+                className="flex w-full flex-col gap-1 sm:mx-auto sm:items-center xl:mx-0 xl:max-w-[420px] xl:items-start xl:gap-[7px]"
               >
-                <p className="text-base font-bold text-[#13181D] sm:text-lg lg:text-[20px] lg:leading-[22px]">
+                <p className="text-base font-bold text-[#13181D] sm:text-lg xl:text-[20px] xl:leading-[22px]">
                   {name}
                 </p>
-                <p className="text-sm text-[#53585C] sm:text-base lg:text-[16px] lg:leading-[22px] lg:font-normal">
+                <p className="text-sm text-[#53585C] sm:text-base xl:text-[16px] xl:leading-[22px] xl:font-normal">
                   {title}
                 </p>
               </StaggerItem>
@@ -86,12 +86,12 @@ export function MinisterProfileSection({
     >
       <div className="container">
         {variant === 'profile' ? (
-          <div className="mx-auto flex w-full max-w-[1348px] flex-col gap-8 lg:flex-row lg:items-center lg:gap-[72px]">
+          <div className="mx-auto flex w-full max-w-[1348px] flex-col gap-8 xl:flex-row xl:items-center xl:gap-[72px]">
             <ScrollRise
               distance={70}
               fromScale={0.88}
               offset={['start 95%', 'start 55%']}
-              className="aspect-[700/594] w-full shrink-0 overflow-hidden rounded-3xl bg-[#E8ECEF] lg:aspect-auto lg:h-[594px] lg:w-[700px]"
+              className="aspect-[700/594] w-full min-w-0 overflow-hidden rounded-3xl bg-[#E8ECEF] xl:h-[594px] xl:w-[700px] xl:max-w-[700px] xl:shrink-0 xl:aspect-auto"
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
@@ -103,22 +103,22 @@ export function MinisterProfileSection({
               />
             </ScrollRise>
 
-            <StaggerGroup as="div" className="flex w-full max-w-[576px] flex-col lg:pt-0">
+            <StaggerGroup as="div" className="flex min-w-0 w-full flex-col xl:max-w-[576px]">
               <StaggerItem
                 as="p"
-                className="text-[28px] font-normal leading-[47px] tracking-normal text-[#13181D]"
+                className="text-[22px] font-normal leading-[1.3] tracking-normal text-[#13181D] sm:text-[28px] sm:leading-[47px]"
               >
                 {label}
               </StaggerItem>
               <StaggerItem
                 as="h3"
-                className="mt-[30px] text-[40px] font-normal leading-[22px] tracking-normal text-[#001529]"
+                className="mt-5 text-[clamp(1.75rem,4vw,40px)] font-normal leading-[1.15] tracking-normal text-[#001529] sm:mt-[30px] lg:text-[40px] lg:leading-[47px]"
               >
                 {name}
               </StaggerItem>
               <StaggerItem
                 as="p"
-                className="mt-[18px] text-[16px] font-medium leading-[24px] tracking-normal text-[#53585C]"
+                className="mt-3 text-[15px] font-medium leading-[24px] tracking-normal text-[#53585C] sm:mt-[18px] sm:text-[16px]"
               >
                 {title}
               </StaggerItem>
@@ -127,8 +127,8 @@ export function MinisterProfileSection({
                   key={index}
                   as="p"
                   className={cn(
-                    'text-[18px] font-medium leading-[28px] tracking-normal text-[#13181D]',
-                    index === 0 ? 'mt-[26px]' : 'mt-4',
+                    'text-[16px] font-medium leading-[28px] tracking-normal text-[#13181D] sm:text-[18px]',
+                    index === 0 ? 'mt-5 sm:mt-[26px]' : 'mt-4',
                   )}
                 >
                   {paragraph}

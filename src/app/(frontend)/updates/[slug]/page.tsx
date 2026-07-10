@@ -74,13 +74,13 @@ export default async function UpdateDetailPage({ params }: Args) {
 
   return (
     <main className="bg-white">
-      <div className="container pb-8 pt-12 md:pb-10 md:pt-16 lg:pb-[35px] lg:pt-[92px]">
-        <div className="mx-auto flex w-full max-w-[1348px] items-start gap-8 lg:gap-[86px]">
-          <aside className="shrink-0">
+      <div className="container px-4 pb-8 pt-10 sm:px-0 sm:pb-10 sm:pt-12 md:pt-16 lg:pb-[35px] lg:pt-[92px]">
+        <div className="mx-auto flex w-full max-w-[1348px] flex-col items-start gap-6 sm:gap-8 lg:flex-row lg:gap-[86px]">
+          <aside className="w-full shrink-0 lg:w-auto">
             <UpdateDetailBackLink />
           </aside>
 
-          <div className="flex min-w-0 flex-1 flex-col gap-7 lg:max-w-[1029px] lg:gap-[28px]">
+          <div className="flex min-w-0 w-full flex-1 flex-col gap-6 sm:gap-7 lg:max-w-[1029px] lg:gap-[28px]">
             <UpdateDetailHeader
               title={update.title}
               date={new Date(update.date).toLocaleDateString('en-GB', {

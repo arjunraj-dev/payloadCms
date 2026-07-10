@@ -37,18 +37,17 @@ function ShowYouChevron() {
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none absolute right-0 top-0 hidden h-full w-[min(40%,280px)] lg:block"
+      className="pointer-events-none absolute right-0 top-6 z-0 hidden lg:block md:top-8 lg:top-10"
     >
-      <div className="absolute right-0 top-1/2 h-[85%] w-full -translate-y-1/2">
-        <svg
-          className="h-full w-full text-white/[0.04]"
-          viewBox="0 0 200 600"
-          fill="currentColor"
-          preserveAspectRatio="xMaxYMid meet"
-        >
-          <polygon points="0,0 200,300 0,600" />
-        </svg>
-      </div>
+      <svg
+        width={83}
+        height={167}
+        viewBox="0 0 83 167"
+        fill="currentColor"
+        className="text-white/[0.06]"
+      >
+        <polygon points="83,0 0,83.5 83,167" />
+      </svg>
     </div>
   )
 }
@@ -61,33 +60,38 @@ export function ShowYouSection({
   ctaHref = '/progress',
 }: ShowYouSectionProps) {
   return (
-    <section className="bg-white pt-2 pb-12 md:pt-3 md:pb-16 lg:pt-4 lg:pb-20">
+    <section className="bg-white pt-2 pb-10 md:pt-3 md:pb-16 lg:pt-4 lg:pb-20">
       <div className="container">
-        <ScrollRise className="relative overflow-hidden rounded-3xl bg-[#001529] px-6 py-10 md:px-10 md:py-14 lg:px-12 lg:py-16">
+        <ScrollRise className="relative overflow-hidden rounded-3xl bg-[#001529] px-5 py-8 sm:px-6 sm:py-10 md:px-10 md:py-14 lg:px-12 lg:py-16">
           <ShowYouChevron />
           <div className="relative z-10">
             <Reveal as="div" className="text-center lg:text-left">
-              <h2 className="mx-auto max-w-[665px] text-[clamp(1.75rem,4vw,40px)] font-normal leading-[1.625] tracking-normal text-white lg:mx-0 lg:text-[40px] lg:leading-[65px]">
+              <h2 className="mx-auto max-w-[665px] text-[clamp(1.75rem,4vw,40px)] font-normal leading-[1.25] tracking-normal text-white lg:mx-0 lg:text-[40px] lg:leading-[65px]">
                 {heading}
               </h2>
-              <p className="mx-auto mt-4 max-w-[753px] text-base leading-relaxed text-[#AAB5C1] sm:text-lg lg:mx-0 lg:text-[18px] lg:leading-[28px]">
+              <p className="mx-auto mt-3 max-w-[753px] text-[15px] leading-relaxed text-[#AAB5C1] sm:mt-4 sm:text-base md:text-lg lg:mx-0 lg:text-[18px] lg:leading-[28px]">
                 {description}
               </p>
             </Reveal>
 
-            <DrawLine className="mt-10 border-t border-[#1E2F40] md:mt-12" delay={0.15} />
+            <DrawLine className="mt-8 border-t border-[#1E2F40] sm:mt-10 md:mt-12" delay={0.15} />
 
-            <StaggerGroup as="div" className="grid grid-cols-1 lg:grid-cols-4 lg:items-stretch">
+            <StaggerGroup
+              as="div"
+              className="grid grid-cols-1 gap-0 md:grid-cols-2 xl:grid-cols-4 xl:items-stretch"
+            >
               {cards.map((card, index) => (
                 <StaggerItem
                   as="article"
                   key={card.title}
-                  whileHover={{ y: -6 }}
-                  transition={{ type: 'spring', stiffness: 300, damping: 22 }}
+                  whileHover={{ y: -2 }}
+                  transition={{ type: 'spring', stiffness: 320, damping: 28 }}
                   className={cn(
-                    'flex flex-col rounded-2xl py-8 transition-colors duration-300 hover:bg-white/[0.03] lg:px-5 lg:py-10 xl:px-6',
-                    index > 0 && 'border-t border-[#1E2F40] lg:border-t-0',
-                    index > 0 && 'lg:border-l lg:border-[#1E2F40]',
+                    'flex min-w-0 flex-col rounded-2xl px-1 py-6 transition-colors duration-300 hover:bg-white/[0.02] sm:px-2 sm:py-8 md:px-4 xl:px-5 xl:py-10',
+                    index > 0 && 'border-t border-[#1E2F40] md:border-t-0',
+                    index % 2 === 1 && 'md:border-l md:border-[#1E2F40]',
+                    index >= 2 && 'md:border-t md:border-[#1E2F40] xl:border-t-0',
+                    index > 0 && 'xl:border-l xl:border-[#1E2F40]',
                   )}
                 >
                   <span
@@ -96,20 +100,22 @@ export function ShowYouSection({
                   >
                     {String(index + 1).padStart(2, '0')}
                   </span>
-                  <div className="mt-4 flex items-start gap-2.5">
-                    <h3 className="min-w-0 flex-1 text-[24px] font-normal leading-[30px] tracking-normal text-white">
+
+                  <div className="mt-4 flex flex-wrap items-start gap-x-2.5 gap-y-2">
+                    <h3 className="min-w-0 flex-1 basis-[min(100%,12rem)] text-[20px] font-normal leading-[1.3] tracking-normal text-white sm:text-[22px] xl:text-[24px] xl:leading-[30px]">
                       {card.title}
                     </h3>
                     <span
                       className={cn(
-                        'inline-flex h-[19px] shrink-0 items-center rounded-[4px] px-[6px] text-[10px] font-semibold uppercase tracking-wide whitespace-nowrap',
+                        'inline-flex h-[19px] shrink-0 items-center rounded-[4px] px-[6px] text-[10px] font-semibold uppercase tracking-wide',
                         labelColorClasses[card.labelColor],
                       )}
                     >
                       {card.label}
                     </span>
                   </div>
-                  <p className="mt-4 flex-1 text-[16px] font-normal leading-[24px] tracking-normal text-[#AAB5C1]">
+
+                  <p className="mt-4 flex-1 text-[15px] font-normal leading-[24px] tracking-normal text-[#AAB5C1] sm:text-[16px]">
                     {card.description}
                   </p>
                   <DrawLine className="mt-6 border-t border-[#1E2F40]" delay={0.1 + index * 0.05} />
@@ -122,7 +128,7 @@ export function ShowYouSection({
                 href={ctaHref}
                 className={cn(
                   GRADIENT_CTA_BASE_CLASSNAME,
-                  'transition-transform hover:-translate-y-0.5 lg:h-[50px] lg:w-[206px]',
+                  'w-full max-w-[206px] transition-transform hover:-translate-y-0.5 lg:h-[50px] lg:w-[206px]',
                 )}
                 style={TEAL_GRADIENT_CTA_STYLE}
               >

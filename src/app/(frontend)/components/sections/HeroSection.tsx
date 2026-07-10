@@ -88,7 +88,7 @@ function HeroPattern({
 }) {
   if (titleVariant === 'display' || titleVariant === 'about') {
     return (
-      <div className="pointer-events-none absolute top-[11px] left-[-84px] z-0 h-[602px] w-[876px] opacity-50">
+      <div className="pointer-events-none absolute top-[11px] left-[-40px] z-0 h-[320px] w-[480px] opacity-40 sm:left-[-60px] sm:h-[420px] sm:w-[620px] sm:opacity-50 lg:left-[-84px] lg:h-[602px] lg:w-[876px]">
         <GravityWaveBackground
           className="h-full w-full"
           particleColor={patternColor}
@@ -206,19 +206,24 @@ function AboutHeroCopy({
     <StaggerGroup as="div" staggerChildren={STAGGER_CHILDREN} className="relative z-10 w-full">
       <StaggerItem
         as="h1"
-        className="max-w-[450px] text-[clamp(2rem,5vw,56.69px)] font-normal leading-[1.084] tracking-normal text-[#13181D] lg:text-[56.69px] lg:leading-[61.42px]"
+        className="max-w-full text-[clamp(2rem,5vw,56.69px)] font-normal leading-[1.084] tracking-normal text-[#13181D] sm:max-w-[450px] lg:text-[56.69px] lg:leading-[61.42px]"
       >
         {lineOne}
-        <br />
-        {lineTwo}
+        {lineTwo ? (
+          <>
+            <br className="hidden sm:block" />
+            <span className="sm:hidden"> </span>
+            {lineTwo}
+          </>
+        ) : null}
       </StaggerItem>
       {subtitleParagraphs.map((paragraph, index) => (
         <StaggerItem
           as="p"
           key={index}
           className={cn(
-            index === 0 ? 'mt-[22px]' : 'mt-[25px]',
-            'max-w-[655px] text-[18px] font-medium leading-[25px] tracking-normal text-[#4B5563]',
+            index === 0 ? 'mt-4 sm:mt-[22px]' : 'mt-4 sm:mt-[25px]',
+            'max-w-full text-[16px] font-medium leading-[25px] tracking-normal text-[#4B5563] sm:max-w-[655px] sm:text-[18px]',
           )}
         >
           {paragraph}
@@ -271,7 +276,7 @@ function DisplayHeroCopy({
           onDone={advance}
           className={cn(
             index === 0 ? 'mt-4' : 'mt-3',
-            'text-center text-[20px] font-semibold leading-none tracking-normal text-black lg:text-start',
+            'text-center text-[16px] font-semibold leading-snug tracking-normal text-black sm:text-[18px] md:text-[20px] md:leading-none lg:text-start',
           )}
         />
       ))}
@@ -287,7 +292,10 @@ function DisplayHeroCopy({
           {primaryCTA && (
             <Link
               href={primaryCTA.href}
-              className={cn(displayCtaBaseClassName, 'lg:w-[256px]')}
+              className={cn(
+                displayCtaBaseClassName,
+                'w-full max-w-[256px] sm:w-[256px] lg:w-[256px]',
+              )}
               style={displayPrimaryCtaStyle}
             >
               {primaryCTA.label}
@@ -296,7 +304,10 @@ function DisplayHeroCopy({
           {secondaryCTA && (
             <Link
               href={secondaryCTA.href}
-              className={cn(displayCtaBaseClassName, 'lg:w-[173px]')}
+              className={cn(
+                displayCtaBaseClassName,
+                'w-full max-w-[173px] sm:w-[173px] lg:w-[173px]',
+              )}
               style={displaySecondaryCtaStyle}
             >
               {secondaryCTA.label}
@@ -380,10 +391,10 @@ export function HeroSection({
               : 'py-10 md:py-14 lg:py-16'
             : isCenteredPageHero(titleVariant)
               ? titleVariant === 'updates'
-                ? 'py-10 md:py-12 lg:pt-[136px] lg:pb-[234px]'
+                ? 'px-4 py-10 sm:px-0 md:py-12 lg:px-0 lg:pt-[136px] lg:pb-[234px]'
                 : titleVariant === 'contact'
                   ? 'px-4 py-12 sm:px-0 md:py-16 lg:px-0 lg:pt-[136px] lg:pb-[123px]'
-                  : 'py-10 md:py-12 lg:pt-[136px] lg:pb-[209px]'
+                  : 'px-4 py-10 sm:px-0 md:py-12 lg:px-0 lg:pt-[136px] lg:pb-[209px]'
               : 'py-12 md:py-16 lg:py-20',
         )}
       >
@@ -392,8 +403,12 @@ export function HeroSection({
           onPointerMove={hasImage ? parallax.onPointerMove : undefined}
           onPointerLeave={hasImage ? parallax.onPointerLeave : undefined}
           className={cn(
-            'grid grid-cols-1 gap-1',
-            hasImage ? 'items-stretch lg:grid-cols-2 lg:gap-1' : 'items-center',
+            'grid grid-cols-1 gap-6',
+            hasImage
+              ? titleVariant === 'display'
+                ? 'items-center xl:grid-cols-2 xl:items-stretch xl:gap-8'
+                : 'items-stretch lg:grid-cols-2 lg:gap-1'
+              : 'items-center',
             !hasImage && isCentered && 'justify-items-center',
           )}
         >
@@ -442,7 +457,11 @@ export function HeroSection({
                     : undefined
                 }
                 headingMaxWidthClassName={
-                  titleVariant === 'contact' ? 'max-w-full lg:max-w-[523px]' : 'max-w-[701px]'
+                  titleVariant === 'contact'
+                    ? 'max-w-full lg:max-w-[523px]'
+                    : titleVariant === 'getInvolved' || titleVariant === 'updates'
+                      ? 'max-w-full lg:max-w-[701px]'
+                      : 'max-w-[701px]'
                 }
               />
             ) : (
@@ -518,13 +537,16 @@ export function HeroSection({
                 delay: titleVariant === 'display' ? 0.2 : 0,
               }}
               className={cn(
-                'relative aspect-[4/3] overflow-hidden rounded-3xl lg:aspect-auto',
+                'relative w-full min-w-0 overflow-hidden rounded-3xl',
                 titleVariant === 'display'
-                  ? 'lg:-mt-[7px] lg:aspect-[707/566] lg:max-w-[707px] lg:min-h-0'
-                  : 'lg:min-h-[420px]',
+                  ? 'aspect-[707/566] xl:-mt-[7px] xl:max-w-[707px]'
+                  : 'aspect-[4/3] lg:aspect-auto lg:min-h-[420px]',
               )}
             >
-              <motion.div style={{ x: parallax.x, y: parallax.y }} className="relative h-full w-full">
+              <motion.div
+                style={{ x: parallax.x, y: parallax.y }}
+                className="relative h-full w-full scale-[1.04]"
+              >
                 {backgroundImages.map((src, index) => (
                   <motion.img
                     key={src}
@@ -540,7 +562,10 @@ export function HeroSection({
                       scale: index === activeImageIndex ? 1 : 1.03,
                     }}
                     transition={{ duration: 1, ease: 'easeInOut' }}
-                    className={cn('absolute inset-0 h-full w-full object-cover', imageClassName)}
+                    className={cn(
+                      'absolute inset-0 h-full w-full object-cover object-center',
+                      imageClassName,
+                    )}
                   />
                 ))}
               </motion.div>
