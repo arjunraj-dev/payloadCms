@@ -25,7 +25,7 @@ export interface CountryFutureSectionProps {
   secondaryButtonHref?: string
   embedded?: boolean
   /** `updates` — compact card with teal border. `progress` — full pillars/footer layout. */
-  variant?: 'default' | 'updates' | 'progress'
+  variant?: 'default' | 'updates' | 'progress' | 'contact'
 }
 
 const secondaryCtaClassName = cn(CTA_BUTTON_CLASSNAME, 'font-bold lg:w-[187px]')
@@ -45,6 +45,7 @@ export function CountryFutureSection({
 }: CountryFutureSectionProps) {
   const isUpdates = variant === 'updates'
   const isProgress = variant === 'progress'
+  const isContact = variant === 'contact'
   const headingLines = (heading ?? '')
     .split('\n')
     .map((line) => line.trim())
@@ -52,6 +53,7 @@ export function CountryFutureSection({
   const hasPrimaryCTA = Boolean(primaryButtonLabel && primaryButtonHref)
   const hasSecondaryCTA = Boolean(secondaryButtonLabel && secondaryButtonHref)
   const hasExtraContent = Boolean(pillarsHeading || pillarsDescription || footerText)
+  const showSubtitle = Boolean(subtitle) && !isContact
 
   return (
     <section
@@ -61,6 +63,7 @@ export function CountryFutureSection({
           : cn(
               'bg-white',
               isUpdates ? 'py-8 md:py-10 lg:py-[35px]' : 'pb-8 md:pb-10 lg:pb-12',
+              isUpdates || isContact ? 'py-8 md:py-10 lg:py-[35px]' : 'pb-8 md:pb-10 lg:pb-12',
             ),
       )}
     >
@@ -68,8 +71,7 @@ export function CountryFutureSection({
         <div
           className={cn(
             'relative mx-auto flex w-full max-w-[1347px] flex-col overflow-hidden rounded-[24px]',
-            isUpdates &&
-              'justify-center px-6 py-10 lg:h-[423px] lg:px-[54px] lg:py-0',
+            isUpdates && 'justify-center px-6 py-10 lg:h-[423px] lg:px-[54px] lg:py-0',
             isProgress &&
               'justify-center bg-[#0D1B2A] px-6 py-10 md:px-10 md:py-12 lg:h-[540px] lg:px-[54px] lg:pt-[76px] lg:pb-12',
             !isUpdates &&
@@ -78,6 +80,14 @@ export function CountryFutureSection({
                 'justify-center bg-[#0D1B2A] px-6 py-10 md:px-10 md:py-12 lg:px-[54px] lg:py-[82px]',
                 hasExtraContent ? 'lg:min-h-[423px]' : 'lg:h-[393px]',
               ),
+            isUpdates
+              ? 'justify-center px-6 py-10 lg:h-[423px] lg:px-[54px] lg:py-0'
+              : isContact
+                ? 'justify-center bg-[#0D1B2A] px-5 py-10 sm:px-6 md:py-12 lg:h-[540px] lg:px-[54px] lg:py-0'
+                : cn(
+                    'justify-center bg-[#0D1B2A] px-6 py-10 md:px-10 md:py-12 lg:px-[54px] lg:py-[82px]',
+                    hasExtraContent ? 'lg:min-h-[423px]' : 'lg:h-[393px]',
+                  ),
           )}
           style={isUpdates ? TEAL_CARD_BORDER_STYLE : undefined}
         >
@@ -89,10 +99,9 @@ export function CountryFutureSection({
               'relative z-10',
               isProgress
                 ? 'w-full max-w-[871px]'
-                : cn(
-                    'max-w-[557px]',
-                    !isUpdates && 'mx-auto text-center lg:mx-0 lg:text-left',
-                  ),
+                : cn('max-w-[557px]', !isUpdates && 'mx-auto text-center lg:mx-0 lg:text-left'),
+              'relative z-10 w-full',
+              isContact ? 'max-w-[672px]' : 'max-w-[557px]',
             )}
           >
             {headingLines.length > 0 && (
@@ -102,6 +111,10 @@ export function CountryFutureSection({
                   isProgress
                     ? 'max-w-[661px] leading-[47px]'
                     : 'mx-auto max-w-[557px] leading-[47px] lg:mx-0',
+                  'font-normal tracking-normal text-white lg:text-[40px]',
+                  isContact
+                    ? 'max-w-full text-[clamp(1.5rem,5vw,40px)] leading-[1.2] sm:leading-[48px] lg:max-w-[672px]'
+                    : 'max-w-[557px] text-[clamp(1.75rem,4vw,40px)] leading-[47px]',
                 )}
               >
                 {headingLines.map((line, index) => (
@@ -112,8 +125,7 @@ export function CountryFutureSection({
                 ))}
               </h2>
             )}
-
-            {subtitle && (
+            {showSubtitle && (
               <p
                 className={cn(
                   'font-medium tracking-normal text-[#AAB5C1]',
@@ -121,7 +133,9 @@ export function CountryFutureSection({
                     ? 'mt-[13px] max-w-[871px] text-[18px] leading-[26px]'
                     : cn(
                         'text-[18px] leading-[26px]',
-                        isUpdates ? 'mt-4 max-w-[550px]' : 'mx-auto mt-[13px] max-w-[546px] lg:mx-0',
+                        isUpdates
+                          ? 'mt-4 max-w-[550px]'
+                          : 'mx-auto mt-[13px] max-w-[546px] lg:mx-0',
                       ),
                 )}
               >
@@ -178,15 +192,14 @@ export function CountryFutureSection({
                         isUpdates ? 'mt-[33px]' : 'mt-[42px] sm:gap-5',
                         !isUpdates && 'items-center justify-center lg:items-start lg:justify-start',
                       ),
+                  isContact ? 'mt-8 sm:mt-10' : isUpdates ? 'mt-[33px]' : 'mt-[42px] sm:gap-5',
                 )}
               >
                 {hasPrimaryCTA && (
                   <Link
                     href={primaryButtonHref!}
                     className={cn(
-                      isUpdates || isProgress
-                        ? GRADIENT_CTA_BASE_CLASSNAME
-                        : CTA_BUTTON_CLASSNAME,
+                      isUpdates || isProgress ? GRADIENT_CTA_BASE_CLASSNAME : CTA_BUTTON_CLASSNAME,
                       'font-semibold',
                       isProgress || isUpdates
                         ? 'h-[50px] w-[171px] rounded-[6px]'

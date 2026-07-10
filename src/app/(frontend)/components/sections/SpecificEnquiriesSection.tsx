@@ -1,5 +1,4 @@
 import type { LucideIcon } from 'lucide-react'
-import { cn } from '@/utilities/ui'
 import React from 'react'
 import { Reveal } from '@/app/(frontend)/components/motion/Reveal'
 import { StaggerGroup, StaggerItem } from '@/app/(frontend)/components/motion/StaggerGroup'
@@ -16,52 +15,25 @@ export interface SpecificEnquiriesSectionProps {
   embedded?: boolean
 }
 
-interface EnquiryCardProps {
-  enquiry: EnquiryItem
-  embedded?: boolean
-}
-
-function EnquiryCard({ enquiry, embedded = false }: EnquiryCardProps) {
+function EnquiryCard({ enquiry }: { enquiry: EnquiryItem }) {
   const Icon = enquiry.icon
 
   return (
-    <div
-      className={cn(
-        'flex flex-col border border-[#E5E7EB] bg-[#F5F5F5] transition-shadow duration-200 hover:shadow-md',
-        embedded
-          ? 'h-[255px] w-full max-w-[672px] rounded-[24px] p-6'
-          : 'h-full rounded-2xl p-8',
-      )}
-    >
-      <Icon className="size-7 text-[#001529]" aria-hidden="true" strokeWidth={1.5} />
+    <div className="flex w-full flex-col rounded-[24px] border border-[#DFDFDF] bg-[#E9E9E980] px-5 pb-8 pt-6 sm:px-8 sm:pb-10 sm:pt-8 lg:px-[39px] lg:pb-[42px] lg:pt-[33px]">
+      <Icon className="size-8 shrink-0 text-[#13181D]" aria-hidden="true" strokeWidth={1.5} />
 
-      <h3
-        className={cn(
-          'font-bold text-[#001529]',
-          embedded ? 'mt-3 text-base' : 'mt-4 text-lg',
-        )}
-      >
+      <h3 className="mt-5 w-full text-[22px] font-normal leading-[30px] tracking-normal text-[#13181D] sm:mt-6 sm:text-[24px] lg:mt-[34px]">
         {enquiry.title}
       </h3>
 
-      <p
-        className={cn(
-          'flex-1 text-[#4B5563]',
-          embedded
-            ? 'mt-2 line-clamp-2 text-sm leading-relaxed'
-            : 'mt-3 text-base leading-relaxed',
-        )}
-      >
+      <p className="mt-2 w-full text-[15px] font-normal leading-6 tracking-normal text-[#53585C] sm:mt-[7px] sm:text-[16px]">
         {enquiry.description}
       </p>
 
       <a
         href={`mailto:${enquiry.email}`}
         aria-label={`Email ${enquiry.title}`}
-        className={cn(
-          'font-semibold text-[#001529] transition-colors hover:text-[#008C95]',
-          embedded ? 'mt-3 text-sm' : 'mt-6 text-base',
-        )}
+        className="mt-5 w-full break-all text-[16px] font-medium leading-[25px] tracking-normal text-[#13181D] transition-opacity hover:opacity-70 sm:mt-7 sm:break-words sm:text-[18px]"
       >
         {enquiry.email}
       </a>
@@ -74,34 +46,30 @@ export function SpecificEnquiriesSection({
   embedded = false,
 }: SpecificEnquiriesSectionProps) {
   const content = (
-    <>
-      <Reveal as="h2" className="text-[clamp(1.75rem,4vw,40px)] font-normal leading-[47px] text-[#001529]">
+    <div className="flex w-full flex-col gap-8 sm:gap-10">
+      <Reveal
+        as="h2"
+        className="text-[clamp(1.75rem,4vw,40px)] font-normal leading-[47px] tracking-normal text-[#13181D] lg:text-[40px]"
+      >
         Specific enquiries.
       </Reveal>
 
-      <StaggerGroup
-        as="div"
-        className={
-          embedded
-            ? 'mt-8 flex flex-col gap-6'
-            : 'mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8'
-        }
-      >
+      <StaggerGroup as="div" className="flex flex-col gap-[14px]">
         {enquiries.map((enquiry) => (
-          <StaggerItem as="div" key={enquiry.email}>
+          <StaggerItem as="div" key={enquiry.email} className="w-full">
             <EnquiryCard enquiry={enquiry} />
           </StaggerItem>
         ))}
       </StaggerGroup>
-    </>
+    </div>
   )
 
   if (embedded) {
-    return <div className="min-w-0">{content}</div>
+    return <div className="min-w-0 w-full">{content}</div>
   }
 
   return (
-    <section className="bg-white py-12 md:py-16 lg:py-20">
+    <section className="bg-white py-8 md:py-10 lg:py-[35px]">
       <div className="container">{content}</div>
     </section>
   )

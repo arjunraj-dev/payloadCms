@@ -33,3 +33,12 @@ export const TEAL_CARD_BORDER_STYLE: CSSProperties = {
   backgroundOrigin: 'border-box',
   backgroundClip: 'padding-box, border-box',
 }
+
+/** Teal gradient border on white cards (e.g. Contact "Follow us" social tiles). */
+export const TEAL_WHITE_CARD_BORDER_STYLE: CSSProperties = {
+  border: '1px solid transparent',
+  backgroundImage:
+    'linear-gradient(#ffffff, #ffffff), linear-gradient(90deg, #0C3538 0%, #0F848D 35.56%, #169EA9 49.52%, #169EA9 53.78%, #0F848D 64.92%, #0C3538 100%)',
+  backgroundOrigin: 'border-box',
+  backgroundClip: 'padding-box, border-box',
+}

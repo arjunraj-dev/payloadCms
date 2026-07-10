@@ -22,9 +22,13 @@ export default async function ContactPage() {
     <main>
       <HeroSection
         title={page.hero.title}
-        subtitle={page.hero.subtitle}
+        subtitle={page.hero.subtitle
+          .split(/\n+/)
+          .map((line) => line.trim())
+          .filter(Boolean)}
         align="center"
-        titleVariant="display"
+        showPattern
+        titleVariant="contact"
         secondaryCTA={
           page.hero.secondaryCTA?.label && page.hero.secondaryCTA?.href
             ? { label: page.hero.secondaryCTA.label, href: page.hero.secondaryCTA.href }
@@ -40,35 +44,39 @@ export default async function ContactPage() {
         image={mediaUrl(page.officeInfo.image)}
       />
 
-      <section className="bg-white py-12 md:py-16 lg:py-20">
+      <section className="bg-white py-8 md:py-10 lg:py-[35px]">
         <div className="container">
-          <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-2 lg:gap-16">
-            <SpecificEnquiriesSection
-              embedded
-              enquiries={(page.enquiries ?? []).map((enquiry) => ({
-                icon: iconMap[enquiry.icon] ?? Briefcase,
-                title: enquiry.title,
-                description: enquiry.description,
-                email: enquiry.email,
-              }))}
-            />
-            <FollowUsSection
-              heading={page.followUs.heading}
-              subtitle={page.followUs.subtitle}
-              socialLinks={(page.followUs.socialLinks ?? []).map((link) => ({
-                platform: link.platform,
-                label: link.label,
-                href: link.href,
-                icon: socialIconMap[link.platform] ?? Briefcase,
-              }))}
-            />
+          <div className="mx-auto grid w-full max-w-[1348px] grid-cols-1 items-stretch gap-10 xl:grid-cols-2 xl:gap-16">
+            <div className="min-w-0 w-full overflow-hidden">
+              <SpecificEnquiriesSection
+                embedded
+                enquiries={(page.enquiries ?? []).map((enquiry) => ({
+                  icon: iconMap[enquiry.icon] ?? Briefcase,
+                  title: enquiry.title,
+                  description: enquiry.description,
+                  email: enquiry.email,
+                }))}
+              />
+            </div>
+            <div className="flex min-w-0 w-full justify-center overflow-hidden xl:h-full xl:items-center xl:self-stretch">
+              <FollowUsSection
+                heading={page.followUs.heading}
+                subtitle={page.followUs.subtitle}
+                socialLinks={(page.followUs.socialLinks ?? []).map((link) => ({
+                  platform: link.platform,
+                  label: link.label,
+                  href: link.href,
+                  icon: socialIconMap[link.platform] ?? Briefcase,
+                }))}
+              />
+            </div>
           </div>
         </div>
       </section>
 
       <CountryFutureSection
+        variant="contact"
         heading={page.closing.heading}
-        subtitle={page.closing.subtitle ?? ''}
         primaryButtonLabel={page.closing.primaryButton.label}
         primaryButtonHref={page.closing.primaryButton.href}
       />
