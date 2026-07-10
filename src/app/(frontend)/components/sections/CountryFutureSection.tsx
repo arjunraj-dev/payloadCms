@@ -48,7 +48,9 @@ export function CountryFutureSection({
 
   return (
     <section
-      className={cn(embedded ? 'pb-12 md:pb-16 lg:pb-20' : 'bg-white pb-12 md:pb-16 lg:pb-20')}
+      className={cn(
+        embedded ? 'pb-8 md:pb-10 lg:pb-12' : 'bg-white pb-8 md:pb-10 lg:pb-12',
+      )}
     >
       <div className="container">
         <div

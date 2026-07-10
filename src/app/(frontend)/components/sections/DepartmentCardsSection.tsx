@@ -24,7 +24,7 @@ export function DepartmentCardsSection({
   description = "Our work is supported by several key departments and initiatives, each playing a crucial role in advancing the nation's digital agenda.",
 }: DepartmentCardsSectionProps) {
   return (
-    <section className="bg-white py-12 md:py-16 lg:py-20">
+    <section className="bg-white py-8 md:py-10 lg:py-[35px]">
       <div className="container">
         <Reveal
           as="h2"
