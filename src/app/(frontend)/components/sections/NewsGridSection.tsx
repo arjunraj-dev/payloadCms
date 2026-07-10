@@ -52,27 +52,32 @@ export function NewsGridSection({ news, onCategorySelect, heading }: NewsGridSec
   }
 
   return (
-    <section className="pb-12 pt-12 md:pb-16 md:pt-16">
+    <section className="bg-white py-8 md:py-10 lg:py-[35px]">
       <div className="container">
-        <NewsFilterSection
-          embedded
-          categories={FILTER_CATEGORIES}
-          selectedCategory={selectedCategory}
-          onCategoryChange={handleCategoryChange}
-          heading={heading}
-        />
+        <div className="mx-auto flex w-full max-w-[1348px] flex-col gap-[30px] lg:min-h-[824px]">
+          <NewsFilterSection
+            embedded
+            categories={FILTER_CATEGORIES}
+            selectedCategory={selectedCategory}
+            onCategoryChange={handleCategoryChange}
+            heading={heading}
+          />
 
-        {filteredNews.length > 0 ? (
-          <StaggerGroup as="div" className="mt-8 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {filteredNews.map(({ id, categoryValue: _categoryValue, ...cardProps }) => (
-              <StaggerItem as="div" key={id} className="h-full">
-                <NewsCard {...cardProps} />
-              </StaggerItem>
-            ))}
-          </StaggerGroup>
-        ) : (
-          <p className="mt-8 text-center text-[#4B5563]">No updates found in this category.</p>
-        )}
+          {filteredNews.length > 0 ? (
+            <StaggerGroup
+              as="div"
+              className="grid grid-cols-1 items-stretch gap-10 sm:grid-cols-2 lg:grid-cols-3 lg:gap-10"
+            >
+              {filteredNews.map(({ id, categoryValue: _categoryValue, ...cardProps }) => (
+                <StaggerItem as="div" key={id} className="flex h-full">
+                  <NewsCard {...cardProps} />
+                </StaggerItem>
+              ))}
+            </StaggerGroup>
+          ) : (
+            <p className="text-center text-[#53585C]">No updates found in this category.</p>
+          )}
+        </div>
       </div>
     </section>
   )

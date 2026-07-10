@@ -41,7 +41,7 @@ export interface HeroSectionProps {
   imageClassName?: string
   align?: 'left' | 'center'
   /** Figma display heading — Nunito Sans 56.69px / 61.42px line-height */
-  titleVariant?: 'default' | 'display' | 'about' | 'getInvolved'
+  titleVariant?: 'default' | 'display' | 'about' | 'getInvolved' | 'updates'
 }
 
 /** About hero: always two lines — CMS newline, or split after "Ministry." */
@@ -80,7 +80,7 @@ function HeroPattern({
   patternFollowSpeed,
   patternFollowDamping,
 }: {
-  titleVariant: 'default' | 'display' | 'about' | 'getInvolved'
+  titleVariant: 'default' | 'display' | 'about' | 'getInvolved' | 'updates'
   patternColor?: string
   patternVariant?: 'solid' | 'aurora'
   patternFollowSpeed: number
@@ -120,10 +120,10 @@ const displayPrimaryCtaStyle = TEAL_GRADIENT_CTA_STYLE
 const displaySecondaryCtaStyle = NAVY_GRADIENT_CTA_STYLE
 
 /**
- * Get Involved hero — Figma: centered 56.69px/61.42px title (max 701px),
+ * Centered page hero (Get Involved / Updates) — Figma: 56.69px/61.42px title (max 701px),
  * 18px/25px medium description (max 863px, #53585C).
  */
-function GetInvolvedHeroCopy({
+function CenteredPageHeroCopy({
   title,
   subtitleParagraphs,
 }: {
@@ -164,6 +164,9 @@ function GetInvolvedHeroCopy({
     </StaggerGroup>
   )
 }
+
+const isCenteredPageHero = (variant: HeroSectionProps['titleVariant']) =>
+  variant === 'getInvolved' || variant === 'updates'
 
 /**
  * About page hero — Figma: 56.69px/61.42px title (2 lines, max 450px),
@@ -331,7 +334,7 @@ export function HeroSection({
     <section
       className={cn(
         'relative overflow-hidden bg-white',
-        titleVariant === 'getInvolved' && 'lg:min-h-[507px]',
+        titleVariant === 'getInvolved' || titleVariant === 'updates' ? 'lg:min-h-[507px]' : undefined,
       )}
     >
       {showPattern && !hasImage && (
@@ -350,8 +353,10 @@ export function HeroSection({
             ? titleVariant === 'about'
               ? 'py-8 md:py-10 lg:py-[35px]'
               : 'py-10 md:py-14 lg:py-16'
-            : titleVariant === 'getInvolved'
-              ? 'py-10 md:py-12 lg:pt-[136px] lg:pb-[209px]'
+            : isCenteredPageHero(titleVariant)
+              ? titleVariant === 'updates'
+                ? 'py-10 md:py-12 lg:pt-[136px] lg:pb-[234px]'
+                : 'py-10 md:py-12 lg:pt-[136px] lg:pb-[209px]'
               : 'py-12 md:py-16 lg:py-20',
         )}
       >
@@ -373,7 +378,7 @@ export function HeroSection({
                 : 'items-center',
               !hasImage &&
                 isCentered &&
-                (titleVariant === 'getInvolved'
+                (isCenteredPageHero(titleVariant)
                   ? 'mx-auto max-w-[863px] justify-center'
                   : 'mx-auto max-w-3xl justify-center'),
               !hasImage && !isCentered && 'max-w-3xl',
@@ -400,8 +405,8 @@ export function HeroSection({
               />
             ) : titleVariant === 'about' ? (
               <AboutHeroCopy title={title} subtitleParagraphs={subtitleParagraphs} />
-            ) : titleVariant === 'getInvolved' ? (
-              <GetInvolvedHeroCopy title={title} subtitleParagraphs={subtitleParagraphs} />
+            ) : isCenteredPageHero(titleVariant) ? (
+              <CenteredPageHeroCopy title={title} subtitleParagraphs={subtitleParagraphs} />
             ) : (
               <StaggerGroup
                 as="div"
