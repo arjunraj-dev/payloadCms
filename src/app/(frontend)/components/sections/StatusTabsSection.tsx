@@ -5,11 +5,7 @@ import React, { useCallback, useState } from 'react'
 import { GravityWaveBackground } from '@/app/(frontend)/components/shared/GravityWaveBackground'
 import { DURATION, EASE_OUT } from '@/app/(frontend)/components/motion/config'
 import { StaggerGroup, StaggerItem } from '@/app/(frontend)/components/motion/StaggerGroup'
-<<<<<<< HEAD
 import { TypewriterText } from '@/app/(frontend)/components/motion/TypewriterText'
-=======
-import { GravityWaveBackground } from '@/app/(frontend)/components/shared/GravityWaveBackground'
->>>>>>> 45017314098b2ebca17bcc53b3152e4e2762fd43
 
 export interface StatusCard {
   status: string
@@ -50,7 +46,6 @@ export function StatusTabsSection({
   const onHeadingDone = useCallback(() => setDescriptionReady(true), [])
 
   return (
-<<<<<<< HEAD
     <section className="relative overflow-hidden bg-white pb-12 md:pb-16 lg:pb-20">
       <div className="container relative">
         <div
@@ -108,55 +103,6 @@ export function StatusTabsSection({
                     aria-hidden="true"
                     className="absolute inset-0 h-full w-full object-cover opacity-100"
                   />
-=======
-    <section className="relative overflow-hidden bg-white py-10 md:py-16 lg:py-20">
-      <GravityWaveBackground
-        className="pointer-events-none absolute inset-0 z-0 h-full w-full opacity-50"
-        variant="aurora"
-      />
-      <div className="container relative z-10">
-        <Reveal as="div" className="mx-auto max-w-3xl px-1 text-center sm:px-0">
-          <h1 className="text-[clamp(2rem,5vw,56.69px)] font-normal leading-[1.084] tracking-normal text-[#001529] lg:text-[56.69px] lg:leading-[61.42px]">
-            {heading}
-          </h1>
-          <p className="mt-3 text-[15px] leading-relaxed text-[#4B5563] sm:mt-4 sm:text-base md:text-lg">
-            {description}
-          </p>
-        </Reveal>
-
-        <StaggerGroup
-          as="div"
-          className="mx-auto mt-8 grid max-w-5xl grid-cols-1 gap-4 sm:mt-10 md:mt-12 md:grid-cols-2 md:gap-5 xl:grid-cols-4"
-        >
-          {statusCards.map((card) => {
-            const accentColor = getStatusAccentColor(card.title)
-
-            return (
-              <StaggerItem
-                as="article"
-                key={card.status}
-                className="relative flex min-h-[150px] flex-col items-center justify-center overflow-hidden rounded-2xl px-4 py-7 text-center text-white sm:min-h-[168px] sm:px-5 sm:py-8 md:min-h-[180px]"
-                style={{ boxShadow: `0 8px 24px -4px ${card.color}66` }}
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={card.backgroundImage}
-                  alt=""
-                  aria-hidden="true"
-                  className="absolute inset-0 h-full w-full object-cover"
-                />
-                <div
-                  className="absolute inset-0 bg-gradient-to-b from-black/25 via-black/10 to-black/35"
-                  aria-hidden="true"
-                />
-                <div
-                  className="absolute inset-0 opacity-30 mix-blend-multiply"
-                  style={{ backgroundColor: card.color }}
-                  aria-hidden="true"
-                />
-
-                <div className="relative z-10 flex min-w-0 flex-col items-center">
->>>>>>> 45017314098b2ebca17bcc53b3152e4e2762fd43
                   <div
                     className="absolute inset-0 bg-gradient-to-b from-black/25 via-black/10 to-black/35"
                     aria-hidden="true"

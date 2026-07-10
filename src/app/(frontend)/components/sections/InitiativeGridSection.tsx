@@ -77,7 +77,6 @@ export function InitiativeGridSection({
   initiatives,
 }: InitiativeGridSectionProps) {
   return (
-<<<<<<< HEAD
     <section className="bg-white pb-4 md:pb-6 lg:pb-8">
       <div className="container">
         <ScrollRise className="relative mx-auto w-full max-w-[1348px] overflow-hidden rounded-[24px] bg-[#0D1B2A] px-6 py-10 md:px-10 md:py-12 lg:px-[73px] lg:pt-[60px] lg:pb-10">
@@ -90,8 +89,6 @@ export function InitiativeGridSection({
                 {description}
               </p>
             </Reveal>
-
-            {/* <DrawLine className="mt-8 border-t border-[#1E2F40] md:mt-10" delay={0.15} /> */}
 
             <StaggerGroup
               as="div"
@@ -144,67 +141,6 @@ export function InitiativeGridSection({
             </StaggerGroup>
           </div>
         </ScrollRise>
-=======
-    <section className="bg-white py-8 md:py-10 lg:py-[35px]">
-      <div className="container">
-        <div className="overflow-hidden rounded-[24px] bg-[#001529] px-5 py-8 sm:rounded-[2rem] sm:px-6 sm:py-10 md:px-10 md:py-12 lg:px-12 lg:py-14">
-          <Reveal
-            as="h2"
-            className="text-[clamp(1.75rem,4vw,40px)] font-normal leading-[1.2] tracking-normal text-white lg:text-[40px] lg:leading-[47px]"
-          >
-            {title}
-          </Reveal>
-          <Reveal
-            as="p"
-            delay={0.08}
-            className="mt-3 max-w-2xl text-[16px] font-medium leading-[25px] tracking-normal text-white/90 sm:mt-4 sm:text-[18px]"
-          >
-            {description}
-          </Reveal>
-
-          <StaggerGroup
-            as="div"
-            className="mt-8 grid grid-cols-1 gap-5 sm:mt-10 md:grid-cols-2 xl:grid-cols-3 xl:gap-6"
-          >
-            {initiatives.map((initiative, index) => (
-              <StaggerItem
-                as="article"
-                key={initiative.title}
-                className={cn(
-                  'flex h-full min-w-0 flex-col rounded-2xl border border-white/10 bg-white/[0.06] p-5 shadow-sm backdrop-blur-md transition-all duration-200 hover:border-white/20 hover:bg-white/10 hover:shadow-lg sm:p-6',
-                  getGridItemClass(index, initiatives.length),
-                )}
-              >
-                <div className="flex items-start justify-between gap-3">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={MODERNIZE_ICON}
-                    alt=""
-                    aria-hidden="true"
-                    className="h-6 w-auto shrink-0 brightness-0 invert"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                  <span
-                    className={cn(
-                      'max-w-[50%] rounded px-2.5 py-1 text-center text-[10px] font-semibold uppercase leading-tight tracking-wide',
-                      labelColorClasses[initiative.labelColor],
-                    )}
-                  >
-                    {initiative.label}
-                  </span>
-                </div>
-                <h3 className="mt-5 text-[22px] font-normal leading-[30px] tracking-normal text-white sm:text-[24px]">
-                  {initiative.title}
-                </h3>
-                <p className="mt-3 flex-1 text-[14px] leading-relaxed text-white/75 sm:text-sm">
-                  {initiative.description}
-                </p>
-              </StaggerItem>
-            ))}
-          </StaggerGroup>
-        </div>
->>>>>>> 45017314098b2ebca17bcc53b3152e4e2762fd43
       </div>
     </section>
   )
