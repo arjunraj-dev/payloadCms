@@ -38,10 +38,10 @@ function getPlatformConfig(platform: string) {
 
 export function UpdateDetailHeader({ title, date, category, socialLinks }: UpdateDetailHeaderProps) {
   return (
-    <header className="flex max-w-[734px] flex-col gap-[17px]">
+    <header className="flex w-full max-w-[734px] flex-col gap-4 sm:gap-[17px]">
       <Reveal
         as="h1"
-        className="text-[clamp(2rem,5vw,56px)] font-normal leading-[50px] tracking-normal text-[#13181D] lg:text-[56px]"
+        className="text-[clamp(2rem,5vw,56px)] font-normal leading-[1.1] tracking-normal text-[#13181D] lg:text-[56px] lg:leading-[50px]"
       >
         {title}
       </Reveal>
@@ -49,9 +49,9 @@ export function UpdateDetailHeader({ title, date, category, socialLinks }: Updat
       <Reveal
         as="div"
         delay={0.08}
-        className="flex flex-wrap items-center gap-[17px] text-[16px] font-normal leading-[30px] tracking-normal text-[#13181D]"
+        className="flex flex-wrap items-center gap-x-4 gap-y-3 text-[15px] font-normal leading-[30px] tracking-normal text-[#13181D] sm:gap-[17px] sm:text-[16px]"
       >
-        <div className="flex items-center gap-[17px] text-[#13181D]">
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[#13181D] sm:gap-[17px]">
           <time dateTime={date} className="text-[#13181D]">
             {date}
           </time>
@@ -61,7 +61,7 @@ export function UpdateDetailHeader({ title, date, category, socialLinks }: Updat
           <span className="text-[#13181D]">{category}</span>
         </div>
 
-        <div className="flex items-center gap-7 text-[#13181D]">
+        <div className="flex items-center gap-5 text-[#13181D] sm:gap-7">
           {socialLinks.map((link) => {
             const { icon: Icon, label } = getPlatformConfig(link.platform)
 
@@ -72,7 +72,7 @@ export function UpdateDetailHeader({ title, date, category, socialLinks }: Updat
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`Share on ${label}`}
-                className="inline-flex size-[23.5px] items-center justify-center text-[#13181D] transition-opacity hover:opacity-70"
+                className="inline-flex size-10 items-center justify-center text-[#13181D] transition-opacity hover:opacity-70 sm:size-[23.5px]"
               >
                 {Icon && (
                   <Icon
@@ -96,7 +96,7 @@ export function UpdateDetailBackLink() {
     <Link
       href="/updates"
       aria-label="Back to updates"
-      className="inline-flex h-[30px] w-[70px] shrink-0 items-center gap-[11px] text-[16px] font-normal leading-[30px] tracking-normal text-[#13181D] transition-opacity hover:opacity-70"
+      className="inline-flex h-[44px] w-auto min-w-[70px] shrink-0 items-center gap-[11px] text-[16px] font-normal leading-[30px] tracking-normal text-[#13181D] transition-opacity hover:opacity-70 sm:h-[30px]"
     >
       <ArrowLeft className="size-4 shrink-0" aria-hidden="true" strokeWidth={1.5} />
       <span>Back</span>

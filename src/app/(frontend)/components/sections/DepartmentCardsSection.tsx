@@ -34,7 +34,7 @@ export function DepartmentCardsSection({
         </Reveal>
         <Reveal
           as="p"
-          className="mt-[15px] max-w-[935px] text-left text-[18px] font-medium leading-[25px] tracking-normal text-[#4B5563]"
+          className="mt-3 max-w-[935px] text-left text-[16px] font-medium leading-[25px] tracking-normal text-[#4B5563] sm:mt-[15px] sm:text-[18px]"
           delay={0.08}
         >
           {description}
@@ -42,13 +42,13 @@ export function DepartmentCardsSection({
 
         <StaggerGroup
           as="div"
-          className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 md:mt-12 lg:grid-cols-4"
+          className="mt-8 grid grid-cols-1 gap-5 sm:mt-10 sm:grid-cols-2 md:mt-12 xl:grid-cols-4"
         >
           {departments.map((department, index) => (
             <StaggerItem
               as="article"
               key={department.title}
-              className="flex h-full flex-col rounded-[24px] border border-[#DFDFDF] bg-[#E9E9E980] px-[19px] pb-6 pt-8"
+              className="flex h-full min-w-0 flex-col rounded-[24px] border border-[#DFDFDF] bg-[#E9E9E980] px-4 pb-6 pt-7 sm:px-[19px] sm:pt-8"
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
@@ -59,10 +59,10 @@ export function DepartmentCardsSection({
                 loading="lazy"
                 decoding="async"
               />
-              <h3 className="mt-[41px] max-w-[303px] text-[24px] font-normal leading-[30px] tracking-normal text-[#001529]">
+              <h3 className="mt-8 w-full text-[22px] font-normal leading-[30px] tracking-normal text-[#001529] sm:mt-[41px] sm:text-[24px]">
                 {department.title}
               </h3>
-              <p className="mt-[17px] max-w-[287px] flex-1 text-[16px] font-normal leading-[24px] tracking-normal text-[#4B5563]">
+              <p className="mt-3 w-full flex-1 text-[15px] font-normal leading-[24px] tracking-normal text-[#4B5563] sm:mt-[17px] sm:text-[16px]">
                 {department.description}
               </p>
               {index < departments.length - 1 && (

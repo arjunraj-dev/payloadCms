@@ -39,8 +39,10 @@ function NavLink({
       href={href}
       onClick={onClick}
       className={cn(
-        'text-center text-[16px] leading-none font-semibold tracking-normal transition-colors',
-        isActive ? 'text-[#008C95]' : 'text-black hover:text-[#008C95]',
+        'border-b-2 pb-1.5 text-center text-[16px] leading-none font-semibold tracking-normal transition-colors',
+        isActive
+          ? 'border-[#008C95] text-[#008C95]'
+          : 'border-transparent text-black hover:text-[#008C95]',
         className,
       )}
     >
@@ -118,7 +120,7 @@ export function HeaderClient({ logoUrl, logoAlt, navLinks, cta }: HeaderClientPr
         </Link>
 
         <nav
-          className="ml-10 hidden items-center gap-6 lg:flex xl:ml-14"
+          className="ml-10 hidden items-center gap-10 lg:flex xl:ml-14"
           aria-label="Main navigation"
         >
           {navLinks.map(({ label, href }) => (

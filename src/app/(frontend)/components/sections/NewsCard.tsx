@@ -95,11 +95,11 @@ export interface NewsCardProps {
 
 export function NewsCard({ image, date, category, title, excerpt, slug }: NewsCardProps) {
   return (
-    <Reveal as="div" className="h-full w-full max-w-[436px]">
+    <Reveal as="div" className="h-full w-full min-w-0">
       <Link
         href={`/updates/${slug}`}
         aria-label={`${title} — ${date}`}
-        className="group flex h-full w-full flex-col gap-[23px] lg:h-[661px]"
+        className="group flex h-full w-full min-w-0 flex-col gap-5 sm:gap-[23px]"
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
@@ -107,18 +107,20 @@ export function NewsCard({ image, date, category, title, excerpt, slug }: NewsCa
           alt={title}
           loading="lazy"
           decoding="async"
-          className="aspect-square w-full shrink-0 rounded-2xl object-cover lg:h-[436px] lg:w-[436px]"
+          className="aspect-square w-full shrink-0 rounded-2xl object-cover"
         />
 
-        <div className="flex min-h-0 w-full flex-1 flex-col gap-2 lg:h-[202px] lg:min-h-[202px]">
-          <p className="h-[30px] shrink-0 text-[16px] font-normal leading-[30px] tracking-normal text-[#13181D]">
+        <div className="flex min-h-0 w-full flex-1 flex-col gap-2">
+          <p className="shrink-0 text-[14px] font-normal leading-[24px] tracking-normal text-[#13181D] sm:text-[16px] sm:leading-[30px]">
             <time dateTime={date}>{date}</time>
-            {'   |   '}
+            <span className="mx-2 sm:mx-[0.75em]" aria-hidden="true">
+              |
+            </span>
             <span>{category}</span>
           </p>
 
-          <div className="flex min-h-0 flex-1 flex-col gap-[26px]">
-            <div className="flex flex-col gap-2">
+          <div className="flex min-h-0 flex-1 flex-col gap-5 sm:gap-[26px]">
+            <div className="flex min-w-0 flex-col gap-2">
               <CardTitle title={title} />
               <CardDescription text={excerpt} />
             </div>
@@ -126,7 +128,7 @@ export function NewsCard({ image, date, category, title, excerpt, slug }: NewsCa
             <span
               className={cn(
                 GRADIENT_CTA_BASE_CLASSNAME,
-                'mt-auto h-[50px] w-[173px] shrink-0 rounded-[6px] font-bold',
+                'mt-auto h-[50px] w-full max-w-[173px] shrink-0 rounded-[6px] font-bold',
               )}
               style={NAVY_GRADIENT_CTA_STYLE}
             >

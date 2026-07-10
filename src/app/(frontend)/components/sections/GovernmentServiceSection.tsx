@@ -21,11 +21,21 @@ function GovernmentServicePlaceholder({ className }: { className?: string }) {
   return (
     <div
       aria-hidden="true"
-      className={cn('h-[94px] w-[141px] shrink-0 rounded-[24px] bg-[#F0F0F0]', className)}
+      className={cn(
+        'h-[94px] w-[141px] shrink-0 rounded-[24px] bg-[#F0F0F0]',
+        className,
+      )}
     />
   )
 }
 
+/**
+ * Figma collage (1087×322 inside 1348×625 card):
+ * - Left 263: gray 141×94 (top-right of col) + family 263×176
+ * - Center: laptop 481×322
+ * - Right 263: celebrating 263×176 + gray 141×94
+ * - Column gaps: 40px
+ */
 function GovernmentServiceCollage({
   familyImage,
   laptopImage,
@@ -40,12 +50,15 @@ function GovernmentServiceCollage({
   return (
     <div
       className={cn(
-        'mx-auto grid w-full max-w-[1087px] grid-cols-1 gap-4 sm:grid-cols-2 lg:h-[322px] lg:grid-cols-[minmax(0,1fr)_322px_minmax(0,1fr)] lg:items-stretch lg:gap-5',
+        'mx-auto grid w-full max-w-[1087px] grid-cols-1 gap-4 xl:grid-cols-[263px_481px_263px] xl:items-start xl:justify-center xl:gap-10',
         className,
       )}
     >
-      <div className="flex min-h-[180px] flex-col justify-between gap-4 sm:col-span-1 lg:min-h-0 lg:gap-5">
-        <GovernmentServicePlaceholder className="hidden lg:block" />
+      {/* Left column — placeholder top-right, family below */}
+      <div className="flex min-w-0 flex-col gap-4 xl:h-[322px] xl:w-[263px] xl:justify-between xl:gap-0">
+        <div className="hidden justify-end xl:flex">
+          <GovernmentServicePlaceholder />
+        </div>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           alt=""
@@ -53,20 +66,22 @@ function GovernmentServiceCollage({
           loading="lazy"
           decoding="async"
           aria-hidden="true"
-          className="min-h-[140px] flex-1 rounded-[24px] object-cover lg:min-h-0"
+          className="aspect-[263/176] w-full rounded-[24px] object-cover xl:h-[176px] xl:w-[263px] xl:aspect-auto"
         />
       </div>
 
+      {/* Center — laptop */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         alt="A person using government services online on a laptop"
         src={laptopImage}
         loading="lazy"
         decoding="async"
-        className="h-full min-h-[220px] w-full rounded-[24px] object-cover sm:col-span-2 lg:col-span-1 lg:min-h-0 lg:h-[322px]"
+        className="aspect-[481/322] w-full rounded-[24px] object-cover xl:h-[322px] xl:w-[481px] xl:aspect-auto"
       />
 
-      <div className="flex min-h-[180px] flex-col justify-between gap-4 sm:col-span-1 lg:min-h-0 lg:gap-5">
+      {/* Right column — celebrating top, placeholder below-left */}
+      <div className="flex min-w-0 flex-col gap-4 xl:h-[322px] xl:w-[263px] xl:justify-between xl:gap-0">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           alt=""
@@ -74,10 +89,10 @@ function GovernmentServiceCollage({
           loading="lazy"
           decoding="async"
           aria-hidden="true"
-          className="min-h-[120px] flex-1 rounded-[24px] object-cover lg:min-h-0"
+          className="aspect-[263/176] w-full rounded-[24px] object-cover xl:h-[176px] xl:w-[263px] xl:aspect-auto"
         />
-        <div className="flex justify-end">
-          <GovernmentServicePlaceholder className="hidden lg:block" />
+        <div className="hidden justify-start xl:flex">
+          <GovernmentServicePlaceholder />
         </div>
       </div>
     </div>
@@ -94,12 +109,12 @@ export function GovernmentServiceSection({
   celebratingImage,
 }: GovernmentServiceSectionProps) {
   return (
-    <section className="bg-white py-12 md:py-16 lg:py-20">
+    <section className="bg-white py-10 md:py-16 lg:py-20">
       <div className="container">
-        <div className="mx-auto w-full max-w-[1348px] rounded-[24px] border border-[#D9D9D9] px-6 py-10 md:px-10 md:py-12 lg:flex lg:h-[625px] lg:flex-col lg:px-12 lg:py-[62px]">
+        <div className="mx-auto flex w-full max-w-[1348px] flex-col overflow-hidden rounded-[24px] border border-[#D9D9D9] px-5 py-8 sm:px-6 sm:py-10 md:px-10 md:py-12 xl:h-[625px] xl:px-[130px] xl:pb-[38px] xl:pt-[37px]">
           <StaggerGroup
             as="div"
-            className="mx-auto flex w-full max-w-[665px] flex-col items-center text-center"
+            className="mx-auto flex w-full max-w-[665px] shrink-0 flex-col items-center text-center"
           >
             <StaggerItem
               as="h2"
@@ -109,16 +124,16 @@ export function GovernmentServiceSection({
             </StaggerItem>
             <StaggerItem
               as="p"
-              className="mt-[15px] w-full max-w-[642px] text-base font-medium leading-relaxed text-[#53585C] sm:text-lg lg:text-[18px] lg:leading-[25px]"
+              className="mt-3 w-full max-w-[642px] text-[15px] font-medium leading-relaxed text-[#53585C] sm:mt-[15px] sm:text-base md:text-lg lg:text-[18px] lg:leading-[25px]"
             >
               {description}
             </StaggerItem>
-            <StaggerItem as="div" className="mt-[33px]">
+            <StaggerItem as="div" className="mt-6 w-full sm:mt-[33px] sm:w-auto">
               <Link
                 href={ctaHref}
                 className={cn(
                   GRADIENT_CTA_BASE_CLASSNAME,
-                  'rounded-[6px] font-bold leading-none transition-transform hover:-translate-y-0.5 lg:h-[50px] lg:w-[214px]',
+                  'w-full max-w-[214px] rounded-[6px] font-bold leading-none transition-transform hover:-translate-y-0.5 sm:w-[214px] lg:h-[50px]',
                 )}
                 style={NAVY_GRADIENT_CTA_STYLE}
               >
@@ -127,8 +142,8 @@ export function GovernmentServiceSection({
             </StaggerItem>
           </StaggerGroup>
 
-          <StaggerGroup as="div" className="mt-10 lg:mt-[33px] lg:flex-1">
-            <StaggerItem as="div">
+          <StaggerGroup as="div" className="mt-8 min-w-0 sm:mt-10 xl:mt-[33px]">
+            <StaggerItem as="div" className="min-w-0 w-full">
               <GovernmentServiceCollage
                 familyImage={familyImage}
                 laptopImage={laptopImage}

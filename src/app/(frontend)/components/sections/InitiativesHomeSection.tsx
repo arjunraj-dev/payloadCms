@@ -28,12 +28,12 @@ export function InitiativesHomeSection({
   cards,
 }: InitiativesHomeSectionProps) {
   return (
-    <section className="bg-white py-12 md:py-16 lg:py-20">
+    <section className="bg-white py-10 md:py-16 lg:py-20">
       <div className="container">
-        <div className="mx-auto flex w-full max-w-[1348px] flex-col gap-8 lg:h-[492px] lg:gap-[40px]">
+        <div className="mx-auto flex w-full max-w-[1348px] flex-col gap-8 lg:gap-[40px]">
           <StaggerGroup
             as="div"
-            className="mx-auto flex w-full max-w-[886px] shrink-0 flex-col items-center gap-6 text-center lg:gap-[30px]"
+            className="mx-auto flex w-full max-w-[886px] flex-col items-center gap-5 text-center sm:gap-6 lg:gap-[30px]"
           >
             <StaggerItem
               as="h2"
@@ -41,12 +41,12 @@ export function InitiativesHomeSection({
             >
               {heading}
             </StaggerItem>
-            <StaggerItem as="div">
+            <StaggerItem as="div" className="w-full sm:w-auto">
               <Link
                 href={ctaHref}
                 className={cn(
                   GRADIENT_CTA_BASE_CLASSNAME,
-                  'rounded-[6px] transition-transform hover:-translate-y-0.5 lg:h-[50px] lg:w-[256px]',
+                  'w-full max-w-[256px] rounded-[6px] transition-transform hover:-translate-y-0.5 sm:w-[256px] lg:h-[50px]',
                 )}
                 style={NAVY_GRADIENT_CTA_STYLE}
               >
@@ -54,7 +54,7 @@ export function InitiativesHomeSection({
               </Link>
             </StaggerItem>
           </StaggerGroup>
-          <InitiativeCardsGrid variant="home" className="min-h-0 flex-1" cards={cards} />
+          <InitiativeCardsGrid variant="home" cards={cards} />
         </div>
       </div>
     </section>

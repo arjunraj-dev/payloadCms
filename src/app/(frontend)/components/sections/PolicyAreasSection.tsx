@@ -8,6 +8,14 @@ const POLICY_AREA_ICON = '/Mordernize-gov.svg'
 const POLICY_ACTIVE_GRADIENT =
   'linear-gradient(90deg, #0C3538 0%, #0F848D 35.56%, #169EA9 49.52%, #169EA9 53.78%, #0F848D 64.92%, #0C3538 100%)'
 
+/** Full-card teal gradient border (Figma). */
+const POLICY_CARD_BORDER_STYLE: React.CSSProperties = {
+  border: '1px solid transparent',
+  backgroundImage: `linear-gradient(#ffffff, #ffffff), ${POLICY_ACTIVE_GRADIENT}`,
+  backgroundOrigin: 'border-box',
+  backgroundClip: 'padding-box, border-box',
+}
+
 export type PolicyAreaStatus = 'active' | 'comingSoon'
 
 export interface PolicyArea {
@@ -28,7 +36,7 @@ export function PolicyAreasSection({
   return (
     <section className="bg-white py-8 md:py-10 lg:py-[35px]">
       <div className="container">
-        <div className="mx-auto flex w-full max-w-[1350px] flex-col gap-10">
+        <div className="mx-auto flex w-full max-w-[1350px] flex-col gap-8 sm:gap-10">
           <Reveal
             as="h2"
             className="text-left text-[clamp(1.75rem,4vw,40px)] font-normal leading-[47px] tracking-normal text-[#001529] lg:text-[40px]"
@@ -38,7 +46,7 @@ export function PolicyAreasSection({
 
           <StaggerGroup
             as="div"
-            className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5"
+            className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5"
           >
             {policies.map((policy) => {
               const isComingSoon = policy.status === 'comingSoon'
@@ -47,10 +55,17 @@ export function PolicyAreasSection({
                 <StaggerItem
                   as="article"
                   key={policy.label}
-                  className="flex w-full flex-col lg:h-[131px] lg:w-[254px]"
+                  className="flex min-w-0 w-full flex-col overflow-hidden rounded-[24px]"
+                  style={isComingSoon ? undefined : POLICY_CARD_BORDER_STYLE}
                 >
-                  <div className="flex h-[95px] items-center gap-[10px] rounded-t-[24px] border border-b-0 border-[#DFDFDF] p-[10px]">
-                    <div className="flex w-full max-w-[234px] items-center gap-5">
+                  <div
+                    className={
+                      isComingSoon
+                        ? 'flex min-h-[95px] items-center gap-[10px] rounded-t-[24px] border border-b-0 border-[#DFDFDF] p-[10px]'
+                        : 'flex min-h-[95px] items-center gap-[10px] p-[10px]'
+                    }
+                  >
+                    <div className="flex w-full min-w-0 items-center gap-4 sm:gap-5">
                       <div className="flex h-[50px] w-[50px] shrink-0 items-center justify-center rounded-full px-[6px] py-[7px]">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
@@ -62,7 +77,7 @@ export function PolicyAreasSection({
                           decoding="async"
                         />
                       </div>
-                      <span className="min-w-0 flex-1 text-[18px] font-normal leading-[22px] tracking-normal text-[#001529] line-clamp-2">
+                      <span className="min-w-0 flex-1 text-[16px] font-normal leading-[22px] tracking-normal text-[#001529] line-clamp-2 sm:text-[18px]">
                         {policy.label}
                       </span>
                     </div>
@@ -78,7 +93,7 @@ export function PolicyAreasSection({
                   ) : (
                     <Link
                       href={policy.href ?? '#'}
-                      className="flex h-[36px] w-full items-center justify-center gap-[7px] rounded-b-[24px] border border-[#DFDFDF] px-[18px] py-[10px] text-sm font-medium leading-[22px] text-white transition-opacity hover:opacity-90"
+                      className="flex h-[36px] w-full items-center justify-center gap-[7px] px-[18px] py-[10px] text-sm font-medium leading-[22px] text-white transition-opacity hover:opacity-90"
                       style={{ background: POLICY_ACTIVE_GRADIENT }}
                     >
                       View progress

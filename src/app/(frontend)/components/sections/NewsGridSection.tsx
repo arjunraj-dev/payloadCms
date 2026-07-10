@@ -54,7 +54,7 @@ export function NewsGridSection({ news, onCategorySelect, heading }: NewsGridSec
   return (
     <section className="bg-white py-8 md:py-10 lg:py-[35px]">
       <div className="container">
-        <div className="mx-auto flex w-full max-w-[1348px] flex-col gap-[30px] lg:min-h-[824px]">
+        <div className="mx-auto flex w-full max-w-[1348px] flex-col gap-6 sm:gap-8 lg:gap-[30px]">
           <NewsFilterSection
             embedded
             categories={FILTER_CATEGORIES}
@@ -66,10 +66,10 @@ export function NewsGridSection({ news, onCategorySelect, heading }: NewsGridSec
           {filteredNews.length > 0 ? (
             <StaggerGroup
               as="div"
-              className="grid grid-cols-1 items-stretch gap-10 sm:grid-cols-2 lg:grid-cols-3 lg:gap-10"
+              className="grid grid-cols-1 items-stretch gap-8 sm:grid-cols-2 sm:gap-8 xl:grid-cols-3 xl:gap-10"
             >
               {filteredNews.map(({ id, categoryValue: _categoryValue, ...cardProps }) => (
-                <StaggerItem as="div" key={id} className="flex h-full">
+                <StaggerItem as="div" key={id} className="flex h-full min-w-0 w-full">
                   <NewsCard {...cardProps} />
                 </StaggerItem>
               ))}

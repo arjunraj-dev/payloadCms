@@ -23,7 +23,7 @@ export interface AboutDualCtaSectionProps {
 
 const ctaClassName = cn(
   GRADIENT_CTA_BASE_CLASSNAME,
-  'mt-[33px] h-[50px] rounded-[6px] px-[18px] py-[10px] text-[16px] font-semibold leading-none',
+  'h-[50px] rounded-[6px] px-[18px] py-[10px] text-[16px] font-semibold leading-none',
 )
 
 export function AboutDualCtaSection({ blocks }: AboutDualCtaSectionProps) {
@@ -48,21 +48,21 @@ export function AboutDualCtaSection({ blocks }: AboutDualCtaSectionProps) {
               )}
               <StaggerItem
                 as="div"
-                className="relative z-10 grid grid-cols-1 items-start gap-6 px-6 py-10 md:px-10 md:py-12 lg:grid-cols-[minmax(0,467px)_minmax(0,672px)] lg:justify-between lg:gap-x-12 lg:px-[56px] lg:py-14"
+                className="relative z-10 grid grid-cols-1 items-start gap-5 px-5 py-8 sm:gap-6 sm:px-6 sm:py-10 md:px-10 md:py-12 lg:grid-cols-[minmax(0,467px)_minmax(0,672px)] lg:justify-between lg:gap-x-12 lg:px-[56px] lg:py-14"
               >
-                <h2 className="max-w-[467px] text-[clamp(1.75rem,4vw,40px)] font-normal leading-[47px] tracking-normal text-white lg:text-[40px]">
+                <h2 className="max-w-[467px] text-[clamp(1.75rem,4vw,40px)] font-normal leading-[1.2] tracking-normal text-white lg:text-[40px] lg:leading-[47px]">
                   {block.heading}
                 </h2>
 
                 <div className="max-w-[672px] lg:pt-[19px]">
-                  <p className="text-[18px] font-medium leading-[25px] tracking-normal text-white/80">
+                  <p className="text-[16px] font-medium leading-[25px] tracking-normal text-white/80 sm:text-[18px]">
                     {block.description}
                   </p>
                   <Link
                     href={block.buttonHref}
                     className={cn(
                       ctaClassName,
-                      'w-full sm:w-auto',
+                      'mt-6 w-full sm:mt-[33px] sm:w-auto',
                       block.buttonWidth === 270 && 'lg:w-[270px]',
                       block.buttonWidth === 280 && 'lg:w-[280px]',
                     )}
