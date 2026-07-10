@@ -41,7 +41,7 @@ export interface HeroSectionProps {
   imageClassName?: string
   align?: 'left' | 'center'
   /** Figma display heading — Nunito Sans 56.69px / 61.42px line-height */
-  titleVariant?: 'default' | 'display' | 'about'
+  titleVariant?: 'default' | 'display' | 'about' | 'getInvolved' | 'updates'
 }
 
 /** About hero: always two lines — CMS newline, or split after "Ministry." */
@@ -80,7 +80,7 @@ function HeroPattern({
   patternFollowSpeed,
   patternFollowDamping,
 }: {
-  titleVariant: 'default' | 'display' | 'about'
+  titleVariant: 'default' | 'display' | 'about' | 'getInvolved' | 'updates'
   patternColor?: string
   patternVariant?: 'solid' | 'aurora'
   patternFollowSpeed: number
@@ -118,6 +118,55 @@ const ctaBaseClassName =
 const displayCtaBaseClassName = cn(GRADIENT_CTA_BASE_CLASSNAME, 'lg:h-[50px]')
 const displayPrimaryCtaStyle = TEAL_GRADIENT_CTA_STYLE
 const displaySecondaryCtaStyle = NAVY_GRADIENT_CTA_STYLE
+
+/**
+ * Centered page hero (Get Involved / Updates) — Figma: 56.69px/61.42px title (max 701px),
+ * 18px/25px medium description (max 863px, #53585C).
+ */
+function CenteredPageHeroCopy({
+  title,
+  subtitleParagraphs,
+}: {
+  title: string
+  subtitleParagraphs: string[]
+}) {
+  const titleLines = title
+    .split('\n')
+    .map((line) => line.trim())
+    .filter(Boolean)
+
+  return (
+    <StaggerGroup as="div" staggerChildren={STAGGER_CHILDREN} className="relative z-10 w-full">
+      <StaggerItem
+        as="h1"
+        className="mx-auto max-w-[701px] text-center text-[clamp(2rem,5vw,56.69px)] font-normal leading-[1.084] tracking-normal text-[#13181D] lg:text-[56.69px] lg:leading-[61.42px]"
+      >
+        {titleLines.map((line, index) => (
+          <React.Fragment key={index}>
+            {index > 0 && <br />}
+            {line}
+          </React.Fragment>
+        ))}
+      </StaggerItem>
+      {subtitleParagraphs.length > 0 && (
+        <StaggerItem
+          as="p"
+          className="mx-auto mt-[25px] max-w-[863px] text-center text-[18px] font-medium leading-[25px] tracking-normal text-[#53585C]"
+        >
+          {subtitleParagraphs.map((paragraph, index) => (
+            <React.Fragment key={index}>
+              {index > 0 && <br />}
+              {paragraph}
+            </React.Fragment>
+          ))}
+        </StaggerItem>
+      )}
+    </StaggerGroup>
+  )
+}
+
+const isCenteredPageHero = (variant: HeroSectionProps['titleVariant']) =>
+  variant === 'getInvolved' || variant === 'updates'
 
 /**
  * About page hero — Figma: 56.69px/61.42px title (2 lines, max 450px),
@@ -282,7 +331,12 @@ export function HeroSection({
   }, [backgroundImages, backgroundImageInterval])
 
   return (
-    <section className="relative overflow-hidden bg-white">
+    <section
+      className={cn(
+        'relative overflow-hidden bg-white',
+        titleVariant === 'getInvolved' || titleVariant === 'updates' ? 'lg:min-h-[507px]' : undefined,
+      )}
+    >
       {showPattern && !hasImage && (
         <HeroPattern
           titleVariant={titleVariant}
@@ -295,7 +349,15 @@ export function HeroSection({
       <div
         className={cn(
           'container relative z-10',
-          hasImage ? 'py-10 md:py-14 lg:py-16' : 'py-12 md:py-16 lg:py-20',
+          hasImage
+            ? titleVariant === 'about'
+              ? 'py-8 md:py-10 lg:py-[35px]'
+              : 'py-10 md:py-14 lg:py-16'
+            : isCenteredPageHero(titleVariant)
+              ? titleVariant === 'updates'
+                ? 'py-10 md:py-12 lg:pt-[136px] lg:pb-[234px]'
+                : 'py-10 md:py-12 lg:pt-[136px] lg:pb-[209px]'
+              : 'py-12 md:py-16 lg:py-20',
         )}
       >
         <div
@@ -314,7 +376,11 @@ export function HeroSection({
               hasImage
                 ? 'items-center px-6 py-8 md:px-8 md:py-10 lg:px-10 lg:py-12'
                 : 'items-center',
-              !hasImage && isCentered && 'mx-auto max-w-3xl justify-center',
+              !hasImage &&
+                isCentered &&
+                (isCenteredPageHero(titleVariant)
+                  ? 'mx-auto max-w-[863px] justify-center'
+                  : 'mx-auto max-w-3xl justify-center'),
               !hasImage && !isCentered && 'max-w-3xl',
               isCentered && 'text-center',
             )}
@@ -339,6 +405,8 @@ export function HeroSection({
               />
             ) : titleVariant === 'about' ? (
               <AboutHeroCopy title={title} subtitleParagraphs={subtitleParagraphs} />
+            ) : isCenteredPageHero(titleVariant) ? (
+              <CenteredPageHeroCopy title={title} subtitleParagraphs={subtitleParagraphs} />
             ) : (
               <StaggerGroup
                 as="div"

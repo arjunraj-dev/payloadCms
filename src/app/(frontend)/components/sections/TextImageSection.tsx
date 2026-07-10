@@ -5,6 +5,10 @@ import Link from 'next/link'
 import React from 'react'
 import { ScrollRise } from '@/app/(frontend)/components/motion/ScrollRise'
 import { StaggerGroup, StaggerItem } from '@/app/(frontend)/components/motion/StaggerGroup'
+import {
+  GRADIENT_CTA_BASE_CLASSNAME,
+  NAVY_GRADIENT_CTA_STYLE,
+} from '@/app/(frontend)/components/shared/gradientCta'
 
 export interface TextImageSectionProps {
   heading: string
@@ -18,7 +22,7 @@ export interface TextImageSectionProps {
   /** Single-card layout: image flush with text panel, muted bg on text only (About) */
   contained?: boolean
   /** Figma About page typography — 40px/65px heading, 18px/25px medium body */
-  variant?: 'default' | 'about'
+  variant?: 'default' | 'about' | 'getInvolved'
 }
 
 const imageRiseProps = {
@@ -65,12 +69,49 @@ export function TextImageSection({
   const paragraphs = Array.isArray(text) ? text : [text]
   const isImageLeft = imagePosition === 'left'
   const isAbout = variant === 'about'
+  const isGetInvolved = variant === 'getInvolved'
   const isAboutContained = isAbout && contained
   const hasForegroundImage = Boolean(image)
   const hasBackgroundImage = Boolean(backgroundImage)
   const hasButton = Boolean(buttonLabel && buttonHref)
 
-  const textContent = (
+  const getInvolvedTextContent = (
+    <StaggerGroup as="div" className="flex h-full flex-col">
+      <StaggerItem
+        as="h2"
+        className="max-w-[527px] text-[clamp(1.75rem,4vw,40px)] font-normal leading-[47px] tracking-normal text-[#13181D] lg:text-[40px]"
+      >
+        {heading}
+      </StaggerItem>
+      {paragraphs.map((paragraph, index) => (
+        <StaggerItem
+          as="p"
+          key={index}
+          className={cn(
+            'max-w-[571px] text-[18px] font-medium leading-[25px] tracking-normal text-[#53585C]',
+            index === 0 ? 'mt-[26px]' : 'mt-[25px]',
+          )}
+        >
+          {paragraph}
+        </StaggerItem>
+      ))}
+      {hasButton && (
+        <StaggerItem as="div" className="mt-[33px]">
+          <Link
+            href={buttonHref!}
+            className={cn(GRADIENT_CTA_BASE_CLASSNAME, 'h-[50px] w-[227px] rounded-[6px]')}
+            style={NAVY_GRADIENT_CTA_STYLE}
+          >
+            {buttonLabel}
+          </Link>
+        </StaggerItem>
+      )}
+    </StaggerGroup>
+  )
+
+  const textContent = isGetInvolved ? (
+    getInvolvedTextContent
+  ) : (
     <StaggerGroup as="div">
       <StaggerItem
         as="h2"
@@ -111,11 +152,39 @@ export function TextImageSection({
     </StaggerGroup>
   )
 
+  if (isGetInvolved && hasForegroundImage) {
+    return (
+      <section className="relative bg-white py-8 md:py-10 lg:py-[35px]">
+        <div className="container relative">
+          <div
+            className={cn(
+              'mx-auto flex w-full max-w-[1347px] flex-col gap-8 lg:h-[594px] lg:flex-row lg:items-center lg:gap-[76px]',
+              isImageLeft && 'lg:flex-row-reverse',
+            )}
+          >
+            <div className="flex w-full max-w-[571px] shrink-0 flex-col justify-center lg:h-[403px]">
+              {getInvolvedTextContent}
+            </div>
+            <SectionImage
+              heading={heading}
+              image={image!}
+              className="h-[280px] w-full shrink-0 overflow-hidden rounded-2xl sm:h-[360px] lg:h-[594px] lg:w-[700px] lg:rounded-3xl"
+            />
+          </div>
+        </div>
+      </section>
+    )
+  }
+
   return (
     <section
       className={cn(
         'relative',
-        isAboutContained ? 'py-8 md:py-10 lg:py-12' : 'py-12 md:py-14 lg:py-16',
+        isAbout
+          ? 'py-8 md:py-10 lg:py-[35px]'
+          : isAboutContained
+            ? 'py-8 md:py-10 lg:py-12'
+            : 'py-12 md:py-14 lg:py-16',
         backgroundColor,
       )}
     >

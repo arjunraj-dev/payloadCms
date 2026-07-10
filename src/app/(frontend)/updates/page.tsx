@@ -27,7 +27,7 @@ export default async function UpdatesPage() {
     id: String(doc.id),
     slug: doc.slug ?? '',
     image: mediaUrl(doc.image),
-    date: new Date(doc.date).toLocaleDateString('en-US', {
+    date: new Date(doc.date).toLocaleDateString('en-GB', {
       day: 'numeric',
       month: 'long',
       year: 'numeric',
@@ -45,22 +45,24 @@ export default async function UpdatesPage() {
     <main>
       <HeroSection
         title={updatesPage.hero.title}
-        subtitle={updatesPage.hero.subtitle}
+        subtitle={updatesPage.hero.subtitle
+          .split(/\n+/)
+          .map((line) => line.trim())
+          .filter(Boolean)}
         align="center"
-        titleVariant="display"
+        showPattern
+        titleVariant="updates"
       />
 
-      <div className="bg-[#F8F9FA]">
-        <UpdatesPageClient news={news} />
+      <UpdatesPageClient news={news} />
 
-        <CountryFutureSection
-          embedded
-          heading={updatesPage.closing.heading}
-          subtitle={updatesPage.closing.subtitle}
-          primaryButtonLabel={updatesPage.closing.primaryButton.label}
-          primaryButtonHref={updatesPage.closing.primaryButton.href}
-        />
-      </div>
+      <CountryFutureSection
+        variant="updates"
+        heading={updatesPage.closing.heading}
+        subtitle={updatesPage.closing.subtitle}
+        primaryButtonLabel={updatesPage.closing.primaryButton.label}
+        primaryButtonHref={updatesPage.closing.primaryButton.href}
+      />
     </main>
   )
 }

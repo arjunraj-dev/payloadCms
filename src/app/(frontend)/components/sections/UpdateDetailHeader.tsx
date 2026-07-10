@@ -1,5 +1,4 @@
-import type { LucideIcon } from 'lucide-react'
-import { Facebook, Instagram, Linkedin, Twitter } from 'lucide-react'
+import { ArrowLeft, Facebook, Instagram, Linkedin, Twitter, type LucideIcon } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
 import { Reveal } from '@/app/(frontend)/components/motion/Reveal'
@@ -39,36 +38,54 @@ function getPlatformConfig(platform: string) {
 
 export function UpdateDetailHeader({ title, date, category, socialLinks }: UpdateDetailHeaderProps) {
   return (
-    <header>
-      <Reveal as="h1" className="text-[clamp(2rem,5vw,56px)] font-normal leading-[50px] text-[#001529]">
+    <header className="flex max-w-[734px] flex-col gap-[17px]">
+      <Reveal
+        as="h1"
+        className="text-[clamp(2rem,5vw,56px)] font-normal leading-[50px] tracking-normal text-[#13181D] lg:text-[56px]"
+      >
         {title}
       </Reveal>
 
       <Reveal
         as="div"
         delay={0.08}
-        className="mt-6 flex flex-wrap items-center gap-[17px] text-base font-normal leading-[30px] text-[#4B5563]"
+        className="flex flex-wrap items-center gap-[17px] text-[16px] font-normal leading-[30px] tracking-normal text-[#13181D]"
       >
-        <time dateTime={date}>{date}</time>
-        <span aria-hidden="true">|</span>
-        <span>{category}</span>
+        <div className="flex items-center gap-[17px] text-[#13181D]">
+          <time dateTime={date} className="text-[#13181D]">
+            {date}
+          </time>
+          <span aria-hidden="true" className="text-[#13181D]">
+            |
+          </span>
+          <span className="text-[#13181D]">{category}</span>
+        </div>
 
-        {socialLinks.map((link) => {
-          const { icon: Icon, label } = getPlatformConfig(link.platform)
+        <div className="flex items-center gap-7 text-[#13181D]">
+          {socialLinks.map((link) => {
+            const { icon: Icon, label } = getPlatformConfig(link.platform)
 
-          return (
-            <Link
-              key={link.platform}
-              href={link.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={`Share on ${label}`}
-              className="inline-flex items-center justify-center text-[#4B5563] transition-colors hover:text-[#001529]"
-            >
-              {Icon && <Icon className="size-5 shrink-0" aria-hidden="true" strokeWidth={1.5} />}
-            </Link>
-          )
-        })}
+            return (
+              <Link
+                key={link.platform}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Share on ${label}`}
+                className="inline-flex size-[23.5px] items-center justify-center text-[#13181D] transition-opacity hover:opacity-70"
+              >
+                {Icon && (
+                  <Icon
+                    className="size-[23.5px] shrink-0 text-[#13181D]"
+                    aria-hidden="true"
+                    strokeWidth={1.5}
+                    color="#13181D"
+                  />
+                )}
+              </Link>
+            )
+          })}
+        </div>
       </Reveal>
     </header>
   )
@@ -79,9 +96,10 @@ export function UpdateDetailBackLink() {
     <Link
       href="/updates"
       aria-label="Back to updates"
-      className="inline-flex shrink-0 text-base font-normal uppercase leading-[30px] text-[#4B5563] transition-colors hover:text-[#001529] lg:pt-1"
+      className="inline-flex h-[30px] w-[70px] shrink-0 items-center gap-[11px] text-[16px] font-normal leading-[30px] tracking-normal text-[#13181D] transition-opacity hover:opacity-70"
     >
-      ← BACK
+      <ArrowLeft className="size-4 shrink-0" aria-hidden="true" strokeWidth={1.5} />
+      <span>Back</span>
     </Link>
   )
 }

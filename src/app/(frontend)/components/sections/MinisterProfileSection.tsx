@@ -30,7 +30,7 @@ export function MinisterProfileSection({
 
   if (isBanner) {
     return (
-      <section className="bg-white py-12 md:py-16 lg:py-20">
+      <section className="bg-white py-8 md:py-10 lg:py-[35px]">
         <div className="container">
           <div className="mx-auto flex w-full max-w-[1132px] flex-col lg:h-[440px] lg:flex-row lg:items-stretch lg:gap-[90px]">
             <ScrollRise
@@ -78,7 +78,12 @@ export function MinisterProfileSection({
   }
 
   return (
-    <section className={cn('py-12 md:py-16 lg:py-20', backgroundColor)}>
+    <section
+      className={cn(
+        variant === 'profile' ? 'py-8 md:py-10 lg:py-[35px]' : 'py-12 md:py-16 lg:py-20',
+        backgroundColor,
+      )}
+    >
       <div className="container">
         {variant === 'profile' ? (
           <div className="mx-auto flex w-full max-w-[1348px] flex-col gap-8 lg:flex-row lg:items-center lg:gap-[72px]">

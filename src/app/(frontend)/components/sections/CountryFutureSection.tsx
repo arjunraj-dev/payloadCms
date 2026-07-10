@@ -3,13 +3,15 @@ import Link from 'next/link'
 import React from 'react'
 import { Reveal } from '@/app/(frontend)/components/motion/Reveal'
 import {
+  GRADIENT_CTA_BASE_CLASSNAME,
   NAVY_GRADIENT_CTA_STYLE,
+  TEAL_CARD_BORDER_STYLE,
   TEAL_GRADIENT_CTA_STYLE,
 } from '@/app/(frontend)/components/shared/gradientCta'
 import { CountryFutureWaveBackground } from '@/app/(frontend)/components/sections/CountryFutureWaveBackground'
 
 const CTA_BUTTON_CLASSNAME =
-  'inline-flex h-[50px] items-center justify-center gap-[10px] rounded-[6px] border border-transparent px-[18px] py-[10px] text-center text-[16px] leading-none text-white transition-opacity hover:opacity-90'
+  'inline-flex h-[50px] items-center justify-center gap-[10px] rounded-[6px] border border-transparent px-[18px] py-[10px] text-center text-[16px] font-semibold leading-none text-white transition-opacity hover:opacity-90'
 
 export interface CountryFutureSectionProps {
   heading?: string
@@ -22,6 +24,8 @@ export interface CountryFutureSectionProps {
   secondaryButtonLabel?: string
   secondaryButtonHref?: string
   embedded?: boolean
+  /** Updates page "Stay connected" — 423px card, teal gradient border, single CTA */
+  variant?: 'default' | 'updates'
 }
 
 const secondaryCtaClassName = cn(CTA_BUTTON_CLASSNAME, 'font-bold lg:w-[187px]')
@@ -37,7 +41,9 @@ export function CountryFutureSection({
   secondaryButtonLabel,
   secondaryButtonHref,
   embedded = false,
+  variant = 'default',
 }: CountryFutureSectionProps) {
+  const isUpdates = variant === 'updates'
   const headingLines = (heading ?? '')
     .split('\n')
     .map((line) => line.trim())
@@ -48,18 +54,28 @@ export function CountryFutureSection({
 
   return (
     <section
-      className={cn(embedded ? 'pb-12 md:pb-16 lg:pb-20' : 'bg-white pb-12 md:pb-16 lg:pb-20')}
+      className={cn(
+        embedded
+          ? 'pb-8 md:pb-10 lg:pb-12'
+          : cn('bg-white', isUpdates ? 'py-8 md:py-10 lg:py-[35px]' : 'pb-8 md:pb-10 lg:pb-12'),
+      )}
     >
       <div className="container">
         <div
           className={cn(
-            'relative mx-auto flex w-full max-w-[1347px] flex-col justify-center overflow-hidden rounded-[24px] bg-[#0D1B2A] px-6 py-10 md:px-10 md:py-12 lg:px-[54px] lg:py-[82px]',
-            hasExtraContent ? 'lg:min-h-[423px]' : 'lg:h-[393px]',
+            'relative mx-auto flex w-full max-w-[1347px] flex-col overflow-hidden rounded-[24px]',
+            isUpdates
+              ? 'justify-center px-6 py-10 lg:h-[423px] lg:px-[54px] lg:py-0'
+              : cn(
+                  'justify-center bg-[#0D1B2A] px-6 py-10 md:px-10 md:py-12 lg:px-[54px] lg:py-[82px]',
+                  hasExtraContent ? 'lg:min-h-[423px]' : 'lg:h-[393px]',
+                ),
           )}
+          style={isUpdates ? TEAL_CARD_BORDER_STYLE : undefined}
         >
           <CountryFutureWaveBackground />
 
-          <Reveal as="div" className="relative z-10">
+          <Reveal as="div" className="relative z-10 max-w-[557px]">
             {headingLines.length > 0 && (
               <h2 className="max-w-[557px] text-[clamp(1.75rem,4vw,40px)] font-normal leading-[47px] tracking-normal text-white lg:text-[40px]">
                 {headingLines.map((line, index) => (
@@ -71,7 +87,12 @@ export function CountryFutureSection({
               </h2>
             )}
             {subtitle && (
-              <p className="mt-[13px] max-w-[546px] text-[18px] font-medium leading-[26px] tracking-normal text-[#AAB5C1]">
+              <p
+                className={cn(
+                  'text-[18px] font-medium leading-[26px] tracking-normal text-[#AAB5C1]',
+                  isUpdates ? 'mt-4 max-w-[550px]' : 'mt-[13px] max-w-[546px]',
+                )}
+              >
                 {subtitle}
               </p>
             )}
@@ -93,13 +114,18 @@ export function CountryFutureSection({
             {(hasPrimaryCTA || hasSecondaryCTA) && (
               <div
                 className={cn(
-                  'mt-[42px] flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:gap-5',
+                  'flex flex-col gap-4 sm:flex-row sm:flex-wrap',
+                  isUpdates ? 'mt-[33px]' : 'mt-[42px] sm:gap-5',
                 )}
               >
                 {hasPrimaryCTA && (
                   <Link
                     href={primaryButtonHref!}
-                    className={cn(CTA_BUTTON_CLASSNAME, 'w-full font-semibold sm:w-auto lg:w-[256px]')}
+                    className={cn(
+                      isUpdates ? GRADIENT_CTA_BASE_CLASSNAME : CTA_BUTTON_CLASSNAME,
+                      'font-semibold',
+                      isUpdates ? 'h-[50px] w-[171px] rounded-[6px]' : 'w-full sm:w-auto lg:w-[256px]',
+                    )}
                     style={TEAL_GRADIENT_CTA_STYLE}
                   >
                     {primaryButtonLabel}
