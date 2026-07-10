@@ -24,3 +24,12 @@ export const NAVY_GRADIENT_CTA_STYLE: CSSProperties = {
   backgroundOrigin: 'border-box',
   backgroundClip: 'padding-box, border-box',
 }
+
+/** Teal gradient border for dark CTA cards (e.g. Updates "Stay connected"). */
+export const TEAL_CARD_BORDER_STYLE: CSSProperties = {
+  border: '1px solid transparent',
+  backgroundImage:
+    'linear-gradient(#0D1B2A, #0D1B2A), linear-gradient(90deg, #08747D 0%, #67B5BB 48.08%, #08747D 100%)',
+  backgroundOrigin: 'border-box',
+  backgroundClip: 'padding-box, border-box',
+}

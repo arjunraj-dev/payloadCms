@@ -74,16 +74,16 @@ export default async function UpdateDetailPage({ params }: Args) {
 
   return (
     <main className="bg-white">
-      <div className="container py-12 md:py-16 lg:py-20">
-        <div className="flex items-start gap-6 lg:gap-12 xl:gap-16">
-          <div className="w-14 shrink-0 sm:w-20">
+      <div className="container pb-8 pt-12 md:pb-10 md:pt-16 lg:pb-[35px] lg:pt-[92px]">
+        <div className="mx-auto flex w-full max-w-[1348px] items-start gap-8 lg:gap-[86px]">
+          <aside className="shrink-0">
             <UpdateDetailBackLink />
-          </div>
+          </aside>
 
-          <div className="min-w-0 flex-1">
+          <div className="flex min-w-0 flex-1 flex-col gap-7 lg:max-w-[1029px] lg:gap-[28px]">
             <UpdateDetailHeader
               title={update.title}
-              date={new Date(update.date).toLocaleDateString('en-US', {
+              date={new Date(update.date).toLocaleDateString('en-GB', {
                 day: 'numeric',
                 month: 'long',
                 year: 'numeric',
