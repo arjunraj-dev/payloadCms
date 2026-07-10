@@ -53,6 +53,10 @@ export interface GravityWaveBackgroundProps {
   anchorYRatio?: number
   /** Optional RGB stops for the aurora gradient. Defaults to the brand palette. */
   palette?: RGB[]
+  /** Soft outer glow on particles (e.g. cyan halo on dark cards). */
+  glow?: boolean
+  /** RGB string for glow color, e.g. "0,240,255". */
+  glowColor?: string
 }
 
 /**
@@ -70,6 +74,8 @@ export function GravityWaveBackground({
   anchorXRatio = 0.36,
   anchorYRatio = 0.5,
   palette,
+  glow = false,
+  glowColor = '0,240,255',
 }: GravityWaveBackgroundProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const activePalette = palette ?? AURORA_PALETTE
@@ -221,6 +227,26 @@ export function GravityWaveBackground({
 
       for (const d of drawBuffer) {
         if (d.alpha < 0.01) continue
+
+        if (glow) {
+          ctx.save()
+          ctx.shadowColor = `rgba(${glowColor}, 0.4)`
+          ctx.shadowBlur = 20
+          ctx.beginPath()
+          ctx.arc(d.x, d.y, d.radius + 0.5, 0, Math.PI * 2)
+          ctx.fillStyle = `rgba(${d.color[0]},${d.color[1]},${d.color[2]},${d.alpha * 0.55})`
+          ctx.fill()
+
+          ctx.shadowColor = `rgba(${glowColor}, 0.7)`
+          ctx.shadowBlur = 10
+          ctx.beginPath()
+          ctx.arc(d.x, d.y, d.radius, 0, Math.PI * 2)
+          ctx.fillStyle = `rgba(${d.color[0]},${d.color[1]},${d.color[2]},${d.alpha})`
+          ctx.fill()
+          ctx.restore()
+          continue
+        }
+
         ctx.beginPath()
         ctx.arc(d.x, d.y, d.radius, 0, Math.PI * 2)
         ctx.fillStyle = `rgba(${d.color[0]},${d.color[1]},${d.color[2]},${d.alpha})`
@@ -292,6 +318,8 @@ export function GravityWaveBackground({
     anchorXRatio,
     anchorYRatio,
     activePalette,
+    glow,
+    glowColor,
   ])
 
   return <canvas ref={canvasRef} aria-hidden="true" className={className} />

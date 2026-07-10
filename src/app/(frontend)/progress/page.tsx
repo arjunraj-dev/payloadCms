@@ -13,8 +13,11 @@ import { notFound } from 'next/navigation'
 
 export const metadata = {
   title: 'Progress | MIND',
-  description: 'View the progress and initiatives of the Ministry of Innovation & National Development',
+  description:
+    'View the progress and initiatives of the Ministry of Innovation & National Development',
 }
+
+const DEVELOP_BAHAMIAN_TALENT_BG = '/1574f2245995d3daaf17789ddfc3c93dd9b9cb57.jpg'
 
 export default async function ProgressPage() {
   const progress = await getCachedGlobalSafe('progress-page', 1)()
@@ -81,7 +84,9 @@ export default async function ProgressPage() {
       <ProgramSectionCards
         title={progress.developBahamianTalent.title}
         description={progress.developBahamianTalent.description}
-        backgroundImage={mediaUrl(progress.developBahamianTalent.backgroundImage)}
+        backgroundImage={
+          mediaUrl(progress.developBahamianTalent.backgroundImage) || DEVELOP_BAHAMIAN_TALENT_BG
+        }
         theme="accent"
         cardSurface="cream"
         sectionTypography="nunito"
@@ -100,6 +105,7 @@ export default async function ProgressPage() {
         theme="light"
         cardSurface="muted"
         sectionTypography="nunito"
+        cardLayout="wide"
         iconSrc="/Mordernize-gov.svg"
         cards={(progress.driveNationalDevelopment.cards ?? []).map((card) => ({
           label: card.label,
@@ -110,6 +116,7 @@ export default async function ProgressPage() {
       />
 
       <CountryFutureSection
+        variant="progress"
         heading={progress.countryFuture.heading}
         subtitle={progress.countryFuture.subtitle}
         pillarsHeading={progress.countryFuture.pillarsHeading ?? undefined}

@@ -19,6 +19,8 @@ export interface ProgramCard {
   description: string
 }
 
+export type ProgramCardLayout = 'standard' | 'wide'
+
 export interface ProgramSectionCardsProps {
   title: string
   description: string
@@ -29,6 +31,8 @@ export interface ProgramSectionCardsProps {
   sectionTypography?: ProgramSectionTypography
   iconSrc?: string
   cards: ProgramCard[]
+  /** `wide` — 3 large cards (Drive National Development). `standard` — compact 4-up grid. */
+  cardLayout?: ProgramCardLayout
   /** Optional extra classes on the outer `<section>` wrapper. */
   sectionClassName?: string
 }
@@ -99,6 +103,7 @@ const ProgramSectionCards: React.FC<ProgramSectionCardsProps> = ({
   sectionTypography = 'default',
   iconSrc,
   cards,
+  cardLayout = 'standard',
   sectionClassName,
 }) => {
   const isAccent = theme === 'accent'
@@ -107,8 +112,14 @@ const ProgramSectionCards: React.FC<ProgramSectionCardsProps> = ({
   const isNunito = sectionTypography === 'nunito'
 
   if (isNunito) {
-    const dividerClassName = isAccent ? 'border-t border-[#FFFFFF33]' : 'border-t border-[#DFDFDF]'
-    const cardBorderClassName = isCream ? 'border-[#DFDFDF]' : 'border-[#DFDFDF]'
+    const isPhotoSection = isAccent && Boolean(backgroundImage)
+    const isWideSection = cardLayout === 'wide'
+    const dividerClassName = isPhotoSection
+      ? 'border-t border-white/25'
+      : isAccent
+        ? 'border-t border-[#FFFFFF33]'
+        : 'border-t border-[#DFDFDF]'
+    const cardBorderClassName = 'border-[#DFDFDF]'
 
     return (
       <section
@@ -120,8 +131,13 @@ const ProgramSectionCards: React.FC<ProgramSectionCardsProps> = ({
         <div className="container">
           <ScrollRise
             className={cn(
-              'relative',
-              backgroundImage &&
+              'relative mx-auto w-full',
+              isWideSection && 'flex max-w-[1351px] flex-col gap-[23px] lg:min-h-[591px]',
+              isPhotoSection &&
+                'max-w-[1348px] overflow-hidden rounded-[24px] px-6 py-10 md:px-10 md:py-12 lg:min-h-[669px] lg:px-[73px] lg:pt-[60px] lg:pb-12',
+              !isWideSection &&
+                backgroundImage &&
+                !isPhotoSection &&
                 'overflow-hidden rounded-[24px] px-6 py-10 md:px-10 md:py-12 lg:px-12 lg:py-14',
             )}
           >
@@ -129,40 +145,70 @@ const ProgramSectionCards: React.FC<ProgramSectionCardsProps> = ({
               <>
                 <div
                   aria-hidden="true"
-                  className="pointer-events-none absolute inset-0 bg-cover bg-center bg-no-repeat"
+                  className={cn(
+                    'pointer-events-none absolute bg-cover bg-center bg-no-repeat',
+                    isPhotoSection
+                      ? 'top-[-5px] left-1/2 h-[943px] w-[1415px] max-w-none -translate-x-1/2'
+                      : 'inset-0',
+                  )}
                   style={{ backgroundImage: `url(${backgroundImage})` }}
                 />
-                <div className="pointer-events-none absolute inset-0 bg-[#FF8C00]/10" aria-hidden="true" />
+                {!isPhotoSection && (
+                  <div className="pointer-events-none absolute inset-0 bg-[#FF8C00]/10" aria-hidden="true" />
+                )}
               </>
             )}
 
             <div className="relative z-10">
-              <Reveal as="div" className="flex w-full max-w-[842px] flex-col gap-[15px]">
+              <Reveal
+                as="div"
+                className={cn(
+                  'flex w-full flex-col gap-[15px]',
+                  isPhotoSection
+                    ? 'max-w-[895px]'
+                    : isWideSection
+                      ? 'max-w-[842px]'
+                      : 'max-w-[842px]',
+                )}
+              >
                 <h2
                   className={cn(
                     'text-[clamp(1.75rem,4vw,40px)] font-normal leading-[47px] tracking-normal lg:text-[40px]',
-                    isAccent ? 'text-white' : 'text-[#13181D]',
+                    isPhotoSection || isAccent ? 'text-white' : 'text-[#13181D]',
                   )}
                 >
                   {title}
                 </h2>
                 <p
                   className={cn(
-                    'max-w-[824px] text-base font-medium leading-[25px] tracking-normal sm:text-[18px]',
-                    isAccent ? 'text-white/90' : 'text-[#53585C]',
+                    'text-base font-medium leading-[25px] tracking-normal sm:text-[18px]',
+                    isPhotoSection
+                      ? 'max-w-[895px] text-white'
+                      : isAccent
+                        ? 'max-w-[824px] text-white/90'
+                        : isWideSection
+                          ? 'max-w-[930px] text-[#53585C]'
+                          : 'max-w-[824px] text-[#53585C]',
                   )}
                 >
                   {description}
                 </p>
               </Reveal>
 
-              <DrawLine className={cn('mt-8 md:mt-10', dividerClassName)} delay={0.15} />
+              {!isPhotoSection && !isWideSection && (
+                <DrawLine className={cn('mt-8 md:mt-10', dividerClassName)} delay={0.15} />
+              )}
 
               <StaggerGroup
                 as="div"
                 className={cn(
-                  'mx-auto mt-8 grid w-full max-w-[1351px] justify-items-center gap-5 md:mt-12 lg:gap-[20px]',
-                  getGridClass(cards.length),
+                  'mx-auto grid w-full justify-items-center gap-5 lg:gap-[20px]',
+                  isPhotoSection &&
+                    'mt-6 max-w-[1204px] grid-cols-1 sm:grid-cols-2 lg:mt-[23px] lg:grid-cols-3',
+                  isWideSection && 'max-w-[1351px] grid-cols-1 sm:grid-cols-2 lg:grid-cols-3',
+                  !isPhotoSection &&
+                    !isWideSection &&
+                    cn('mt-8 max-w-[1351px] md:mt-12', getGridClass(cards.length)),
                 )}
               >
                 {cards.map((card, index) => (
@@ -172,38 +218,82 @@ const ProgramSectionCards: React.FC<ProgramSectionCardsProps> = ({
                     whileHover={{ y: -6 }}
                     transition={{ type: 'spring', stiffness: 300, damping: 22 }}
                     className={cn(
-                      'flex min-h-[500px] w-full max-w-[322px] flex-col rounded-[24px] border px-[26px] pt-[32px] pb-6 transition-colors duration-300',
+                      'flex w-full flex-col rounded-[24px] border pb-6 transition-colors duration-300',
                       cardBorderClassName,
-                      isCream
-                        ? 'bg-[#FDF6E3] hover:bg-[#FCF3DC]'
-                        : 'bg-[#E9E9E980] hover:bg-[#E9E9E9A6]',
-                      getFiveCardItemClass(index, cards.length),
+                      isPhotoSection &&
+                        'min-h-[377px] max-w-[388px] bg-[#E9E9E9CC] px-[19px] pt-[32px] hover:bg-[#E9E9E9E6]',
+                      isWideSection &&
+                        'min-h-[436px] max-w-[437px] bg-[#E9E9E980] px-[26px] pt-[32px] hover:bg-[#E9E9E9A6]',
+                      !isPhotoSection &&
+                        !isWideSection &&
+                        cn(
+                          'min-h-[500px] max-w-[322px] px-[26px] pt-[32px]',
+                          isCream
+                            ? 'bg-[#FDF6E3] hover:bg-[#FCF3DC]'
+                            : 'bg-[#E9E9E980] hover:bg-[#E9E9E9A6]',
+                          getFiveCardItemClass(index, cards.length),
+                        ),
                     )}
                   >
-                    <ProgramIcon iconSrc={iconSrc} icon={card.icon} />
-
-                    <div className="mt-[37px] flex items-start justify-between gap-3">
-                      <h3 className="min-w-0 flex-1 pr-2 text-[24px] font-normal leading-[30px] tracking-normal text-[#13181D]">
-                        {card.title}
-                      </h3>
-                      <span
+                    {isPhotoSection || isWideSection ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={iconSrc}
+                        alt=""
+                        aria-hidden="true"
                         className={cn(
-                          'inline-flex h-[19px] shrink-0 items-center rounded-[4px] px-[6px] text-[12px] font-semibold uppercase leading-[22px] tracking-normal whitespace-nowrap',
-                          labelColorClasses[card.labelColor],
+                          'shrink-0 object-contain',
+                          isWideSection ? 'h-[20px] w-[31px]' : 'h-[20px] w-[23px]',
                         )}
-                      >
-                        {card.label}
-                      </span>
-                    </div>
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    ) : (
+                      <ProgramIcon iconSrc={iconSrc} icon={card.icon} />
+                    )}
 
-                    <p className="mt-[18px] w-full flex-1 text-[16px] font-normal leading-[24px] tracking-normal text-[#53585C]">
-                      {card.description}
-                    </p>
+                    {isWideSection ? (
+                      <>
+                        <h3 className="mt-[37px] text-[24px] font-normal leading-[30px] tracking-normal text-[#13181D]">
+                          {card.title}
+                        </h3>
+                        <p className="mt-[18px] max-w-[390px] flex-1 text-[16px] font-normal leading-[24px] tracking-normal text-[#53585C]">
+                          {card.description}
+                        </p>
+                      </>
+                    ) : (
+                      <>
+                        <div className="mt-[37px] flex items-start justify-between gap-3">
+                          <h3 className="min-w-0 flex-1 pr-2 text-[24px] font-normal leading-[30px] tracking-normal text-[#13181D]">
+                            {card.title}
+                          </h3>
+                          <span
+                            className={cn(
+                              'inline-flex h-[19px] shrink-0 items-center rounded-[4px] px-[6px] text-[12px] font-semibold uppercase leading-[22px] tracking-normal whitespace-nowrap',
+                              labelColorClasses[card.labelColor],
+                            )}
+                          >
+                            {card.label}
+                          </span>
+                        </div>
 
-                    <DrawLine
-                      className={cn('mt-6', dividerClassName)}
-                      delay={0.1 + index * 0.05}
-                    />
+                        <p
+                          className={cn(
+                            'mt-[18px] w-full flex-1 text-[16px] font-normal leading-[24px] tracking-normal text-[#53585C]',
+                            isPhotoSection && 'max-w-[341px]',
+                          )}
+                        >
+                          {card.description}
+                        </p>
+                      </>
+                    )}
+
+                    {!isPhotoSection && !isWideSection && (
+                      <DrawLine
+                        className={cn('mt-6', dividerClassName)}
+                        delay={0.1 + index * 0.05}
+                      />
+                    )}
                   </StaggerItem>
                 ))}
               </StaggerGroup>

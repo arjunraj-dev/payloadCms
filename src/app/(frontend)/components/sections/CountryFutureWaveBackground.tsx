@@ -2,24 +2,26 @@
 
 import { GravityWaveBackground } from '@/app/(frontend)/components/shared/GravityWaveBackground'
 
-// Silver-to-white stops for particles on the dark #0D1B2A card.
+// Bright cyan glow on the dark #0D1B2A card — matches #00F0FF with halo.
 const COUNTRY_FUTURE_WAVE_PALETTE: [number, number, number][] = [
-  [140, 148, 158], // cool silver
-  [175, 182, 190], // soft silver
-  [210, 215, 220], // light silver
-  [245, 247, 250], // near white
-  [210, 215, 220],
-  [175, 182, 190],
-  [140, 148, 158],
+  [0, 200, 220],
+  [0, 240, 255], // #00F0FF
+  [120, 248, 255],
+  [0, 240, 255],
+  [0, 200, 220],
+  [0, 240, 255],
+  [0, 200, 220],
 ]
 
 export function CountryFutureWaveBackground() {
   return (
-    <div className="pointer-events-none absolute inset-0 z-0 opacity-90">
+    <div className="pointer-events-none absolute inset-0 z-0">
       <GravityWaveBackground
         className="h-full w-full"
         variant="aurora"
         palette={COUNTRY_FUTURE_WAVE_PALETTE}
+        glow
+        glowColor="0,240,255"
         anchorXRatio={0.5}
         anchorYRatio={0.5}
         followSpeed={0.004}
