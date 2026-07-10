@@ -26,7 +26,7 @@ export function PolicyAreasSection({
   heading = 'Policy areas this Ministry leads',
 }: PolicyAreasSectionProps) {
   return (
-    <section className="bg-white py-12 md:py-16 lg:py-20">
+    <section className="bg-white py-8 md:py-10 lg:py-[35px]">
       <div className="container">
         <div className="mx-auto flex w-full max-w-[1350px] flex-col gap-10">
           <Reveal

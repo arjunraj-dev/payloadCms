@@ -16,7 +16,7 @@ export interface AboutMissionSectionProps {
 
 export function AboutMissionSection({ heading, description, cards }: AboutMissionSectionProps) {
   return (
-    <section className="bg-white py-12 md:py-16 lg:py-20">
+    <section className="bg-white py-8 md:py-10 lg:py-[35px]">
       <div className="container">
         <StaggerGroup as="div" className="flex flex-col">
           <StaggerItem

@@ -28,7 +28,7 @@ const ctaClassName = cn(
 
 export function AboutDualCtaSection({ blocks }: AboutDualCtaSectionProps) {
   return (
-    <section className="bg-white py-12 md:py-16 lg:py-20">
+    <section className="bg-white py-8 md:py-10 lg:py-[35px]">
       <div className="container">
         <StaggerGroup
           as="div"

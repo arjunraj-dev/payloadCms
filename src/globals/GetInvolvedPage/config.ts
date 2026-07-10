@@ -93,7 +93,7 @@ export const GetInvolvedPage: GlobalConfig = {
                     {
                       name: 'label',
                       type: 'text',
-                      defaultValue: "See what's already in motion",
+                      defaultValue: 'See our latest updates',
                     },
                     {
                       name: 'href',

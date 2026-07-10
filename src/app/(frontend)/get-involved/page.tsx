@@ -23,6 +23,7 @@ export default async function GetInvolvedPage() {
         subtitle={paragraphs(page.hero.subtitle)}
         showPattern={true}
         align="center"
+        titleVariant="getInvolved"
       />
 
       <GetInvolvedCategoriesSection
@@ -45,8 +46,8 @@ export default async function GetInvolvedPage() {
         text={paragraphs(page.reachOut.text)}
         image={mediaUrl(page.reachOut.image)}
         imagePosition={page.reachOut.imagePosition ?? 'right'}
-        backgroundColor="bg-[#F8F9FA]"
-        buttonLabel={page.reachOut.button?.label ?? "See what's already in motion"}
+        variant="getInvolved"
+        buttonLabel={page.reachOut.button?.label ?? 'See our latest updates'}
         buttonHref={page.reachOut.button?.href ?? '/progress'}
       />
 
