@@ -77,7 +77,7 @@ export function CountryFutureSection({
                 ? 'justify-center bg-[#0D1B2A] px-5 py-10 sm:px-6 md:py-12 lg:h-[540px] lg:px-[54px] lg:py-0'
                 : cn(
                     'justify-center bg-[#0D1B2A] px-5 py-10 sm:px-6 md:px-10 md:py-12 lg:px-[54px] lg:py-[82px]',
-                    hasExtraContent ? 'lg:min-h-[423px]' : 'lg:min-h-[393px]',
+                    hasExtraContent ? 'lg:min-h-[423px]' : 'lg:h-[393px]',
                   ),
           )}
           style={isUpdates ? TEAL_CARD_BORDER_STYLE : undefined}
@@ -88,7 +88,13 @@ export function CountryFutureSection({
             as="div"
             className={cn(
               'relative z-10 w-full',
-              isContact ? 'max-w-[672px]' : isProgressLayout ? 'max-w-[871px]' : 'max-w-[557px]',
+              isContact
+                ? 'max-w-[672px]'
+                : isProgressLayout
+                  ? 'max-w-[871px]'
+                  : isUpdates
+                    ? 'max-w-[557px]'
+                    : 'max-w-[767px]',
             )}
           >
             {headingLines.length > 0 && (
@@ -123,7 +129,7 @@ export function CountryFutureSection({
                     ? 'mt-3 max-w-[550px] text-[16px] leading-[26px] sm:mt-4 sm:text-[18px]'
                     : isProgressLayout
                       ? 'mt-3 max-w-[871px] text-[16px] leading-[26px] sm:mt-[13px] sm:text-[18px]'
-                      : 'mt-3 max-w-[546px] text-[16px] leading-[26px] sm:mt-[13px] sm:text-[18px]',
+                      : 'mt-3 max-w-[767px] text-[16px] leading-[26px] sm:mt-[13px] sm:text-[18px]',
                 )}
               >
                 {subtitle}

@@ -84,41 +84,53 @@ export function ShowYouSection({
                 <StaggerItem
                   as="article"
                   key={card.title}
-                  whileHover={{ y: -2 }}
-                  transition={{ type: 'spring', stiffness: 320, damping: 28 }}
                   className={cn(
-                    'flex min-w-0 flex-col rounded-2xl px-1 py-6 transition-colors duration-300 hover:bg-white/[0.02] sm:px-2 sm:py-8 md:px-4 xl:px-5 xl:py-10',
+                    'group relative z-0 flex min-w-0 flex-col overflow-hidden rounded-2xl transition-all duration-500 ease-out',
+                    'hover:z-10 hover:scale-[1.03] hover:shadow-[0_0_20px_rgba(0,255,255,0.45)]',
+                    'motion-reduce:hover:scale-100 motion-reduce:hover:shadow-none',
                     index > 0 && 'border-t border-[#1E2F40] md:border-t-0',
                     index % 2 === 1 && 'md:border-l md:border-[#1E2F40]',
                     index >= 2 && 'md:border-t md:border-[#1E2F40] xl:border-t-0',
                     index > 0 && 'xl:border-l xl:border-[#1E2F40]',
                   )}
                 >
+                  {/* Holographic shine — Prismic / CodePen holographic-card ::before */}
                   <span
                     aria-hidden="true"
-                    className="text-sm font-normal tabular-nums tracking-wide text-white/25"
-                  >
-                    {String(index + 1).padStart(2, '0')}
-                  </span>
+                    className="pointer-events-none absolute -top-1/2 -left-1/2 z-[1] h-[200%] w-[200%] origin-center -rotate-45 bg-[linear-gradient(0deg,transparent,transparent_30%,rgba(0,255,255,0.28))] opacity-0 transition-all duration-500 ease-out group-hover:translate-y-full group-hover:opacity-100 motion-reduce:hidden"
+                  />
 
-                  <div className="mt-4 flex flex-wrap items-start gap-x-2.5 gap-y-2">
-                    <h3 className="min-w-0 flex-1 basis-[min(100%,12rem)] text-[20px] font-normal leading-[1.3] tracking-normal text-white sm:text-[22px] xl:text-[24px] xl:leading-[30px]">
-                      {card.title}
-                    </h3>
+                  <div className="relative z-[2] flex min-w-0 flex-1 flex-col px-1 pt-6 pb-0 sm:px-2 sm:pt-8 md:px-4 xl:px-5 xl:pt-10">
                     <span
-                      className={cn(
-                        'inline-flex h-[19px] shrink-0 items-center rounded-[4px] px-[6px] text-[10px] font-semibold uppercase tracking-wide',
-                        labelColorClasses[card.labelColor],
-                      )}
+                      aria-hidden="true"
+                      className="text-sm font-normal tabular-nums tracking-wide text-white/25 transition-colors duration-300 group-hover:text-cyan-200/70"
                     >
-                      {card.label}
+                      {String(index + 1).padStart(2, '0')}
                     </span>
+
+                    <div className="mt-4 flex flex-wrap items-start gap-x-2.5 gap-y-2">
+                      <h3 className="min-w-0 flex-1 basis-[min(100%,12rem)] text-[20px] font-normal leading-[1.3] tracking-normal text-white transition-colors duration-300 group-hover:text-cyan-200 sm:text-[22px] xl:text-[24px] xl:leading-[30px]">
+                        {card.title}
+                      </h3>
+                      <span
+                        className={cn(
+                          'inline-flex h-[19px] shrink-0 items-center rounded-[4px] px-[6px] text-[10px] font-semibold uppercase tracking-wide',
+                          labelColorClasses[card.labelColor],
+                        )}
+                      >
+                        {card.label}
+                      </span>
+                    </div>
+
+                    <p className="mt-4 flex-1 pb-6 text-[15px] font-normal leading-[24px] tracking-normal text-[#AAB5C1] sm:text-[16px]">
+                      {card.description}
+                    </p>
                   </div>
 
-                  <p className="mt-4 flex-1 text-[15px] font-normal leading-[24px] tracking-normal text-[#AAB5C1] sm:text-[16px]">
-                    {card.description}
-                  </p>
-                  <DrawLine className="mt-6 border-t border-[#1E2F40]" delay={0.1 + index * 0.05} />
+                  <DrawLine
+                    className="relative z-[2] border-t border-[#1E2F40]"
+                    delay={0.1 + index * 0.05}
+                  />
                 </StaggerItem>
               ))}
             </StaggerGroup>

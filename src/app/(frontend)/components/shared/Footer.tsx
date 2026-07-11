@@ -8,7 +8,9 @@ const DEFAULT_LOGO = '/images/mind-logo.svg'
 function FooterColumn({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div>
-      <h3 className="text-xs font-semibold uppercase tracking-wider text-[#001529]">{title}</h3>
+      <h3 className="text-[14px] font-bold uppercase leading-none tracking-normal text-[#001529]">
+        {title}
+      </h3>
       <ul className="mt-4 flex flex-col gap-3">{children}</ul>
     </div>
   )
@@ -122,7 +124,7 @@ export async function Footer() {
       <div className="border-t border-[#E5E7EB]">
         <div className="container py-6">
           <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-6 sm:gap-y-2">
-            <p className="text-sm text-[#6B7280]">
+            <p className="text-[14px] font-semibold leading-none tracking-normal text-black">
               © {year} {footer.copyrightText}
             </p>
             {legalLinks.length > 0 && (
@@ -131,7 +133,7 @@ export async function Footer() {
                   <Link
                     key={link.id ?? link.href}
                     href={link.href}
-                    className="text-sm text-[#6B7280] transition-colors hover:text-[#008C95]"
+                    className="text-[14px] font-semibold leading-none tracking-normal text-black transition-colors hover:text-[#008C95]"
                   >
                     {link.label}
                   </Link>

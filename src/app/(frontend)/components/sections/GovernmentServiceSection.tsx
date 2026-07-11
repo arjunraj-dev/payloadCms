@@ -30,11 +30,10 @@ function GovernmentServicePlaceholder({ className }: { className?: string }) {
 }
 
 /**
- * Figma collage (1087×322 inside 1348×625 card):
- * - Left 263: gray 141×94 (top-right of col) + family 263×176
- * - Center: laptop 481×322
- * - Right 263: celebrating 263×176 + gray 141×94
- * - Column gaps: 40px
+ * Responsive collage:
+ * - Mobile: laptop full-width on top, family + celebrating side-by-side below
+ * - Tablet: scaled 3-col Figma layout with gray accents
+ * - Desktop (xl): exact Figma sizes (263 | 481 | 263, 40px gaps)
  */
 function GovernmentServiceCollage({
   familyImage,
@@ -50,14 +49,16 @@ function GovernmentServiceCollage({
   return (
     <div
       className={cn(
-        'mx-auto grid w-full max-w-[1087px] grid-cols-1 gap-4 xl:grid-cols-[263px_481px_263px] xl:items-start xl:justify-center xl:gap-10',
+        'mx-auto grid w-full max-w-[1087px] grid-cols-2 gap-3',
+        'md:grid-cols-[minmax(0,0.85fr)_minmax(0,1.55fr)_minmax(0,0.85fr)] md:items-stretch md:gap-4',
+        'xl:grid-cols-[263px_481px_263px] xl:items-start xl:justify-center xl:gap-10',
         className,
       )}
     >
-      {/* Left column — placeholder top-right, family below */}
-      <div className="flex min-w-0 flex-col gap-4 xl:h-[322px] xl:w-[263px] xl:justify-between xl:gap-0">
-        <div className="hidden justify-end xl:flex">
-          <GovernmentServicePlaceholder />
+      {/* Left — family (bottom); gray tile on tablet+ */}
+      <div className="order-2 flex min-w-0 flex-col justify-end gap-3 md:order-1 md:h-full md:justify-between md:gap-4 xl:h-[322px] xl:w-[263px] xl:gap-0">
+        <div className="hidden justify-end md:flex">
+          <GovernmentServicePlaceholder className="h-14 w-[88px] md:rounded-2xl xl:h-[94px] xl:w-[141px] xl:rounded-[24px]" />
         </div>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
@@ -66,22 +67,22 @@ function GovernmentServiceCollage({
           loading="lazy"
           decoding="async"
           aria-hidden="true"
-          className="aspect-[263/176] w-full rounded-[24px] object-cover xl:h-[176px] xl:w-[263px] xl:aspect-auto"
+          className="aspect-[4/3] w-full rounded-[20px] object-cover sm:aspect-[263/176] sm:rounded-[24px] md:aspect-[263/176] md:min-h-0 md:flex-1 xl:h-[176px] xl:w-[263px] xl:flex-none xl:aspect-auto"
         />
       </div>
 
-      {/* Center — laptop */}
+      {/* Center — laptop (featured on mobile) */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         alt="A person using government services online on a laptop"
         src={laptopImage}
         loading="lazy"
         decoding="async"
-        className="aspect-[481/322] w-full rounded-[24px] object-cover xl:h-[322px] xl:w-[481px] xl:aspect-auto"
+        className="order-1 col-span-2 aspect-[16/10] w-full rounded-[20px] object-cover sm:rounded-[24px] md:order-2 md:col-span-1 md:aspect-[481/322] md:h-full md:min-h-0 xl:h-[322px] xl:w-[481px] xl:aspect-auto"
       />
 
-      {/* Right column — celebrating top, placeholder below-left */}
-      <div className="flex min-w-0 flex-col gap-4 xl:h-[322px] xl:w-[263px] xl:justify-between xl:gap-0">
+      {/* Right — celebrating (top); gray tile on tablet+ */}
+      <div className="order-3 flex min-w-0 flex-col justify-start gap-3 md:h-full md:justify-between md:gap-4 xl:h-[322px] xl:w-[263px] xl:gap-0">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           alt=""
@@ -89,10 +90,10 @@ function GovernmentServiceCollage({
           loading="lazy"
           decoding="async"
           aria-hidden="true"
-          className="aspect-[263/176] w-full rounded-[24px] object-cover xl:h-[176px] xl:w-[263px] xl:aspect-auto"
+          className="aspect-[4/3] w-full rounded-[20px] object-cover sm:aspect-[263/176] sm:rounded-[24px] md:aspect-[263/176] md:min-h-0 md:flex-1 xl:h-[176px] xl:w-[263px] xl:flex-none xl:aspect-auto"
         />
-        <div className="hidden justify-start xl:flex">
-          <GovernmentServicePlaceholder />
+        <div className="hidden justify-start md:flex">
+          <GovernmentServicePlaceholder className="h-14 w-[88px] md:rounded-2xl xl:h-[94px] xl:w-[141px] xl:rounded-[24px]" />
         </div>
       </div>
     </div>
