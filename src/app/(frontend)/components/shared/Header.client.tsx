@@ -101,9 +101,12 @@ export function HeaderClient({ logoUrl, logoAlt, navLinks, cta }: HeaderClientPr
   }, [closeMobileMenu])
 
   return (
-    <header className="sticky top-0 z-50 bg-white lg:pt-[17px]">
-      <div className="container flex items-center py-3 lg:h-[76.21px] lg:py-0">
-        <Link href="/" className="shrink-0">
+    <header className="sticky top-0 z-50 bg-white pt-2 lg:pt-[17px]">
+      <div className="container relative flex items-center py-4 lg:h-[76.21px] lg:py-0">
+        <Link
+          href="/"
+          className="absolute left-1/2 top-1/2 z-10 w-[min(100%,140px)] -translate-x-1/2 -translate-y-1/2 sm:w-[160px] lg:static lg:top-auto lg:left-auto lg:w-auto lg:max-w-[197px] lg:translate-x-0 lg:translate-y-0 lg:shrink-0"
+        >
           {logoUrl ? (
             /* eslint-disable-next-line @next/next/no-img-element */
             <img
@@ -114,7 +117,7 @@ export function HeaderClient({ logoUrl, logoAlt, navLinks, cta }: HeaderClientPr
               loading="eager"
               fetchPriority="high"
               decoding="async"
-              className="h-auto w-full max-w-[160px] sm:max-w-[197px]"
+              className="h-auto w-full"
             />
           ) : null}
         </Link>
@@ -140,7 +143,7 @@ export function HeaderClient({ logoUrl, logoAlt, navLinks, cta }: HeaderClientPr
 
         <button
           type="button"
-          className="ml-auto inline-flex size-10 shrink-0 items-center justify-center rounded-md text-[#001529] lg:hidden"
+          className="relative z-20 ml-auto inline-flex size-10 shrink-0 items-center justify-center rounded-md text-[#001529] lg:hidden"
           aria-expanded={mobileOpen}
           aria-controls="mobile-nav"
           onClick={() => setMobileOpen((open) => !open)}

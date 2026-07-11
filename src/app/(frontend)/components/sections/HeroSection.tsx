@@ -70,6 +70,65 @@ function getAboutTitleLines(title: string): [string, string] {
   return [lines[0] ?? title, '']
 }
 
+/** Homepage display title — forced 4 lines on narrow phones (e.g. 360×740). */
+const HOME_MOBILE_TITLE_LINES = [
+  'Build today',
+  'what The Bahamas',
+  'needs to win',
+  'tomorrow',
+] as const
+
+function isHomeDisplayTitle(title: string): boolean {
+  const compact = title.replace(/[.\s]+/g, '').toLowerCase()
+  return (
+    compact.includes('buildtoday') &&
+    compact.includes('bahamas') &&
+    compact.includes('needstowin') &&
+    compact.includes('tomorrow')
+  )
+}
+
+function getDisplayTitleLines(title: string, isDesktop: boolean): string[] {
+  const cmsLines = title
+    .split('\n')
+    .map((line) => line.trim())
+    .filter(Boolean)
+
+  if (!isHomeDisplayTitle(title)) {
+    return cmsLines
+  }
+
+  if (!isDesktop) {
+    const withPeriod = /tomorrow\.\s*$/i.test(title.replace(/\n/g, ' ').trim())
+    return [
+      HOME_MOBILE_TITLE_LINES[0],
+      HOME_MOBILE_TITLE_LINES[1],
+      HOME_MOBILE_TITLE_LINES[2],
+      withPeriod ? 'tomorrow.' : HOME_MOBILE_TITLE_LINES[3],
+    ]
+  }
+
+  if (cmsLines.length >= 2) {
+    return cmsLines
+  }
+
+  return ['Build today what The Bahamas', 'needs to win tomorrow']
+}
+
+function useIsMinWidth(minWidthPx: number): boolean {
+  const [matches, setMatches] = useState(false)
+
+  useEffect(() => {
+    const media = window.matchMedia(`(min-width: ${minWidthPx}px)`)
+    const update = () => setMatches(media.matches)
+    update()
+    media.addEventListener('change', update)
+    return () => media.removeEventListener('change', update)
+  }, [minWidthPx])
+
+  return matches
+}
+
 // `GravityWaveBackground`'s canvas sizes itself off its parent element's box, so pinning it to
 // the Figma-exact 876x602 box (rather than filling the whole hero) requires a positioned wrapper
 // for the canvas to measure against, instead of sizing the canvas element directly.
@@ -239,6 +298,7 @@ function AboutHeroCopy({
  */
 function DisplayHeroCopy({
   titleLines,
+  title,
   subtitleParagraphs,
   showCTAs,
   isCentered,
@@ -246,12 +306,19 @@ function DisplayHeroCopy({
   secondaryCTA,
 }: {
   titleLines: string[]
+  title: string
   subtitleParagraphs: string[]
   showCTAs: boolean
   isCentered: boolean
   primaryCTA?: HeroCTA
   secondaryCTA?: HeroCTA
 }) {
+  const isDesktop = useIsMinWidth(1024)
+  const displayTitleLines = useMemo(
+    () => getDisplayTitleLines(title, isDesktop),
+    [title, isDesktop],
+  )
+  const resolvedTitleLines = displayTitleLines.length > 0 ? displayTitleLines : titleLines
   const totalSegments = 1 + subtitleParagraphs.length
   const [doneCount, setDoneCount] = useState(0)
   const advance = useCallback(() => setDoneCount((count) => count + 1), [])
@@ -260,11 +327,12 @@ function DisplayHeroCopy({
   return (
     <div className="relative z-10 w-full text-center lg:text-left">
       <TypewriterText
+        key={resolvedTitleLines.join('\n')}
         as="h1"
-        lines={titleLines}
+        lines={resolvedTitleLines}
         speed={30}
         onDone={advance}
-        className="mx-auto text-[clamp(2rem,5vw,56.69px)] font-normal leading-[1.084] tracking-normal text-[#13181D] lg:mx-0 lg:max-w-[573px] lg:text-[56.69px] lg:leading-[61.42px]"
+        className="mx-auto max-w-[20ch] text-[clamp(1.75rem,8.2vw,56.69px)] font-normal leading-[1.084] tracking-normal text-[#13181D] sm:max-w-none lg:mx-0 lg:max-w-[573px] lg:text-[56.69px] lg:leading-[61.42px]"
       />
       {subtitleParagraphs.map((paragraph, index) => (
         <TypewriterText
@@ -438,6 +506,7 @@ export function HeroSection({
             )}
             {titleVariant === 'display' ? (
               <DisplayHeroCopy
+                title={title}
                 titleLines={titleLines}
                 subtitleParagraphs={subtitleParagraphs}
                 showCTAs={Boolean(showCTAs)}
