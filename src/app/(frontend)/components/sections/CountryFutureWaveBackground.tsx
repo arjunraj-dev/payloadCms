@@ -3,6 +3,7 @@ import React from 'react'
 /**
  * Decorative wave for Country Future CTA cards.
  * Figma (home): 1097.1 × 393.3, right-aligned in the 1347px card (~250px from left).
+ * Opacity matches vector.svg (group opacity 0.15 + screen blend).
  */
 export function CountryFutureWaveBackground() {
   return (
@@ -13,7 +14,7 @@ export function CountryFutureWaveBackground() {
         alt=""
         width={1097}
         height={393}
-        className="absolute top-0 right-0 h-full w-auto max-w-full object-cover object-right opacity-90 lg:w-[1097.1px] lg:max-w-none"
+        className="absolute top-0 right-0 h-full w-auto max-w-full object-cover object-right mix-blend-screen lg:w-[1097.1px] lg:max-w-none"
       />
     </div>
   )

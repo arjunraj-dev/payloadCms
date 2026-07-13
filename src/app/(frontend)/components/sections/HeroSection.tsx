@@ -313,7 +313,7 @@ function DisplayHeroCopy({
   primaryCTA?: HeroCTA
   secondaryCTA?: HeroCTA
 }) {
-  const isDesktop = useIsMinWidth(1024)
+  const isDesktop = useIsMinWidth(1280)
   const displayTitleLines = useMemo(
     () => getDisplayTitleLines(title, isDesktop),
     [title, isDesktop],
@@ -325,14 +325,14 @@ function DisplayHeroCopy({
   const ctasReady = doneCount >= totalSegments
 
   return (
-    <div className="relative z-10 w-full text-center lg:text-left">
+    <div className="relative z-10 w-full text-center xl:text-left">
       <TypewriterText
         key={resolvedTitleLines.join('\n')}
         as="h1"
         lines={resolvedTitleLines}
-        speed={30}
+        speed={75}
         onDone={advance}
-        className="mx-auto max-w-[20ch] text-[clamp(1.75rem,8.2vw,56.69px)] font-normal leading-[1.084] tracking-normal text-[#13181D] sm:max-w-none lg:mx-0 lg:max-w-[573px] lg:text-[56.69px] lg:leading-[61.42px]"
+        className="mx-auto max-w-[20ch] text-[clamp(1.75rem,8.2vw,56.69px)] font-normal leading-[1.084] tracking-normal text-[#13181D] sm:max-w-none xl:mx-0 xl:max-w-[573px] xl:text-[56.69px] xl:leading-[61.42px]"
       />
       {subtitleParagraphs.map((paragraph, index) => (
         <TypewriterText
@@ -340,11 +340,11 @@ function DisplayHeroCopy({
           as="p"
           lines={[paragraph]}
           start={doneCount >= index + 1}
-          speed={18}
+          speed={45}
           onDone={advance}
           className={cn(
             index === 0 ? 'mt-4' : 'mt-3',
-            'text-center text-[16px] font-semibold leading-snug tracking-normal text-black sm:text-[18px] md:text-[20px] md:leading-none lg:text-start',
+            'text-center text-[16px] font-semibold leading-snug tracking-normal text-black sm:text-[18px] md:text-[20px] md:leading-none xl:text-start',
           )}
         />
       ))}
@@ -352,8 +352,8 @@ function DisplayHeroCopy({
         <div
           className={cn(
             'mt-8 flex flex-col gap-2.5 font-semibold transition-all duration-500 ease-out sm:flex-row sm:flex-wrap',
-            'items-center justify-center lg:items-start lg:justify-start',
-            isCentered && 'lg:items-center lg:justify-center',
+            'items-center justify-center xl:items-start xl:justify-start',
+            isCentered && 'xl:items-center xl:justify-center',
             ctasReady ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-3 opacity-0',
           )}
         >
@@ -484,7 +484,10 @@ export function HeroSection({
             className={cn(
               'relative flex h-full w-full',
               hasImage
-                ? 'items-center px-6 py-8 md:px-8 md:py-10 lg:px-10 lg:py-12'
+                ? cn(
+                    'items-center px-6 py-8 md:px-8 md:py-10 lg:px-10 lg:py-12',
+                    titleVariant === 'display' && 'justify-center xl:justify-start',
+                  )
                 : 'items-center',
               !hasImage &&
                 isCentered &&
