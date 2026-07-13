@@ -1,13 +1,13 @@
 'use client'
 
-import Link from 'next/link'
-import React, { useLayoutEffect, useRef } from 'react'
-import { Reveal } from '@/app/(frontend)/components/motion/Reveal'
+import { LandingPart } from '@/app/(frontend)/components/motion/LandingPart'
 import {
   GRADIENT_CTA_BASE_CLASSNAME,
   NAVY_GRADIENT_CTA_STYLE,
 } from '@/app/(frontend)/components/shared/gradientCta'
 import { cn } from '@/utilities/ui'
+import Link from 'next/link'
+import React, { useLayoutEffect, useRef } from 'react'
 
 function CardTitle({ title }: { title: string }) {
   const ref = useRef<HTMLHeadingElement>(null)
@@ -91,52 +91,68 @@ export interface NewsCardProps {
   title: string
   excerpt: string
   slug: string
+  /** Grid index — offsets each card's landing stagger in the row. */
+  index?: number
 }
 
-export function NewsCard({ image, date, category, title, excerpt, slug }: NewsCardProps) {
+export function NewsCard({
+  image,
+  date,
+  category,
+  title,
+  excerpt,
+  slug,
+  index = 0,
+}: NewsCardProps) {
+  const rowDelay = (index % 3) * 0.08
+
   return (
-    <Reveal as="div" className="h-full w-full min-w-0">
-      <Link
-        href={`/updates/${slug}`}
-        aria-label={`${title} — ${date}`}
-        className="group flex h-full w-full min-w-0 flex-col gap-5 sm:gap-[23px]"
-      >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={image}
-          alt={title}
-          loading="lazy"
-          decoding="async"
-          className="aspect-square w-full shrink-0 rounded-2xl object-cover"
-        />
+    <Link
+      href={`/updates/${slug}`}
+      aria-label={`${title} — ${date}`}
+      className="group flex h-full w-full min-w-0 flex-col gap-5 sm:gap-[23px]"
+    >
+      <LandingPart delay={rowDelay} image>
+        <div className="relative aspect-square w-full shrink-0 overflow-hidden rounded-2xl bg-[#E8ECEF]">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={image}
+            alt={title}
+            loading="lazy"
+            decoding="async"
+            className="absolute inset-0 h-full w-full object-cover object-center transition-transform duration-500 ease-out group-hover:scale-105"
+          />
+        </div>
+      </LandingPart>
 
-        <div className="flex min-h-0 w-full flex-1 flex-col gap-2">
-          <p className="shrink-0 text-[14px] font-normal leading-[24px] tracking-normal text-[#13181D] sm:text-[16px] sm:leading-[30px]">
-            <time dateTime={date}>{date}</time>
-            <span className="mx-2 sm:mx-[0.75em]" aria-hidden="true">
-              |
-            </span>
-            <span>{category}</span>
-          </p>
+      <LandingPart delay={rowDelay + 0.1} className="flex min-h-0 w-full flex-1 flex-col gap-2">
+        <p className="shrink-0 text-[14px] font-normal leading-[24px] tracking-normal text-[#13181D] sm:text-[16px] sm:leading-[30px]">
+          <time dateTime={date}>{date}</time>
+          <span className="mx-2 sm:mx-[0.75em]" aria-hidden="true">
+            |
+          </span>
+          <span>{category}</span>
+        </p>
 
-          <div className="flex min-h-0 flex-1 flex-col gap-5 sm:gap-[26px]">
-            <div className="flex min-w-0 flex-col gap-2">
-              <CardTitle title={title} />
-              <CardDescription text={excerpt} />
-            </div>
+        <LandingPart delay={rowDelay + 0.18} className="flex min-h-0 flex-1 flex-col gap-5 sm:gap-[26px]">
+          <div className="flex min-w-0 flex-col gap-2">
+            <CardTitle title={title} />
+            <CardDescription text={excerpt} />
+          </div>
 
+          <LandingPart delay={rowDelay + 0.26}>
             <span
               className={cn(
                 GRADIENT_CTA_BASE_CLASSNAME,
-                'mt-auto h-[50px] w-full max-w-[173px] shrink-0 rounded-[6px] font-bold',
+                'mt-auto inline-flex h-[50px] w-full max-w-[173px] shrink-0 rounded-[6px] font-bold transition-opacity duration-300 group-hover:opacity-90',
               )}
               style={NAVY_GRADIENT_CTA_STYLE}
             >
               Read more →
             </span>
-          </div>
-        </div>
-      </Link>
-    </Reveal>
+          </LandingPart>
+        </LandingPart>
+      </LandingPart>
+    </Link>
   )
 }

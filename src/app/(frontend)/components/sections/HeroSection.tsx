@@ -5,7 +5,7 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { GravityWaveBackground } from '@/app/(frontend)/components/shared/GravityWaveBackground'
-import { DURATION, EASE_OUT, STAGGER_CHILDREN } from '@/app/(frontend)/components/motion/config'
+import { DURATION, EASE_OUT, STAGGER_CHILDREN, TYPEWRITER_SPEED } from '@/app/(frontend)/components/motion/config'
 import { StaggerGroup, StaggerItem } from '@/app/(frontend)/components/motion/StaggerGroup'
 import { TypewriterText } from '@/app/(frontend)/components/motion/TypewriterText'
 import { useCursorParallax } from '@/app/(frontend)/components/motion/useCursorParallax'
@@ -181,6 +181,7 @@ const displaySecondaryCtaStyle = NAVY_GRADIENT_CTA_STYLE
 /**
  * Centered page hero (Get Involved / Updates / Contact) — Figma: 56.69px/61.42px title,
  * 18px/25px medium description (max 863px, #53585C). Contact optionally includes a navy CTA.
+ * Title types out first; subtitle and CTA fade in after.
  */
 function CenteredPageHeroCopy({
   title,
@@ -197,27 +198,27 @@ function CenteredPageHeroCopy({
     .split('\n')
     .map((line) => line.trim())
     .filter(Boolean)
+  const [titleDone, setTitleDone] = useState(false)
+  const onTitleDone = useCallback(() => setTitleDone(true), [])
 
   return (
-    <StaggerGroup as="div" staggerChildren={STAGGER_CHILDREN} className="relative z-10 w-full">
-      <StaggerItem
+    <div className="relative z-10 w-full">
+      <TypewriterText
         as="h1"
+        lines={titleLines}
+        speed={TYPEWRITER_SPEED.hero}
+        onDone={onTitleDone}
         className={cn(
           'mx-auto text-center text-[clamp(2rem,5vw,56.69px)] font-normal leading-[1.084] tracking-normal text-[#13181D] lg:text-[56.69px] lg:leading-[61.42px]',
           headingMaxWidthClassName,
         )}
-      >
-        {titleLines.map((line, index) => (
-          <React.Fragment key={index}>
-            {index > 0 && <br />}
-            {line}
-          </React.Fragment>
-        ))}
-      </StaggerItem>
+      />
       {subtitleParagraphs.length > 0 && (
-        <StaggerItem
-          as="p"
-          className="mx-auto mt-4 max-w-full text-center text-[16px] font-medium leading-[25px] tracking-normal text-[#53585C] sm:mt-[25px] sm:text-[18px] lg:max-w-[863px]"
+        <p
+          className={cn(
+            'mx-auto mt-4 max-w-full text-center text-[16px] font-medium leading-[25px] tracking-normal text-[#53585C] transition-all duration-500 ease-out sm:mt-[25px] sm:text-[18px] lg:max-w-[863px]',
+            titleDone ? 'translate-y-0 opacity-100' : 'translate-y-3 opacity-0',
+          )}
         >
           {subtitleParagraphs.map((paragraph, index) => (
             <React.Fragment key={index}>
@@ -225,10 +226,17 @@ function CenteredPageHeroCopy({
               {paragraph}
             </React.Fragment>
           ))}
-        </StaggerItem>
+        </p>
       )}
       {cta && (
-        <StaggerItem as="div" className="mt-8 flex justify-center sm:mt-[43px]">
+        <div
+          className={cn(
+            'mt-8 flex justify-center transition-all duration-500 ease-out sm:mt-[43px]',
+            titleDone
+              ? 'translate-y-0 opacity-100'
+              : 'pointer-events-none translate-y-3 opacity-0',
+          )}
+        >
           <Link
             href={cta.href}
             className={cn(
@@ -239,9 +247,9 @@ function CenteredPageHeroCopy({
           >
             {cta.label}
           </Link>
-        </StaggerItem>
+        </div>
       )}
-    </StaggerGroup>
+    </div>
   )
 }
 
@@ -250,7 +258,7 @@ const isCenteredPageHero = (variant: HeroSectionProps['titleVariant']) =>
 
 /**
  * About page hero — Figma: 56.69px/61.42px title (2 lines, max 450px),
- * 18px/25px medium description (max 655px).
+ * 18px/25px medium description (max 655px). Title types out first; body fades in after.
  */
 function AboutHeroCopy({
   title,
@@ -260,35 +268,33 @@ function AboutHeroCopy({
   subtitleParagraphs: string[]
 }) {
   const [lineOne, lineTwo] = getAboutTitleLines(title)
+  const titleLines = [lineOne, lineTwo].filter(Boolean)
+  const [titleDone, setTitleDone] = useState(false)
+  const onTitleDone = useCallback(() => setTitleDone(true), [])
 
   return (
-    <StaggerGroup as="div" staggerChildren={STAGGER_CHILDREN} className="relative z-10 w-full">
-      <StaggerItem
+    <div className="relative z-10 w-full">
+      <TypewriterText
         as="h1"
+        lines={titleLines}
+        speed={TYPEWRITER_SPEED.hero}
+        onDone={onTitleDone}
         className="max-w-full text-[clamp(2rem,5vw,56.69px)] font-normal leading-[1.084] tracking-normal text-[#13181D] sm:max-w-[450px] lg:text-[56.69px] lg:leading-[61.42px]"
-      >
-        {lineOne}
-        {lineTwo ? (
-          <>
-            <br className="hidden sm:block" />
-            <span className="sm:hidden"> </span>
-            {lineTwo}
-          </>
-        ) : null}
-      </StaggerItem>
+      />
       {subtitleParagraphs.map((paragraph, index) => (
-        <StaggerItem
-          as="p"
+        <p
           key={index}
           className={cn(
             index === 0 ? 'mt-4 sm:mt-[22px]' : 'mt-4 sm:mt-[25px]',
-            'max-w-full text-[16px] font-medium leading-[25px] tracking-normal text-[#4B5563] sm:max-w-[655px] sm:text-[18px]',
+            'max-w-full text-[16px] font-medium leading-[25px] tracking-normal text-[#4B5563] transition-all duration-500 ease-out sm:max-w-[655px] sm:text-[18px]',
+            titleDone ? 'translate-y-0 opacity-100' : 'translate-y-3 opacity-0',
           )}
+          style={{ transitionDelay: titleDone ? `${index * 80}ms` : '0ms' }}
         >
           {paragraph}
-        </StaggerItem>
+        </p>
       ))}
-    </StaggerGroup>
+    </div>
   )
 }
 
@@ -330,7 +336,7 @@ function DisplayHeroCopy({
         key={resolvedTitleLines.join('\n')}
         as="h1"
         lines={resolvedTitleLines}
-        speed={75}
+        speed={TYPEWRITER_SPEED.displayTitle}
         onDone={advance}
         className="mx-auto max-w-[20ch] text-[clamp(1.75rem,8.2vw,56.69px)] font-normal leading-[1.084] tracking-normal text-[#13181D] sm:max-w-none xl:mx-0 xl:max-w-[573px] xl:text-[56.69px] xl:leading-[61.42px]"
       />
@@ -340,7 +346,7 @@ function DisplayHeroCopy({
           as="p"
           lines={[paragraph]}
           start={doneCount >= index + 1}
-          speed={45}
+          speed={TYPEWRITER_SPEED.displaySubtitle}
           onDone={advance}
           className={cn(
             index === 0 ? 'mt-4' : 'mt-3',

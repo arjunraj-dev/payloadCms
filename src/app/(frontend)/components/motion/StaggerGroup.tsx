@@ -42,9 +42,11 @@ export function StaggerGroup({
 
 export interface StaggerItemProps extends Omit<HTMLMotionProps<'div'>, 'variants' | 'initial'> {
   as?: keyof typeof motion
+  /** When true, items also scale up slightly as they enter. */
+  withScale?: boolean
 }
 
-export function StaggerItem({ as = 'div', children, ...rest }: StaggerItemProps) {
+export function StaggerItem({ as = 'div', withScale = false, children, ...rest }: StaggerItemProps) {
   const prefersReducedMotion = useReducedMotion()
   const MotionTag = motion[as] as React.ComponentType<HTMLMotionProps<'div'>>
 
@@ -56,8 +58,17 @@ export function StaggerItem({ as = 'div', children, ...rest }: StaggerItemProps)
   return (
     <MotionTag
       variants={{
-        hidden: { opacity: 0, y: REVEAL_DISTANCE },
-        visible: { opacity: 1, y: 0, transition: { duration: DURATION.base, ease: EASE_OUT } },
+        hidden: {
+          opacity: 0,
+          y: REVEAL_DISTANCE,
+          ...(withScale ? { scale: 0.96 } : {}),
+        },
+        visible: {
+          opacity: 1,
+          y: 0,
+          ...(withScale ? { scale: 1 } : {}),
+          transition: { duration: DURATION.base, ease: EASE_OUT },
+        },
       }}
       {...rest}
     >

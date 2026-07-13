@@ -1,7 +1,11 @@
-import React from 'react'
-import { Reveal } from '@/app/(frontend)/components/motion/Reveal'
+'use client'
+
+import React, { useCallback, useState } from 'react'
+import { TYPEWRITER_SPEED } from '@/app/(frontend)/components/motion/config'
 import { StaggerGroup, StaggerItem } from '@/app/(frontend)/components/motion/StaggerGroup'
+import { TypewriterText } from '@/app/(frontend)/components/motion/TypewriterText'
 import { GravityWaveBackground } from '@/app/(frontend)/components/shared/GravityWaveBackground'
+import { cn } from '@/utilities/ui'
 
 export interface StatusCard {
   status: string
@@ -34,6 +38,13 @@ export function StatusTabsSection({
   heading = "What's already in motion.",
   description = "We said we'd show you rather than tell you. This page is how we keep that promise — an honest account of what's live, what we're building, and what's still being planned.",
 }: StatusTabsSectionProps) {
+  const [headingDone, setHeadingDone] = useState(false)
+  const onHeadingDone = useCallback(() => setHeadingDone(true), [])
+  const headingLines = heading
+    .split('\n')
+    .map((line) => line.trim())
+    .filter(Boolean)
+
   return (
     <section className="relative overflow-hidden bg-white py-10 md:py-16 lg:py-20">
       <GravityWaveBackground
@@ -41,14 +52,23 @@ export function StatusTabsSection({
         variant="aurora"
       />
       <div className="container relative z-10">
-        <Reveal as="div" className="mx-auto max-w-3xl px-1 text-center sm:px-0">
-          <h1 className="text-[clamp(2rem,5vw,56.69px)] font-normal leading-[1.084] tracking-normal text-[#001529] lg:text-[56.69px] lg:leading-[61.42px]">
-            {heading}
-          </h1>
-          <p className="mt-3 text-[15px] leading-relaxed text-[#4B5563] sm:mt-4 sm:text-base md:text-lg">
+        <div className="mx-auto max-w-3xl px-1 text-center sm:px-0">
+          <TypewriterText
+            as="h1"
+            lines={headingLines}
+            speed={TYPEWRITER_SPEED.hero}
+            onDone={onHeadingDone}
+            className="text-[clamp(2rem,5vw,56.69px)] font-normal leading-[1.084] tracking-normal text-[#001529] lg:text-[56.69px] lg:leading-[61.42px]"
+          />
+          <p
+            className={cn(
+              'mt-3 text-[15px] leading-relaxed text-[#4B5563] transition-all duration-500 ease-out sm:mt-4 sm:text-base md:text-lg',
+              headingDone ? 'translate-y-0 opacity-100' : 'translate-y-3 opacity-0',
+            )}
+          >
             {description}
           </p>
-        </Reveal>
+        </div>
 
         <StaggerGroup
           as="div"

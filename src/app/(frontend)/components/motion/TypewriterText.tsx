@@ -4,6 +4,7 @@ import { useInView, useReducedMotion } from 'framer-motion'
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 
 import { cn } from '@/utilities/ui'
+import { TYPEWRITER_SPEED } from './config'
 
 export interface TypewriterTextProps {
   /** Rendered as separate lines joined by <br />. */
@@ -35,7 +36,7 @@ export interface TypewriterTextProps {
  */
 export function TypewriterText({
   lines,
-  speed = 26,
+  speed = TYPEWRITER_SPEED.hero,
   startDelay = 0,
   start = true,
   startOnView = false,
@@ -84,7 +85,11 @@ export function TypewriterText({
         rafId = requestAnimationFrame(tick)
         return
       }
-      const nextLength = Math.min(fullText.length, Math.floor(elapsed / speed) + 1)
+      const totalDuration = Math.max(fullText.length * speed, speed)
+      const rawProgress = Math.min(1, elapsed / totalDuration)
+      // Ease-out so typing starts gently and settles smoothly at the end.
+      const easedProgress = 1 - Math.pow(1 - rawProgress, 2.8)
+      const nextLength = Math.min(fullText.length, Math.round(fullText.length * easedProgress))
       setTypedLength(nextLength)
       if (nextLength >= fullText.length) {
         if (!hasFinishedRef.current) {
@@ -119,7 +124,7 @@ export function TypewriterText({
         {isTyping && (
           <span
             className={cn(
-              '-mb-1 ml-0.5 inline-block h-[0.9em] w-[2px] animate-pulse bg-current align-middle',
+              '-mb-1 ml-0.5 inline-block h-[0.9em] w-[2px] animate-pulse bg-current align-middle opacity-80 [animation-duration:1.35s] [animation-timing-function:ease-in-out]',
               cursorClassName,
             )}
           />
