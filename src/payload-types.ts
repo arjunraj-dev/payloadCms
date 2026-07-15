@@ -2346,7 +2346,7 @@ export interface GetInvolvedPage {
     backgroundImage: number | Media;
     socialLinks?:
       | {
-          platform: 'facebook' | 'instagram' | 'linkedin' | 'x';
+          platform: 'facebook' | 'instagram' | 'linkedin' | 'tiktok';
           label: string;
           href: string;
           id?: string | null;
@@ -2414,7 +2414,7 @@ export interface ContactPage {
     subtitle: string;
     socialLinks?:
       | {
-          platform: 'facebook' | 'instagram' | 'linkedin' | 'x';
+          platform: 'facebook' | 'instagram' | 'linkedin' | 'tiktok';
           label: string;
           href: string;
           id?: string | null;

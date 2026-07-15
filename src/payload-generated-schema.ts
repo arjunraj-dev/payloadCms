@@ -57,10 +57,10 @@ export const enum_progress_page_develop_bahamian_talent_cards_label_color = pgEn
 export const enum_progress_page_drive_national_development_cards_icon = pgEnum('enum_progress_page_drive_national_development_cards_icon', ['briefcase', 'target', 'users', 'trending-up', 'bar-chart', 'building', 'smartphone', 'shield', 'monitor', 'refresh-cw', 'calendar', 'lightbulb', 'folder', 'cpu', 'graduation-cap', 'book-open', 'handshake', 'megaphone'])
 export const enum_progress_page_drive_national_development_cards_label_color = pgEnum('enum_progress_page_drive_national_development_cards_label_color', ['green', 'blue', 'orange', 'dark', 'planned'])
 export const enum_get_involved_page_categories_section_categories_icon = pgEnum('enum_get_involved_page_categories_section_categories_icon', ['briefcase', 'target', 'users', 'trending-up', 'bar-chart', 'building', 'smartphone', 'shield', 'monitor', 'refresh-cw', 'calendar', 'lightbulb', 'folder', 'cpu', 'graduation-cap', 'book-open', 'handshake', 'megaphone'])
-export const enum_get_involved_page_follow_the_work_social_links_platform = pgEnum('enum_get_involved_page_follow_the_work_social_links_platform', ['facebook', 'instagram', 'linkedin', 'x'])
+export const enum_get_involved_page_follow_the_work_social_links_platform = pgEnum('enum_get_involved_page_follow_the_work_social_links_platform', ['facebook', 'instagram', 'linkedin', 'tiktok'])
 export const enum_get_involved_page_reach_out_image_position = pgEnum('enum_get_involved_page_reach_out_image_position', ['left', 'right'])
 export const enum_contact_page_enquiries_icon = pgEnum('enum_contact_page_enquiries_icon', ['briefcase', 'target', 'users', 'trending-up', 'bar-chart', 'building', 'smartphone', 'shield', 'monitor', 'refresh-cw', 'calendar', 'lightbulb', 'folder', 'cpu', 'graduation-cap', 'book-open', 'handshake', 'megaphone'])
-export const enum_contact_page_follow_us_social_links_platform = pgEnum('enum_contact_page_follow_us_social_links_platform', ['facebook', 'instagram', 'linkedin', 'x'])
+export const enum_contact_page_follow_us_social_links_platform = pgEnum('enum_contact_page_follow_us_social_links_platform', ['facebook', 'instagram', 'linkedin', 'tiktok'])
 
 export const pages_hero_links = pgTable('pages_hero_links', {
   _order: integer('_order').notNull(),

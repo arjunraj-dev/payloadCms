@@ -1,13 +1,12 @@
-import type { LucideIcon } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
 import { Reveal } from '@/app/(frontend)/components/motion/Reveal'
 import { StaggerGroup, StaggerItem } from '@/app/(frontend)/components/motion/StaggerGroup'
+import { SocialPlatformIcon } from '@/app/(frontend)/components/shared/SocialPlatformIcon'
 
 export interface FollowTheWorkSocialLink {
   platform: string
   label: string
-  icon: LucideIcon
   href: string
 }
 
@@ -28,8 +27,6 @@ function SocialLinks({
   return (
     <StaggerGroup as="div" className={className}>
       {links.map((link) => {
-        const Icon = link.icon
-
         return (
           <StaggerItem as="div" key={link.platform} className="min-w-0 w-full sm:w-auto">
             <Link
@@ -39,7 +36,11 @@ function SocialLinks({
               className="inline-flex h-[67px] w-full max-w-[197px] items-center gap-[9px] rounded-[12px] bg-white p-[10px] transition-opacity hover:opacity-90 sm:w-[197px]"
             >
               <span className="flex size-[37px] shrink-0 items-center justify-center">
-                <Icon className="size-[37px] text-[#111827]" aria-hidden="true" strokeWidth={1.5} />
+                <SocialPlatformIcon
+                  platform={link.platform}
+                  className="size-[37px] text-[#111827]"
+                  strokeWidth={1.5}
+                />
               </span>
               <span className="text-[18px] font-medium leading-none tracking-normal text-[#111827]">
                 {link.label}

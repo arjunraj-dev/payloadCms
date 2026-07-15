@@ -5,8 +5,6 @@ import { HeroSection } from '@/app/(frontend)/components/sections/HeroSection'
 import { TextImageSection } from '@/app/(frontend)/components/sections/TextImageSection'
 import { getCachedGlobal } from '@/utilities/getGlobals'
 import { mediaUrl, paragraphs } from '@/utilities/cms'
-import { socialIconMap } from '@/utilities/socialIcons'
-import { Briefcase } from 'lucide-react'
 
 export const metadata = {
   title: 'Get Involved | MIND',
@@ -59,7 +57,6 @@ export default async function GetInvolvedPage() {
           platform: link.platform,
           label: link.label,
           href: link.href,
-          icon: socialIconMap[link.platform] ?? Briefcase,
         }))}
       />
     </main>

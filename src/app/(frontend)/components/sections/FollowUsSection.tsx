@@ -1,13 +1,12 @@
-import type { LucideIcon } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
 import { Reveal } from '@/app/(frontend)/components/motion/Reveal'
 import { StaggerGroup, StaggerItem } from '@/app/(frontend)/components/motion/StaggerGroup'
 import { TEAL_WHITE_CARD_BORDER_STYLE } from '@/app/(frontend)/components/shared/gradientCta'
+import { SocialPlatformIcon } from '@/app/(frontend)/components/shared/SocialPlatformIcon'
 
 export interface FollowUsSocialLink {
   platform: string
-  icon: LucideIcon
   label: string
   href: string
 }
@@ -19,25 +18,22 @@ export interface FollowUsSectionProps {
 }
 
 function SocialButton({ link }: { link: FollowUsSocialLink }) {
-  const Icon = link.icon
-  const label = link.platform === 'x' ? 'X' : link.label
-
   return (
     <Link
       href={link.href}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label={`Follow us on ${label}`}
+      aria-label={`Follow us on ${link.label}`}
       className="flex aspect-square w-full flex-col items-center justify-center gap-[7px] rounded-[24px] p-[10px] transition-opacity hover:opacity-90 xl:aspect-auto xl:h-[155px]"
       style={TEAL_WHITE_CARD_BORDER_STYLE}
     >
-      <Icon
+      <SocialPlatformIcon
+        platform={link.platform}
         className="size-10 shrink-0 text-[#53585C] sm:size-[60px]"
-        aria-hidden="true"
         strokeWidth={1.25}
       />
       <span className="text-center text-[16px] font-medium leading-none tracking-normal text-[#111827] sm:text-[18px]">
-        {label}
+        {link.label}
       </span>
     </Link>
   )
