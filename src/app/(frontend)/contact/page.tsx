@@ -6,7 +6,6 @@ import { SpecificEnquiriesSection } from '@/app/(frontend)/components/sections/S
 import { getCachedGlobal } from '@/utilities/getGlobals'
 import { iconMap } from '@/utilities/iconMap'
 import { mediaUrl, paragraphs } from '@/utilities/cms'
-import { socialIconMap } from '@/utilities/socialIcons'
 import { Briefcase } from 'lucide-react'
 import React from 'react'
 
@@ -66,7 +65,6 @@ export default async function ContactPage() {
                   platform: link.platform,
                   label: link.label,
                   href: link.href,
-                  icon: socialIconMap[link.platform] ?? Briefcase,
                 }))}
               />
             </div>
