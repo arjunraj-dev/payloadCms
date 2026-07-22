@@ -37,6 +37,7 @@ export default async function GetInvolvedPage() {
       <GetInvolvedFormSection
         formTitle={page.form.formTitle}
         illustrationImage={mediaUrl(page.form.illustrationImage)}
+        successMessage={page.form.notifications?.successMessage ?? undefined}
       />
 
       <TextImageSection

@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useId } from 'react'
+import React, { useId, useState } from 'react'
 import { Reveal } from '@/app/(frontend)/components/motion/Reveal'
 import { ScrollRise } from '@/app/(frontend)/components/motion/ScrollRise'
 import {
@@ -8,6 +8,11 @@ import {
   TEAL_GRADIENT_CTA_STYLE,
 } from '@/app/(frontend)/components/shared/gradientCta'
 import { cn } from '@/utilities/ui'
+import { EMAIL_VALIDATION_MESSAGE, isValidEmail } from '@/utilities/validateEmail'
+
+const SEND_FAILED_MESSAGE = 'Mail send failed. Please try again later.'
+const NETWORK_FAILED_MESSAGE =
+  'Mail send failed. Please check your connection and try again.'
 
 export interface GetInvolvedFormData {
   name: string
@@ -19,6 +24,7 @@ export interface GetInvolvedFormData {
 export interface GetInvolvedFormSectionProps {
   formTitle?: string
   illustrationImage?: string
+  successMessage?: string
   onSubmit?: (data: GetInvolvedFormData) => void | Promise<void>
 }
 
@@ -39,11 +45,15 @@ function FormField({
   htmlFor,
   children,
   className,
+  error,
+  errorId,
 }: {
   label: string
   htmlFor: string
   children: React.ReactNode
   className?: string
+  error?: string | null
+  errorId?: string
 }) {
   return (
     <div className={cn('flex flex-col gap-1', className)}>
@@ -51,6 +61,11 @@ function FormField({
         {label}
       </label>
       {children}
+      {error && (
+        <p id={errorId} className="text-xs leading-5 text-red-200" role="alert">
+          {error}
+        </p>
+      )}
     </div>
   )
 }
@@ -58,17 +73,41 @@ function FormField({
 export function GetInvolvedFormSection({
   formTitle = 'Send us a message',
   illustrationImage = '/images/emailCommunication.jpg',
+  successMessage = "Thank you for your message. We'll be in touch soon.",
   onSubmit,
 }: GetInvolvedFormSectionProps) {
   const resolvedIllustrationImage = illustrationImage || '/images/emailCommunication.jpg'
   const baseId = useId()
   const nameId = `${baseId}-name`
   const emailId = `${baseId}-email`
+  const emailErrorId = `${baseId}-email-error`
   const categoryId = `${baseId}-category`
   const messageId = `${baseId}-message`
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [hasSubmitted, setHasSubmitted] = useState(false)
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
+  const [isSendFailure, setIsSendFailure] = useState(false)
+  const [emailError, setEmailError] = useState<string | null>(null)
+
+  const validateEmailField = (value: string) => {
+    if (!value.trim()) {
+      setEmailError('Email is required.')
+      return false
+    }
+
+    if (!isValidEmail(value)) {
+      setEmailError(EMAIL_VALIDATION_MESSAGE)
+      return false
+    }
+
+    setEmailError(null)
+    return true
+  }
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    setErrorMessage(null)
+    setIsSendFailure(false)
 
     const form = event.currentTarget
     const formData = new FormData(form)
@@ -80,8 +119,45 @@ export function GetInvolvedFormSection({
       message: String(formData.get('message') ?? ''),
     }
 
+    if (!validateEmailField(data.email)) {
+      return
+    }
+
     if (onSubmit) {
       await onSubmit(data)
+      return
+    }
+
+    setIsSubmitting(true)
+
+    try {
+      const response = await fetch('/api/get-involved', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+
+      const result = (await response.json()) as { error?: string }
+
+      if (!response.ok) {
+        const sendFailed = response.status >= 500
+        setIsSendFailure(sendFailed)
+        setErrorMessage(
+          result.error ||
+            (sendFailed ? SEND_FAILED_MESSAGE : 'Something went wrong. Please try again.'),
+        )
+        return
+      }
+
+      setHasSubmitted(true)
+      form.reset()
+    } catch {
+      setIsSendFailure(true)
+      setErrorMessage(NETWORK_FAILED_MESSAGE)
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
@@ -108,7 +184,26 @@ export function GetInvolvedFormSection({
                 {formTitle}
               </Reveal>
 
+              {hasSubmitted ? (
+                <div
+                  className="rounded-[8px] bg-white/10 px-4 py-5 text-center text-sm leading-6 text-white"
+                  role="status"
+                >
+                  {successMessage}
+                </div>
+              ) : (
               <form className="flex flex-col gap-5 sm:gap-[24px]" onSubmit={handleSubmit}>
+                {errorMessage && (
+                  <div
+                    className="rounded-[8px] border border-red-300/30 bg-red-500/15 px-4 py-3 text-center text-sm leading-6 text-red-100"
+                    role="alert"
+                    aria-live="polite"
+                  >
+                    {isSendFailure && <p className="font-semibold text-white">Mail send failed</p>}
+                    <p className={isSendFailure ? 'mt-1' : undefined}>{errorMessage}</p>
+                  </div>
+                )}
+
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <FormField label="YOUR NAME *" htmlFor={nameId} className="min-w-0">
                     <input
@@ -122,16 +217,36 @@ export function GetInvolvedFormSection({
                       className={inputClassName}
                     />
                   </FormField>
-                  <FormField label="YOUR EMAIL *" htmlFor={emailId} className="min-w-0">
+                  <FormField
+                    label="YOUR EMAIL *"
+                    htmlFor={emailId}
+                    className="min-w-0"
+                    error={emailError}
+                    errorId={emailErrorId}
+                  >
                     <input
                       id={emailId}
                       name="email"
                       type="email"
+                      inputMode="email"
                       required
                       aria-required="true"
+                      aria-invalid={emailError ? true : undefined}
+                      aria-describedby={emailError ? emailErrorId : undefined}
                       autoComplete="email"
-                      placeholder="Enter"
-                      className={inputClassName}
+                      placeholder="name@example.com"
+                      className={cn(
+                        inputClassName,
+                        emailError && 'ring-2 ring-red-400 focus:ring-red-400',
+                      )}
+                      onBlur={(event) => {
+                        validateEmailField(event.target.value)
+                      }}
+                      onChange={() => {
+                        if (emailError) {
+                          setEmailError(null)
+                        }
+                      }}
                     />
                   </FormField>
                 </div>
@@ -169,12 +284,17 @@ export function GetInvolvedFormSection({
 
                 <button
                   type="submit"
-                  className={cn(GRADIENT_CTA_BASE_CLASSNAME, 'h-[50px] w-full shrink-0 rounded-[6px]')}
+                  disabled={isSubmitting}
+                  className={cn(
+                    GRADIENT_CTA_BASE_CLASSNAME,
+                    'h-[50px] w-full shrink-0 rounded-[6px] disabled:cursor-not-allowed disabled:opacity-70',
+                  )}
                   style={TEAL_GRADIENT_CTA_STYLE}
                 >
-                  Send your message
+                  {isSubmitting ? 'Sending...' : 'Send your message'}
                 </button>
               </form>
+              )}
             </div>
           </div>
         </div>

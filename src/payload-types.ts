@@ -2324,6 +2324,38 @@ export interface GetInvolvedPage {
   form: {
     formTitle: string;
     illustrationImage: number | Media;
+    /**
+     * Configure where form submissions are sent. SendGrid API credentials stay in server environment variables.
+     */
+    notifications: {
+      /**
+       * Inbox that receives Get Involved form submissions.
+       */
+      notificationEmail: string;
+      /**
+       * Customize the notification email content. Use {{name}}, {{email}}, {{category}}, and {{message}} as placeholders. The HTML email is styled automatically to match the MIND website.
+       */
+      emailTemplate?: {
+        /**
+         * Shown in the email header. Prefer PNG or JPG (email clients often block SVG). If empty, the Header logo is used.
+         */
+        logo?: (number | null) | Media;
+        subject?: string | null;
+        heading?: string | null;
+        /**
+         * Used for the plain-text version of the email. The HTML version uses the branded MIND layout automatically.
+         */
+        body?: string | null;
+        /**
+         * Optional footer text shown at the bottom of the email.
+         */
+        footer?: string | null;
+      };
+      /**
+       * Shown to visitors after a successful form submission.
+       */
+      successMessage?: string | null;
+    };
   };
   reachOut: {
     heading: string;
@@ -2973,6 +3005,21 @@ export interface GetInvolvedPageSelect<T extends boolean = true> {
     | {
         formTitle?: T;
         illustrationImage?: T;
+        notifications?:
+          | T
+          | {
+              notificationEmail?: T;
+              emailTemplate?:
+                | T
+                | {
+                    logo?: T;
+                    subject?: T;
+                    heading?: T;
+                    body?: T;
+                    footer?: T;
+                  };
+              successMessage?: T;
+            };
       };
   reachOut?:
     | T

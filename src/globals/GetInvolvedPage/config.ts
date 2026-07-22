@@ -72,6 +72,88 @@ export const GetInvolvedPage: GlobalConfig = {
               fields: [
                 { name: 'formTitle', type: 'text', required: true, defaultValue: 'Send us a message' },
                 { name: 'illustrationImage', type: 'upload', relationTo: 'media', required: true },
+                {
+                  name: 'notifications',
+                  type: 'group',
+                  label: 'Email notifications',
+                  admin: {
+                    description:
+                      'Configure where form submissions are sent. SendGrid API credentials stay in server environment variables.',
+                  },
+                  fields: [
+                    {
+                      name: 'notificationEmail',
+                      type: 'email',
+                      label: 'Notification email',
+                      required: true,
+                      defaultValue: 'idipindas@gmail.com',
+                      admin: {
+                        description: 'Inbox that receives Get Involved form submissions.',
+                      },
+                    },
+                    {
+                      name: 'emailTemplate',
+                      type: 'group',
+                      label: 'Email template',
+                      admin: {
+                        description:
+                          'Customize the notification email content. Use {{name}}, {{email}}, {{category}}, and {{message}} as placeholders. The HTML email is styled automatically to match the MIND website.',
+                      },
+                      fields: [
+                        {
+                          name: 'logo',
+                          type: 'upload',
+                          relationTo: 'media',
+                          label: 'Email logo',
+                          admin: {
+                            description:
+                              'Shown in the email header. Prefer PNG or JPG (email clients often block SVG). If empty, the Header logo is used.',
+                          },
+                        },
+                        {
+                          name: 'subject',
+                          type: 'text',
+                          label: 'Email subject',
+                          defaultValue: 'Get Involved: {{category}} — {{name}}',
+                        },
+                        {
+                          name: 'heading',
+                          type: 'text',
+                          label: 'Email heading',
+                          defaultValue: 'New Get Involved submission',
+                        },
+                        {
+                          name: 'body',
+                          type: 'textarea',
+                          label: 'Plain text body',
+                          defaultValue:
+                            'You have received a new message from the Get Involved form.\n\nName: {{name}}\nEmail: {{email}}\nCategory: {{category}}\n\nMessage:\n{{message}}',
+                          admin: {
+                            description:
+                              'Used for the plain-text version of the email. The HTML version uses the branded MIND layout automatically.',
+                          },
+                        },
+                        {
+                          name: 'footer',
+                          type: 'textarea',
+                          label: 'Email footer',
+                          admin: {
+                            description: 'Optional footer text shown at the bottom of the email.',
+                          },
+                        },
+                      ],
+                    },
+                    {
+                      name: 'successMessage',
+                      type: 'textarea',
+                      label: 'Success message',
+                      defaultValue: "Thank you for your message. We'll be in touch soon.",
+                      admin: {
+                        description: 'Shown to visitors after a successful form submission.',
+                      },
+                    },
+                  ],
+                },
               ],
             },
           ],
