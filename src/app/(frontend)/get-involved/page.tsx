@@ -4,11 +4,20 @@ import { GetInvolvedFormSection } from '@/app/(frontend)/components/sections/Get
 import { HeroSection } from '@/app/(frontend)/components/sections/HeroSection'
 import { TextImageSection } from '@/app/(frontend)/components/sections/TextImageSection'
 import { getCachedGlobal } from '@/utilities/getGlobals'
+import { generateGlobalMeta } from '@/utilities/generateMeta'
 import { mediaUrl, paragraphs } from '@/utilities/cms'
 
-export const metadata = {
-  title: 'Get Involved | MIND',
-  description: 'Get involved with the Ministry of Innovation & National Development initiatives',
+import type { Metadata } from 'next'
+
+export async function generateMetadata(): Promise<Metadata> {
+  const page = await getCachedGlobal('get-involved-page', 0)()
+
+  return generateGlobalMeta({
+    meta: page?.meta,
+    fallbackTitle: 'Get Involved | MIND',
+    fallbackDescription:
+      'Get involved with the Ministry of Innovation & National Development initiatives',
+  })
 }
 
 export default async function GetInvolvedPage() {

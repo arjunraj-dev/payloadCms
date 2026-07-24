@@ -1,6 +1,6 @@
 import type { GlobalConfig } from 'payload'
 
-import { ctaField } from '@/fields/cms'
+import { ctaField, seoTab } from '@/fields/cms'
 import { iconOptions } from '@/utilities/iconMap'
 import { revalidateProgressPage } from './hooks/revalidateProgressPage'
 
@@ -152,6 +152,7 @@ export const ProgressPage: GlobalConfig = {
             },
           ],
         },
+        seoTab(),
       ],
     },
   ],

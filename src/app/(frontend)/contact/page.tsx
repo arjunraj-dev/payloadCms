@@ -4,14 +4,21 @@ import { FollowUsSection } from '@/app/(frontend)/components/sections/FollowUsSe
 import { HeroSection } from '@/app/(frontend)/components/sections/HeroSection'
 import { SpecificEnquiriesSection } from '@/app/(frontend)/components/sections/SpecificEnquiriesSection'
 import { getCachedGlobal } from '@/utilities/getGlobals'
+import { generateGlobalMeta } from '@/utilities/generateMeta'
 import { iconMap } from '@/utilities/iconMap'
 import { mediaUrl, paragraphs } from '@/utilities/cms'
 import { Briefcase } from 'lucide-react'
+import type { Metadata } from 'next'
 import React from 'react'
 
-export const metadata = {
-  title: 'Contact | MIND',
-  description: 'Contact the Ministry of Innovation & National Development',
+export async function generateMetadata(): Promise<Metadata> {
+  const page = await getCachedGlobal('contact-page', 0)()
+
+  return generateGlobalMeta({
+    meta: page?.meta,
+    fallbackTitle: 'Contact | MIND',
+    fallbackDescription: 'Contact the Ministry of Innovation & National Development',
+  })
 }
 
 export default async function ContactPage() {

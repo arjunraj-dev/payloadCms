@@ -47,3 +47,20 @@ export const generateMeta = async (args: {
     title,
   }
 }
+
+/**
+ * For Globals-driven static pages (Home, About, Contact, etc.) that only expose
+ * a plain meta.title / meta.description pair (no image/OG wiring).
+ */
+export const generateGlobalMeta = (args: {
+  fallbackDescription: string
+  fallbackTitle: string
+  meta?: { description?: string | null; title?: string | null } | null
+}): Metadata => {
+  const { fallbackDescription, fallbackTitle, meta } = args
+
+  return {
+    title: meta?.title || fallbackTitle,
+    description: meta?.description || fallbackDescription,
+  }
+}

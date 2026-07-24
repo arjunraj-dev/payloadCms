@@ -1,6 +1,6 @@
 import type { GlobalConfig } from 'payload'
 
-import { ctaField } from '@/fields/cms'
+import { ctaField, seoTab } from '@/fields/cms'
 import { revalidateUpdatesPage } from './hooks/revalidateUpdatesPage'
 
 export const UpdatesPage: GlobalConfig = {
@@ -11,20 +11,31 @@ export const UpdatesPage: GlobalConfig = {
   },
   fields: [
     {
-      name: 'hero',
-      type: 'group',
-      fields: [
-        { name: 'title', type: 'text', required: true },
-        { name: 'subtitle', type: 'textarea', required: true },
-      ],
-    },
-    {
-      name: 'closing',
-      type: 'group',
-      fields: [
-        { name: 'heading', type: 'text', required: true },
-        { name: 'subtitle', type: 'textarea', required: true },
-        ctaField('primaryButton', 'Primary Button', true),
+      type: 'tabs',
+      tabs: [
+        {
+          label: 'Content',
+          fields: [
+            {
+              name: 'hero',
+              type: 'group',
+              fields: [
+                { name: 'title', type: 'text', required: true },
+                { name: 'subtitle', type: 'textarea', required: true },
+              ],
+            },
+            {
+              name: 'closing',
+              type: 'group',
+              fields: [
+                { name: 'heading', type: 'text', required: true },
+                { name: 'subtitle', type: 'textarea', required: true },
+                ctaField('primaryButton', 'Primary Button', true),
+              ],
+            },
+          ],
+        },
+        seoTab(),
       ],
     },
   ],

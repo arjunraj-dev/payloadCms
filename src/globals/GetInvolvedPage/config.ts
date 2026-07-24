@@ -1,6 +1,6 @@
 import type { GlobalConfig } from 'payload'
 
-import { paragraphsField } from '@/fields/cms'
+import { paragraphsField, seoTab } from '@/fields/cms'
 import { iconOptions } from '@/utilities/iconMap'
 import { socialPlatformOptions } from '@/utilities/socialIcons'
 import { revalidateGetInvolvedPage } from './hooks/revalidateGetInvolvedPage'
@@ -213,6 +213,7 @@ export const GetInvolvedPage: GlobalConfig = {
             },
           ],
         },
+        seoTab(),
       ],
     },
   ],

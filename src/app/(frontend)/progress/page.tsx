@@ -5,15 +5,23 @@ import type { ProgramLabelColor } from '@/app/(frontend)/components/sections/Pro
 import { StatusTabsSection } from '@/app/(frontend)/components/sections/StatusTabsSection'
 import type { InitiativeLabelColor } from '@/app/(frontend)/components/sections/InitiativeGridSection'
 import { getCachedGlobalSafe } from '@/utilities/getGlobals'
+import { generateGlobalMeta } from '@/utilities/generateMeta'
 import { iconMap } from '@/utilities/iconMap'
 import { mediaUrl } from '@/utilities/cms'
 import { Briefcase } from 'lucide-react'
 
+import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
-export const metadata = {
-  title: 'Progress | MIND',
-  description: 'View the progress and initiatives of the Ministry of Innovation & National Development',
+export async function generateMetadata(): Promise<Metadata> {
+  const progress = await getCachedGlobalSafe('progress-page', 0)()
+
+  return generateGlobalMeta({
+    meta: progress?.meta,
+    fallbackTitle: 'Progress | MIND',
+    fallbackDescription:
+      'View the progress and initiatives of the Ministry of Innovation & National Development',
+  })
 }
 
 export default async function ProgressPage() {

@@ -1909,6 +1909,16 @@ export interface Homepage {
       href?: string | null;
     };
   };
+  meta?: {
+    /**
+     * Shown in the browser tab and as the clickable headline in search results. Falls back to the default page title if left blank.
+     */
+    title?: string | null;
+    /**
+     * Shown under the title in search results. Aim for roughly 150-160 characters. Falls back to the default description if left blank.
+     */
+    description?: string | null;
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -2066,6 +2076,16 @@ export interface AboutPage {
       label?: string | null;
       href?: string | null;
     };
+  };
+  meta?: {
+    /**
+     * Shown in the browser tab and as the clickable headline in search results. Falls back to the default page title if left blank.
+     */
+    title?: string | null;
+    /**
+     * Shown under the title in search results. Aim for roughly 150-160 characters. Falls back to the default description if left blank.
+     */
+    description?: string | null;
   };
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -2251,6 +2271,16 @@ export interface ProgressPage {
       href: string;
     };
   };
+  meta?: {
+    /**
+     * Shown in the browser tab and as the clickable headline in search results. Falls back to the default page title if left blank.
+     */
+    title?: string | null;
+    /**
+     * Shown under the title in search results. Aim for roughly 150-160 characters. Falls back to the default description if left blank.
+     */
+    description?: string | null;
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -2271,6 +2301,16 @@ export interface UpdatesPage {
       label: string;
       href: string;
     };
+  };
+  meta?: {
+    /**
+     * Shown in the browser tab and as the clickable headline in search results. Falls back to the default page title if left blank.
+     */
+    title?: string | null;
+    /**
+     * Shown under the title in search results. Aim for roughly 150-160 characters. Falls back to the default description if left blank.
+     */
+    description?: string | null;
   };
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -2385,6 +2425,16 @@ export interface GetInvolvedPage {
         }[]
       | null;
   };
+  meta?: {
+    /**
+     * Shown in the browser tab and as the clickable headline in search results. Falls back to the default page title if left blank.
+     */
+    title?: string | null;
+    /**
+     * Shown under the title in search results. Aim for roughly 150-160 characters. Falls back to the default description if left blank.
+     */
+    description?: string | null;
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -2460,6 +2510,16 @@ export interface ContactPage {
       label: string;
       href: string;
     };
+  };
+  meta?: {
+    /**
+     * Shown in the browser tab and as the clickable headline in search results. Falls back to the default page title if left blank.
+     */
+    title?: string | null;
+    /**
+     * Shown under the title in search results. Aim for roughly 150-160 characters. Falls back to the default description if left blank.
+     */
+    description?: string | null;
   };
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -2688,6 +2748,12 @@ export interface HomepageSelect<T extends boolean = true> {
               href?: T;
             };
       };
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
@@ -2833,6 +2899,12 @@ export interface AboutPageSelect<T extends boolean = true> {
               href?: T;
             };
       };
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
@@ -2938,6 +3010,12 @@ export interface ProgressPageSelect<T extends boolean = true> {
               href?: T;
             };
       };
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
@@ -2964,6 +3042,12 @@ export interface UpdatesPageSelect<T extends boolean = true> {
               label?: T;
               href?: T;
             };
+      };
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -3055,6 +3139,12 @@ export interface GetInvolvedPageSelect<T extends boolean = true> {
               id?: T;
             };
       };
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
@@ -3124,6 +3214,12 @@ export interface ContactPageSelect<T extends boolean = true> {
               label?: T;
               href?: T;
             };
+      };
+  meta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
       };
   updatedAt?: T;
   createdAt?: T;

@@ -7,14 +7,21 @@ import { MinisterProfileSection } from '@/app/(frontend)/components/sections/Min
 import { PolicyAreasSection } from '@/app/(frontend)/components/sections/PolicyAreasSection'
 import { TextImageSection } from '@/app/(frontend)/components/sections/TextImageSection'
 import { getCachedGlobalSafe } from '@/utilities/getGlobals'
+import { generateGlobalMeta } from '@/utilities/generateMeta'
 import { mediaUrl, paragraphs } from '@/utilities/cms'
 import { getDepartmentCardIconSrc, getPillarCardIconSrc } from '@/utilities/pillarCardIcons'
 
+import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
-export const metadata = {
-  title: 'About | MIND',
-  description: 'Learn about the Ministry of Innovation & National Development',
+export async function generateMetadata(): Promise<Metadata> {
+  const about = await getCachedGlobalSafe('about-page', 0)()
+
+  return generateGlobalMeta({
+    meta: about?.meta,
+    fallbackTitle: 'About | MIND',
+    fallbackDescription: 'Learn about the Ministry of Innovation & National Development',
+  })
 }
 
 export default async function AboutPage() {

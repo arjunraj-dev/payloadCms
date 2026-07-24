@@ -1,15 +1,22 @@
 import { CountryFutureSection } from '@/app/(frontend)/components/sections/CountryFutureSection'
 import { HeroSection } from '@/app/(frontend)/components/sections/HeroSection'
 import { getCachedGlobal } from '@/utilities/getGlobals'
+import { generateGlobalMeta } from '@/utilities/generateMeta'
 import { mediaUrl } from '@/utilities/cms'
 import configPromise from '@payload-config'
+import type { Metadata } from 'next'
 import { getPayload } from 'payload'
 import { UpdatesPageClient } from './page.client'
 
-export const metadata = {
-  title: 'Updates | MIND',
-  description:
-    'Latest updates, announcements, and news from the Ministry of Innovation & National Development',
+export async function generateMetadata(): Promise<Metadata> {
+  const updatesPage = await getCachedGlobal('updates-page', 0)()
+
+  return generateGlobalMeta({
+    meta: updatesPage?.meta,
+    fallbackTitle: 'Updates | MIND',
+    fallbackDescription:
+      'Latest updates, announcements, and news from the Ministry of Innovation & National Development',
+  })
 }
 
 export default async function UpdatesPage() {

@@ -1,6 +1,6 @@
 import type { GlobalConfig } from 'payload'
 
-import { ctaField, paragraphsField } from '@/fields/cms'
+import { ctaField, paragraphsField, seoTab } from '@/fields/cms'
 import { revalidateHomePage } from './hooks/revalidateHomePage'
 
 export const HomePage: GlobalConfig = {
@@ -248,6 +248,7 @@ export const HomePage: GlobalConfig = {
             },
           ],
         },
+        seoTab(),
       ],
     },
   ],

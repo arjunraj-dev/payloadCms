@@ -1,6 +1,6 @@
 import type { GlobalConfig } from 'payload'
 
-import { ctaField, paragraphsField } from '@/fields/cms'
+import { ctaField, paragraphsField, seoTab } from '@/fields/cms'
 import { iconOptions } from '@/utilities/iconMap'
 import { revalidateAboutPage } from './hooks/revalidateAboutPage'
 
@@ -211,6 +211,7 @@ export const AboutPage: GlobalConfig = {
             },
           ],
         },
+        seoTab(),
       ],
     },
   ],

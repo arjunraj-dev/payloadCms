@@ -1,6 +1,6 @@
 import type { GlobalConfig } from 'payload'
 
-import { ctaField, paragraphsField } from '@/fields/cms'
+import { ctaField, paragraphsField, seoTab } from '@/fields/cms'
 import { iconOptions } from '@/utilities/iconMap'
 import { socialPlatformOptions } from '@/utilities/socialIcons'
 import { revalidateContactPage } from './hooks/revalidateContactPage'
@@ -103,6 +103,7 @@ export const ContactPage: GlobalConfig = {
             },
           ],
         },
+        seoTab(),
       ],
     },
   ],
